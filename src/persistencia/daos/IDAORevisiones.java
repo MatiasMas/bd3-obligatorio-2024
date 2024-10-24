@@ -8,5 +8,5 @@ public interface IDAORevisiones {
 	public boolean member (int numero);
 	public void insert (RevisionVO rev);
 	public RevisionVO find (int numero);
-	public List<RevisionVO> listarFolios ();
+	public List<RevisionVO> listarRevisiones ();
 }
