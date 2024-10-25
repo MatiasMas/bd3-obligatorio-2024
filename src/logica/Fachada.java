@@ -1,4 +1,4 @@
-package src.logica;
+package logica;
 
 import java.rmi.RemoteException;
 import java.sql.Connection;
@@ -7,14 +7,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import logicaPersistencia.accesoBD.AccesoBD;
-import logicaPersistencia.excepciones.FolioExistenteException;
-import logicaPersistencia.excepciones.FolioNoExistenteException;
-import logicaPersistencia.excepciones.PersistenciaException;
-import logicaPersistencia.excepciones.RevisionExistenteException;
-import logicaPersistencia.valueObjects.VOFolio;
-import logicaPersistencia.valueObjects.VOFolioMaxRev;
-import logicaPersistencia.valueObjects.VORevision;
+import logica.excepciones.FolioExistenteException;
+import logica.excepciones.FolioNoExistenteException;
+import logica.excepciones.PersistenciaException;
+import logica.excepciones.RevisionExistenteException;
+import logica.valueObjects.VOFolio;
+import logica.valueObjects.VOFolioMaxRev;
+import logica.valueObjects.VORevision;
+import persistencia.daos.DAOFolios;
 
 public class Fachada {
 	// Esta tiene que ser el DAO ahora
@@ -24,8 +24,7 @@ public class Fachada {
 
 	}
 
-	public void agregarFolio(VOFolio voF) throws RemoteException, PersistenciaException, ClassNotFoundException,
-			SQLException, FolioExistenteException {
+	public void agregarFolio(VOFolio voF) throws RemoteException, PersistenciaException, ClassNotFoundException, SQLException, FolioExistenteException {
 		Class.forName(driver);
 		con = DriverManager.getConnection(url, usuario, password);
 
@@ -36,8 +35,7 @@ public class Fachada {
 		accesoBD.agregarFolio(con, voF.getCodigo(), voF.getCaratula(), voF.getPaginas());
 	}
 
-	public void agregarRevision(VORevision voR) throws RemoteException, PersistenciaException, ClassNotFoundException,
-			SQLException, FolioNoExistenteException, RevisionExistenteException {
+	public void agregarRevision(VORevision voR) throws RemoteException, PersistenciaException, ClassNotFoundException, SQLException, FolioNoExistenteException, RevisionExistenteException {
 		Class.forName(driver);
 		con = DriverManager.getConnection(url, usuario, password);
 
@@ -50,8 +48,7 @@ public class Fachada {
 		accesoBD.agregarRevision(con, numero, voR.getCodigoFolio(), voR.getDescripcion());
 	}
 
-	public void borrarFolioRevisiones(String codF) throws RemoteException, PersistenciaException,
-			ClassNotFoundException, SQLException, FolioNoExistenteException {
+	public void borrarFolioRevisiones(String codF) throws RemoteException, PersistenciaException, ClassNotFoundException, SQLException, FolioNoExistenteException {
 
 	}
 

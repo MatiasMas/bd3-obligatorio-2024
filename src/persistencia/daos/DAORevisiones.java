@@ -8,26 +8,45 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import logica.valueObjects.RevisionVO;
+import logica.valueObjects.VORevision;
 import persistencia.consultas.Consultas;
 
 public class DAORevisiones {
+	private String url = "";
+	private String usr = "";
+	private String pwd = "";
+	private String codigoFolio;
 
-	private String url;
-	private String usr;
-	private String pwd;
-
-	public DAORevisiones() {
-		super();
+	public DAORevisiones(String codF) {
+		this.codigoFolio = codF;
 	}
 
-	public DAORevisiones(String url, String usr, String pwd) {
-		this.url = url;
-		this.usr = usr;
-		this.pwd = pwd;
+	public void insback(VORevision rev) {
+		try {
+			Connection con = DriverManager.getConnection(url, usr, pwd);
+
+			Consultas consultas = new Consultas();
+			String query = consultas.agregarRevision();
+			PreparedStatement pstmt = con.prepareStatement(query);
+
+			pstmt.setInt(1, rev.getNumero());
+			pstmt.setString(2, rev.getDescripcion());
+			pstmt.setString(3, rev.getCodigoFolio());
+
+			pstmt.executeUpdate();
+
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			throw new PersistenciaException();
+		}
 	}
 
-	public boolean member(int numero) {
+	public int largo() {
+		return 1;
+	}
+
+	public boolean ksimo(int numero) {
 		boolean existeRevision = false;
 
 		try {
@@ -53,29 +72,8 @@ public class DAORevisiones {
 		return existeRevision;
 	}
 
-	public void insert(RevisionVO rev) {
-		try {
-			Connection con = DriverManager.getConnection(url, usr, pwd);
-
-			Consultas consultas = new Consultas();
-			String query = consultas.agregarRevision();
-			PreparedStatement pstmt = con.prepareStatement(query);
-
-			pstmt.setInt(1, rev.getNumero());
-			pstmt.setString(2, rev.getDescripcion());
-			pstmt.setString(3, rev.getCodigoFolio());
-
-			pstmt.executeUpdate();
-
-			pstmt.close();
-			con.close();
-		} catch (SQLException e) {
-			throw new PersistenciaException();
-		}
-	}
-
-	public RevisionVO find(String codFolio, int numero) {
-		RevisionVO revision = null;
+	public VORevision find(String codFolio, int numero) {
+		VORevision revision = null;
 
 		try {
 			Connection con = DriverManager.getConnection(url, usr, pwd);
@@ -89,7 +87,7 @@ public class DAORevisiones {
 
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
-				revision = new RevisionVO();
+				revision = new VORevision();
 				revision.setNumero(rs.getInt("numero"));
 				revision.setDescripcion(rs.getString("descripcion"));
 				revision.setCodFolio(rs.getString("codFolio"));
@@ -105,8 +103,8 @@ public class DAORevisiones {
 		return revision;
 	}
 
-	public List<RevisionVO> listarRevisiones() {
-		List<RevisionVO> revisiones = new ArrayList<>();
+	public List<VORevision> listarRevisiones() {
+		List<VORevision> revisiones = new ArrayList<>();
 
 		try {
 			Connection con = DriverManager.getConnection(url, usr, pwd);
@@ -117,7 +115,7 @@ public class DAORevisiones {
 
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				RevisionVO revision = new RevisionVO();
+				VORevision revision = new VORevision();
 				revision.setNumero(rs.getInt("numero"));
 				revision.setDescripcion(rs.getString("descripcion"));
 				revision.setCodFolio(rs.getString("codFolio"));
@@ -135,4 +133,7 @@ public class DAORevisiones {
 		return revisiones;
 	}
 
+	public void borrarRevisiones() {
+
+	}
 }

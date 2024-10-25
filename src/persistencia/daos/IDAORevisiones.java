@@ -2,11 +2,11 @@ package persistencia.daos;
 
 import java.util.List;
 
-import logica.valueObjects.RevisionVO;
+import logica.valueObjects.VORevision;
 
 public interface IDAORevisiones {
 	public boolean member (int numero);
-	public void insert (RevisionVO rev);
-	public RevisionVO find (int numero);
-	public List<RevisionVO> listarRevisiones ();
+	public void insert (VORevision rev);
+	public VORevision find (int numero);
+	public List<VORevision> listarRevisiones ();
 }

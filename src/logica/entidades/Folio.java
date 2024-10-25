@@ -1,4 +1,4 @@
-package logica;
+package logica.entidades;
 
 import java.util.List;
 

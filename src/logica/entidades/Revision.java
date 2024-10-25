@@ -1,4 +1,4 @@
-package logica;
+package logica.entidades;
 
 public class Revision {
 	private int numero;

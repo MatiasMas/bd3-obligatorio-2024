@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import logica.valueObjects.FolioVO;
+import logica.valueObjects.VOFolio;
 import persistencia.consultas.Consultas;
 
 public class DAOFolios {
@@ -49,7 +49,7 @@ public class DAOFolios {
 		return existeFolio;
 	}
 
-	public void insert(FolioVO folio) {
+	public void insert(VOFolio folio) {
 		try {
 			Connection con = DriverManager.getConnection(url, usr, pwd);
 
@@ -70,8 +70,8 @@ public class DAOFolios {
 		}
 	}
 
-	public FolioVO find(String codigo) {
-		FolioVO folio = null;
+	public VOFolio find(String codigo) {
+		VOFolio folio = null;
 
 		try {
 			Connection con = DriverManager.getConnection(url, usr, pwd);
@@ -85,7 +85,7 @@ public class DAOFolios {
 
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
-				folio = new FolioVO(rs.getString("codigo"), rs.getString("caratula"), rs.getInt("paginas"));
+				folio = new VOFolio(rs.getString("codigo"), rs.getString("caratula"), rs.getInt("paginas"));
 			}
 
 			rs.close();
@@ -98,8 +98,8 @@ public class DAOFolios {
 		return folio;
 	}
 
-	public List<FolioVO> listarFolios() {
-		List<FolioVO> folios = new ArrayList<>();
+	public List<VOFolio> listarFolios() {
+		List<VOFolio> folios = new ArrayList<>();
 
 		try {
 			Connection con = DriverManager.getConnection(url, usr, pwd);
@@ -111,7 +111,7 @@ public class DAOFolios {
 
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				FolioVO folio = new FolioVO(rs.getString("codigo"), rs.getString("caratula"), rs.getInt("paginas"));
+				VOFolio folio = new VOFolio(rs.getString("codigo"), rs.getString("caratula"), rs.getInt("paginas"));
 
 				folios.add(folio);
 			}

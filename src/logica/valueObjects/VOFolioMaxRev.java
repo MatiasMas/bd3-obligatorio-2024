@@ -1,7 +1,7 @@
 
 package logica.valueObjects;
 
-public class VOFolioMaxRev extends FolioVO {
+public class VOFolioMaxRev extends VOFolio {
 	private int cantRevisiones;
 
 	public VOFolioMaxRev(String codigo, String caratula, int paginas, int cantRevisiones) {
