@@ -1,5 +1,5 @@
-package logicaPersistencia.poolConexiones;
+package poolConexiones;
 
 public interface IConexion {
-	
+
 }
