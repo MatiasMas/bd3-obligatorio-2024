@@ -9,7 +9,15 @@ import persistencia.consultas.Consultas;
 
 public class DAOFolios {
 	
+	private String url;
+	private String usr;
+	private String pwd;
 	
+	public DAOFolios(String url, String usr, String pwd) {
+        this.url = url;
+        this.usr = usr;
+        this.pwd = pwd;
+    }
 	
 	public boolean member(String codigo) {
 	    boolean existeFolio = false;
@@ -59,12 +67,69 @@ public class DAOFolios {
 	    }
 	}
 	
-	public RevisionVO find (int numero) {
-		
-	}
-	public List<RevisionVO> listarFolios (){
-		
-	}
+	
+	   public FolioVO find(String codigo) {
+	        FolioVO folio = null;
+
+	        try {
+	            Connection con = DriverManager.getConnection(url, usr, pwd);
+
+	            Consultas consultas = new Consultas();
+	            String query = consultas.buscarFolio(); // Método que debe devolver la consulta SQL para buscar un folio por su código
+	            PreparedStatement pstmt = con.prepareStatement(query);
+
+	            pstmt.setString(1, codigo);
+
+	            ResultSet rs = pstmt.executeQuery();
+	            if (rs.next()) {
+	                folio = new FolioVO(
+	                    rs.getString("codigo"),
+	                    rs.getString("caratula"),
+	                    rs.getString("paginas")
+	                );
+	            }
+
+	            rs.close();
+	            pstmt.close();
+	            con.close();
+	        } catch (SQLException e) {
+	            throw new PersistenciaException();
+	        }
+
+	        return folio;
+	    }
+	   
+	   
+	   public List<FolioVO> listarFolios() {
+	        List<FolioVO> folios = new ArrayList<>();
+
+	        try {
+	            Connection con = DriverManager.getConnection(url, usr, pwd);
+
+	            Consultas consultas = new Consultas();
+	            String query = consultas.listarFolios(); // Método que debe devolver la consulta SQL para listar todos los folios
+	            PreparedStatement pstmt = con.prepareStatement(query);
+
+	            ResultSet rs = pstmt.executeQuery();
+	            while (rs.next()) {
+	                FolioVO folio = new FolioVO(
+	                    rs.getString("codigo"),
+	                    rs.getString("caratula"),
+	                    rs.getString("paginas")
+	                );
+
+	                folios.add(folio);
+	            }
+
+	            rs.close();
+	            pstmt.close();
+	            con.close();
+	        } catch (SQLException e) {
+	            throw new PersistenciaException();
+	        }
+
+	        return folios;
+	    }
 	
 	
 	

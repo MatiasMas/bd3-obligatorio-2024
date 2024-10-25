@@ -15,11 +15,23 @@ public class FolioVO {
         return codigo;
     }
 
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
     public String getCaratula() {
         return caratula;
     }
 
+    public void setCaratula(String caratula) {
+        this.caratula = caratula;
+    }
+
     public String getPaginas() {
         return paginas;
+    }
+
+    public void setPaginas(String paginas) {
+        this.paginas = paginas;
     }
 }
