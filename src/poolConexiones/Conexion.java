@@ -1,4 +1,4 @@
-package logicaPersistencia.poolConexiones;
+package poolConexiones;
 
 import java.sql.Connection;
 
