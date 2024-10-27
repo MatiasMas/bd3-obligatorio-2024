@@ -1,4 +1,4 @@
-package grafica.ventanas;
+package ventanas;
 
 import java.awt.EventQueue;
 
@@ -6,19 +6,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import grafica.controladores.Controlador;
-import logicaPersistencia.excepciones.FolioException;
-import logicaPersistencia.excepciones.PersistenciaException;
-import logicaPersistencia.excepciones.SQLexcepcion;
-
+import grafica.controladores.ControladordarDescripcion;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.rmi.NotBoundException;
-import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class darDescripcion extends JFrame {
@@ -27,6 +19,7 @@ public class darDescripcion extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtCodigo;
 	private JTextField txtNroRevision;
+	private ControladordarDescripcion cdd;
 
 	/**
 	 * Launch the application.

@@ -1,4 +1,4 @@
-package grafica.ventanas;
+package ventanas;
 
 import java.awt.EventQueue;
 
@@ -7,17 +7,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import grafica.controladores.Controlador;
-import logicaPersistencia.excepciones.PersistenciaException;
-import logicaPersistencia.excepciones.SQLexcepcion;
-import logicaPersistencia.valueObjects.VOFolioMaxRev;
-
+import grafica.controladores.ControladorfolioMasVisitado;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.rmi.NotBoundException;
-import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -27,6 +19,7 @@ public class folioMasRevisado extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable tablefolioMasRevisado;
+	private ControladorfolioMasVisitado cfmv;
 
 	/**
 	 * Launch the application.

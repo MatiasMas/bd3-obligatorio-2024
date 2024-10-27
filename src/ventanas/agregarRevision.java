@@ -1,4 +1,4 @@
-package grafica.ventanas;
+package ventanas;
 
 import java.awt.EventQueue;
 
@@ -6,16 +6,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import grafica.controladores.Controlador;
-import logicaPersistencia.excepciones.PersistenciaException;
-
+import grafica.controladores.ControladoragregarRevision;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.rmi.NotBoundException;
 import java.awt.event.ActionEvent;
 
 public class agregarRevision extends JFrame {
@@ -24,6 +19,7 @@ public class agregarRevision extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtCodigoFolio;
 	private JTextField txtDescripcion;
+	private ControladoragregarRevision car;
 
 	/**
 	 * Launch the application.

@@ -1,4 +1,4 @@
-package grafica.ventanas;
+package ventanas;
 
 import java.awt.EventQueue;
 
@@ -6,16 +6,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import grafica.controladores.Controlador;
-import logicaPersistencia.excepciones.PersistenciaException;
-
+import grafica.controladores.ControladoragregarFolio;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.rmi.NotBoundException;
 import java.awt.event.ActionEvent;
 
 public class agregarFolio extends JFrame {
@@ -25,6 +20,7 @@ public class agregarFolio extends JFrame {
 	private JTextField txtCodigo;
 	private JTextField txtCaratula;
 	private JTextField txtPaginas;
+	private ControladoragregarFolio caf;
 
 	/**
 	 * Launch the application.
