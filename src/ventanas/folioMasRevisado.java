@@ -69,48 +69,6 @@ public class folioMasRevisado extends JFrame {
 		JButton btnfolioMasRevisado = new JButton("Obtener Folios mas Revisado ");
 		btnfolioMasRevisado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-
-					Controlador controlador = new Controlador();
-					VOFolioMaxRev folioMasRevisado = new VOFolioMaxRev();
-					folioMasRevisado = controlador.folioMasRevisado();
-
-					Object[] fila = new Object[modeloFolio.getColumnCount()];
-
-					fila[0] = folioMasRevisado.getCodigo();
-					fila[1] = folioMasRevisado.getCaratula();
-					fila[2] = folioMasRevisado.getPaginas();
-					fila[3] = folioMasRevisado.getCantRevisiones();
-					modeloFolio.addRow(fila);
-
-					// Actualiza contenido de la tabla
-					tablefolioMasRevisado.setModel(modeloFolio);
-
-				} catch (NumberFormatException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (PersistenciaException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (SQLexcepcion e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (NotBoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 			}
 		});
 		btnfolioMasRevisado.setBounds(251, 72, 383, 23);

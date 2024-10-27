@@ -71,46 +71,6 @@ public class listarFolios extends JFrame {
 		JButton btnObtenerFolios = new JButton("Obtener Folios");
 		btnObtenerFolios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-
-					Controlador controlador = new Controlador();
-					List<VOFolio> listaFolios = new ArrayList<VOFolio>(controlador.listarFolios());
-					Object[] fila = new Object[modeloFolio.getColumnCount()];
-
-					for (VOFolio folio : listaFolios) {
-						fila[0] = folio.getCodigo();
-						fila[1] = folio.getCaratula();
-						fila[2] = folio.getPaginas();
-						modeloFolio.addRow(fila);// agregamos una fila a nuestro modelo de tabla
-					}
-					// Actualiza contenido de la tabla
-					tableFolios.setModel(modeloFolio);
-					
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (PersistenciaException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (NumberFormatException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (SQLexcepcion e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (FolioException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (NotBoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 			}
 		});
 		btnObtenerFolios.setBounds(381, 231, 156, 23);

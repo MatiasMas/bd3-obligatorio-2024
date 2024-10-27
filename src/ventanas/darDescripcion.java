@@ -85,40 +85,6 @@ public class darDescripcion extends JFrame {
 		JButton btnObtenerDescr = new JButton("Obtener descripcion");
 		btnObtenerDescr.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-
-					Controlador controlador = new Controlador();
-					lblResultadoDescripcion.setText(controlador.darDescripcion(txtCodigo.getText(),
-							Integer.parseInt(txtNroRevision.getText())));
-
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (PersistenciaException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (NumberFormatException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (SQLexcepcion e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (FolioException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (NotBoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 			}
 		});
 		btnObtenerDescr.setBounds(155, 227, 156, 23);

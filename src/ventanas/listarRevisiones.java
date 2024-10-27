@@ -76,50 +76,6 @@ public class listarRevisiones extends JFrame {
 		JButton btnObtenerRevisiones = new JButton("Obtener Revisiones");
 		btnObtenerRevisiones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-
-					Controlador controlador = new Controlador();
-					List<VORevision> listaRevisiones = new ArrayList<VORevision>(
-							controlador.listarRevisiones(txtCodigoFolio.getText()));
-					Object[] fila = new Object[modeloRevision.getColumnCount()];
-
-					for (VORevision revision : listaRevisiones) {
-						fila[0] = revision.getNumero();
-						fila[1] = revision.getCodigoFolio();
-						fila[2] = revision.getDescripcion();
-						modeloRevision.addRow(fila);// agregamos una fila a nuestro modelo de tabla
-					}
-					// Actualiza contenido de la tabla
-					tableRevision.setModel(modeloRevision);
-
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (PersistenciaException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (NumberFormatException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (SQLexcepcion e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (FolioException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (NotBoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 			}
 		});
 		btnObtenerRevisiones.setBounds(381, 291, 156, 23);

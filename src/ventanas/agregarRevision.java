@@ -74,27 +74,6 @@ public class agregarRevision extends JFrame {
 		JButton btnNuevaRevision = new JButton("Crear nueva Revision");
 		btnNuevaRevision.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					
-					Controlador controlador = new Controlador();
-					controlador.agregarRevision(txtCodigoFolio.getText(), txtDescripcion.getText());
-				
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (PersistenciaException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (NotBoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 			}
 		});
 		btnNuevaRevision.setBounds(155, 112, 156, 23);

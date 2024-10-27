@@ -65,30 +65,6 @@ public class eliminarFolioRevisiones extends JFrame {
 		JButton btnEliminarFolioRevision = new JButton("Eliminar Folio y Revisiones");
 		btnEliminarFolioRevision.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					
-					Controlador controlador = new Controlador();
-					controlador.borrarFolioRevisiones(txtCodigoFolio.getText());
-				
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (PersistenciaException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (FolioException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (NotBoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 			}
 		});
 		btnEliminarFolioRevision.setBounds(104, 60, 207, 23);
