@@ -41,6 +41,7 @@ public class folioMasRevisado extends JFrame {
 	 * Create the frame.
 	 */
 	public folioMasRevisado() {
+		this.cfmv = new ControladorfolioMasVisitado(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 901, 299);
 		contentPane = new JPanel();
@@ -66,6 +67,9 @@ public class folioMasRevisado extends JFrame {
 		});
 		btnfolioMasRevisado.setBounds(251, 72, 383, 23);
 		contentPane.add(btnfolioMasRevisado);
-
+	}
+	
+	public void visible() {
+		this.setVisible(true);
 	}
 }

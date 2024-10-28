@@ -1,5 +1,11 @@
 package grafica.controladores;
 
-public class ControladorlistarFolios {
+import ventanas.listarFolios;
 
+public class ControladorlistarFolios {
+	private listarFolios lf;
+
+	public ControladorlistarFolios(listarFolios ventana) {
+		this.lf = ventana;
+	}
 }

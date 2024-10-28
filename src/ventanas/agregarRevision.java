@@ -75,4 +75,8 @@ public class agregarRevision extends JFrame {
 		btnNuevaRevision.setBounds(155, 112, 156, 23);
 		contentPane.add(btnNuevaRevision);
 	}
+
+	public void visible() {
+		this.setVisible(true);
+	}
 }
