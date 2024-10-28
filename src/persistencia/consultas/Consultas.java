@@ -56,12 +56,13 @@ public class Consultas {
         return query;
     }
 
-    public String listarRevisiones() {
-        String query = "SELECT * FROM revisiones ORDER BY codFolio ASC";
+    public String listarRevisionesPorFolio() {
+        String query = "SELECT * FROM revisiones WHERE codFolio = ? ORDER BY codFolio ASC";
         return query;
     }
     
-    public String contarRevisiones() {
-        return "SELECT COUNT(*) FROM revisiones";
+    public String contarFolios() {
+        String query = "SELECT COUNT(*) FROM folios";
+        return query;
     }
 }

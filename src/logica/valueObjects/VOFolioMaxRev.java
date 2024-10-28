@@ -12,5 +12,4 @@ public class VOFolioMaxRev extends VOFolio {
 	public int getCantRevisiones() {
 		return cantRevisiones;
 	}
-
 }

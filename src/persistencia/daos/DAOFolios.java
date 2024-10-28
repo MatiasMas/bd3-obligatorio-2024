@@ -5,23 +5,24 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import logica.entidades.Folio;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOFolio;
+import logica.valueObjects.VOFolioMaxRev;
 import persistencia.consultas.Consultas;
+import utilidades.GetProperties;
 
 public class DAOFolios {
+	private String url = GetProperties.getInstancia().getString("url");
+	private String usr = GetProperties.getInstancia().getString("user");
+	private String pwd = GetProperties.getInstancia().getString("password");
 
-	private String url;
-	private String usr;
-	private String pwd;
+	public DAOFolios() {
 
-	public DAOFolios(String url, String usr, String pwd) {
-		this.url = url;
-		this.usr = usr;
-		this.pwd = pwd;
 	}
 
 	public boolean member(String codigo) {
@@ -36,6 +37,7 @@ public class DAOFolios {
 			pstmt1.setString(1, codigo);
 
 			ResultSet rs = pstmt1.executeQuery();
+
 			if (rs.next()) {
 				existeFolio = true;
 			}
@@ -50,7 +52,7 @@ public class DAOFolios {
 		return existeFolio;
 	}
 
-	public void insert(VOFolio folio) {
+	public void insert(Folio fol) {
 		try {
 			Connection con = DriverManager.getConnection(url, usr, pwd);
 
@@ -58,9 +60,9 @@ public class DAOFolios {
 			String query = consultas.agregarFolio();
 			PreparedStatement pstmt = con.prepareStatement(query);
 
-			pstmt.setString(1, folio.getCodigo());
-			pstmt.setString(2, folio.getCaratula());
-			pstmt.setInt(3, folio.getPaginas());
+			pstmt.setString(1, fol.getCodigo());
+			pstmt.setString(2, fol.getCaratula());
+			pstmt.setInt(3, fol.getPaginas());
 
 			pstmt.executeUpdate();
 
@@ -71,22 +73,23 @@ public class DAOFolios {
 		}
 	}
 
-	public VOFolio find(String codigo) {
-		VOFolio folio = null;
+	public Folio find(String cod) {
+		Folio folio = null;
 
 		try {
 			Connection con = DriverManager.getConnection(url, usr, pwd);
 
 			Consultas consultas = new Consultas();
-			String query = consultas.existeFolio(); // Método que debe devolver la consulta SQL para buscar un folio por
-													// su código
+			String query = consultas.existeFolio();
+
 			PreparedStatement pstmt = con.prepareStatement(query);
 
-			pstmt.setString(1, codigo);
+			pstmt.setString(1, cod);
 
 			ResultSet rs = pstmt.executeQuery();
+
 			if (rs.next()) {
-				folio = new VOFolio(rs.getString("codigo"), rs.getString("caratula"), rs.getInt("paginas"));
+				folio = new Folio(rs.getString("codigo"), rs.getString("caratula"), rs.getInt("paginas"));
 			}
 
 			rs.close();
@@ -99,6 +102,40 @@ public class DAOFolios {
 		return folio;
 	}
 
+	public void delete(String cod) {
+		try {
+			Connection con = DriverManager.getConnection(url, usr, pwd);
+
+			Consultas consultas = new Consultas();
+			String queryExisteFolio = consultas.existeFolio();
+
+			PreparedStatement pstmt = con.prepareStatement(queryExisteFolio);
+
+			pstmt.setString(1, cod);
+
+			ResultSet rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				Folio folio = new Folio(rs.getString("codigo"), rs.getString("caratula"), rs.getInt("paginas"));
+				folio.borrarRevisiones();
+
+				String queryBorrarFolio = consultas.eliminarFolio();
+				PreparedStatement pstmt2 = con.prepareStatement(queryBorrarFolio);
+				pstmt2.setString(1, cod);
+
+				pstmt2.executeUpdate();
+
+				pstmt2.close();
+			}
+
+			rs.close();
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			throw new PersistenciaException();
+		}
+	}
+
 	public List<VOFolio> listarFolios() {
 		List<VOFolio> folios = new ArrayList<>();
 
@@ -106,11 +143,12 @@ public class DAOFolios {
 			Connection con = DriverManager.getConnection(url, usr, pwd);
 
 			Consultas consultas = new Consultas();
-			String query = consultas.listarFolios(); // Método que debe devolver la consulta SQL para listar todos los
-														// folios
+			String query = consultas.listarFolios();
+
 			PreparedStatement pstmt = con.prepareStatement(query);
 
 			ResultSet rs = pstmt.executeQuery();
+
 			while (rs.next()) {
 				VOFolio folio = new VOFolio(rs.getString("codigo"), rs.getString("caratula"), rs.getInt("paginas"));
 
@@ -127,4 +165,64 @@ public class DAOFolios {
 		return folios;
 	}
 
+	public boolean esVacio() {
+		boolean existenFolios = false;
+
+		try {
+			Connection con = DriverManager.getConnection(url, usr, pwd);
+			Consultas consultas = new Consultas();
+			String query = consultas.contarFolios();
+
+			Statement stm = con.createStatement();
+
+			ResultSet rs = stm.executeQuery(query);
+
+			if (rs.next()) {
+				if(rs.getInt(1) > 0) {
+					existenFolios = true;
+				}
+			}
+
+			rs.close();
+			stm.close();
+			con.close();
+		} catch (SQLException e) {
+			throw new PersistenciaException();
+		}
+
+		return !existenFolios;
+	}
+	
+	public VOFolioMaxRev folioMasRevisado() {
+		VOFolioMaxRev voFolio = null;
+		int maxRevisiones = -1;
+
+		try {
+			Connection con = DriverManager.getConnection(url, usr, pwd);
+			Consultas consultas = new Consultas();
+			String query = consultas.listarFolios();
+
+			Statement stm = con.createStatement();
+
+			ResultSet rs = stm.executeQuery(query);
+
+			while (rs.next()) {
+				Folio folio = new Folio(rs.getString("codigo"), rs.getString("caratula"), rs.getInt("paginas"));
+				
+				int cantidadRevisiones = folio.cantidadRevisiones();
+				
+				if(cantidadRevisiones > maxRevisiones) {
+					voFolio = new VOFolioMaxRev(folio.getCodigo(), folio.getCaratula(), folio.getPaginas(), cantidadRevisiones);
+				}
+			}
+
+			rs.close();
+			stm.close();
+			con.close();
+		} catch (SQLException e) {
+			throw new PersistenciaException();
+		}
+
+		return voFolio;
+	}
 }

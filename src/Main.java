@@ -16,7 +16,7 @@ public class Main {
 			Properties p = new Properties();
 			p.load(new FileInputStream("config/config.properties"));
 			String driver = p.getProperty("driver");
-			String url = p.getProperty("url");
+			String url = p.getProperty("urlCreacionBD");
 			String user = p.getProperty("user");
 			String password = p.getProperty("password");
 
@@ -56,7 +56,7 @@ public class Main {
 			stm.close();
 			con.close();
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.print(e.getMessage());
 		}
 	}
 

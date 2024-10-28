@@ -38,5 +38,4 @@ public class VORevision {
 	public void setCodFolio(String codFolio) {
 		this.codFolio = codFolio;
 	}
-
 }

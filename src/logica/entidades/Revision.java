@@ -10,10 +10,10 @@ public class Revision {
 	}
 
 	public int getNumero() {
-		return numero;
+		return this.numero;
 	}
 
 	public String getDescripcion() {
-		return descripcion;
+		return this.descripcion;
 	}
 }
