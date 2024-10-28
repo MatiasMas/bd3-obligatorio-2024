@@ -10,4 +10,8 @@ public class ControladoragregarFolio {
 		this.caf = ventana;
 	}
 
+	public void agregarFolio(String codigo, String caratula, int paginas) {
+		System.out.println("Codigo: "+codigo+" Caratula: "+caratula+" Paginas: "+paginas);
+	}
+
 }

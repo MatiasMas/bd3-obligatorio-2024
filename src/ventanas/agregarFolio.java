@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 
 import grafica.controladores.ControladoragregarFolio;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -43,7 +44,7 @@ public class agregarFolio extends JFrame {
 	 */
 	public agregarFolio() {
 		this.caf = new ControladoragregarFolio(this);
-		//this.caf = new ControladoragregarFolio(this);
+		// this.caf = new ControladoragregarFolio(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -82,12 +83,19 @@ public class agregarFolio extends JFrame {
 		JButton btnNuevoFolio = new JButton("Crear nuevo Folio");
 		btnNuevoFolio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				caf.agregarFolio(txtCodigo.getText(), txtCaratula.getText(), Integer.parseInt(txtPaginas.getText()));
+				JOptionPane.showMessageDialog(null, "Nuevo Folio ingresado correctamente.");
+				txtCodigo.setText("");
+				txtCaratula.setText("");
+				txtPaginas.setText("");
+				
+//				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
 		});
 		btnNuevoFolio.setBounds(155, 166, 156, 23);
 		contentPane.add(btnNuevoFolio);
 	}
-	
+
 	public void visible() {
 		this.setVisible(true);
 	}
