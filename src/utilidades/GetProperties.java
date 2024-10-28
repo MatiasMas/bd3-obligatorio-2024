@@ -1,8 +1,8 @@
 package utilidades;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
 public class GetProperties {
@@ -12,10 +12,8 @@ public class GetProperties {
 	private GetProperties() {
 		prop = new Properties();
 
-		InputStream in = getClass().getResourceAsStream("src/config/config.properties");
-
 		try {
-			prop.load(in);
+			prop.load(new FileInputStream("config/config.properties"));
 		} catch (FileNotFoundException e) {
 			System.out.print("El archivo de propiedades no fue encontrado.");
 		} catch (IOException e) {
