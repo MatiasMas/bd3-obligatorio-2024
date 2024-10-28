@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOFolio;
 import persistencia.consultas.Consultas;
 
@@ -59,7 +60,7 @@ public class DAOFolios {
 
 			pstmt.setString(1, folio.getCodigo());
 			pstmt.setString(2, folio.getCaratula());
-			pstmt.setString(3, folio.getPaginas());
+			pstmt.setInt(3, folio.getPaginas());
 
 			pstmt.executeUpdate();
 
