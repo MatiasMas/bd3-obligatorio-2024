@@ -1,15 +1,15 @@
 package logica.valueObjects;
 
-public class RevisionVO {
+public class VORevision {
 	private int numero;
 	private String descripcion;
 	private String codFolio;
 
-	public RevisionVO() {
+	public VORevision() {
 		super();
 	}
 
-	public RevisionVO(int numero, String descripcion, String codFolio) {
+	public VORevision(int numero, String descripcion, String codFolio) {
 		this.numero = numero;
 		this.descripcion = descripcion;
 		this.codFolio = codFolio;

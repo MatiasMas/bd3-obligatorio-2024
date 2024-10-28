@@ -60,4 +60,8 @@ public class Consultas {
         String query = "SELECT * FROM revisiones ORDER BY codFolio ASC";
         return query;
     }
+    
+    public String contarRevisiones() {
+        return "SELECT COUNT(*) FROM revisiones";
+    }
 }

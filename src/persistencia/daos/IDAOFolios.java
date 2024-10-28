@@ -1,11 +1,11 @@
 package persistencia.daos;
 
 import java.util.List;
-import logica.valueObjects.FolioVO;
+import logica.valueObjects.VOFolio;
 
 public interface IDAOFolios {
 	public boolean member (String codigo);
-	public void insert (FolioVO fol);
-	public FolioVO find (String codigo);
-	public List<FolioVO> listarFolios ();
+	public void insert (VOFolio fol);
+	public VOFolio find (String codigo);
+	public List<VOFolio> listarFolios ();
 }

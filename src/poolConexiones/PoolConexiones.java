@@ -10,6 +10,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import logica.excepciones.PersistenciaException;
+
 public class PoolConexiones extends UnicastRemoteObject implements IPoolConexiones {
 
 	private static final long serialVersionUID = 1L;
