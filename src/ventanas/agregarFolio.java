@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
 
 public class agregarFolio extends JFrame {
 
-	private static final long serialVersionUID = 1L;
+//	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtCodigo;
 	private JTextField txtCaratula;
@@ -42,6 +42,8 @@ public class agregarFolio extends JFrame {
 	 * Create the frame.
 	 */
 	public agregarFolio() {
+		this.caf = new ControladoragregarFolio(this);
+		//this.caf = new ControladoragregarFolio(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -84,5 +86,9 @@ public class agregarFolio extends JFrame {
 		});
 		btnNuevoFolio.setBounds(155, 166, 156, 23);
 		contentPane.add(btnNuevoFolio);
+	}
+	
+	public void visible() {
+		this.setVisible(true);
 	}
 }
