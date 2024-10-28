@@ -9,6 +9,4 @@ public class RevisionYaExisteException extends RuntimeException{
 	public RevisionYaExisteException(String message) {
 		super(message);
 	}
-	
-
 }

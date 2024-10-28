@@ -1,4 +1,4 @@
-package logica;
+package logica.entidades;
 
 import java.util.List;
 
@@ -6,17 +6,16 @@ import logica.valueObjects.VORevision;
 import persistencia.daos.DAORevisiones;
 
 public class Folio {
-
 	private String codigo;
 	private String caratula;
-	private int pagina;
+	private int paginas;
 	private DAORevisiones secuencia;
 
-	public Folio(String codigo, String caratula, int pagina) {
+	public Folio(String codigo, String caratula, int paginas) {
 		this.codigo = codigo;
 		this.caratula = caratula;
-		this.pagina = pagina;
-		this.secuencia = new DAORevisiones(codigo);
+		this.paginas = paginas;
+		this.secuencia = new DAORevisiones(this.codigo);
 	}
 
 	public String getCodigo() {
@@ -27,24 +26,26 @@ public class Folio {
 		return caratula;
 	}
 
-	public int getPagina() {
-		return pagina;
+	public int getPaginas() {
+		return paginas;
 	}
 
-	public boolean tieneRevision(int numeroRevision) {
-		return secuencia.member(numeroRevision);
+	public boolean tieneRevision(int numR) {
+		Revision revision = secuencia.kesimo(numR);
+		
+		return (revision != null);
 	}
 
 	public int cantidadRevisiones() {
-		return secuencia.size();
+		return secuencia.largo();
 	}
 
 	public void addRevision(Revision rev) {
-     	secuencia.insert(rev);
+     	secuencia.insback(rev);
 	}
 
-	public Revision obtenerRevision(int numeroRevision) {
-		return secuencia.find(numeroRevision);
+	public Revision obtenerRevision(int numR) {
+		return secuencia.kesimo(numR);
 	}
 
 	public List<VORevision> listarRevisiones() {
