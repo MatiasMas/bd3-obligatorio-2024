@@ -1,15 +1,15 @@
 package logica.valueObjects;
 
-public class FolioVO {
+public class VOFolio {
 	private String codigo;
 	private String caratula;
 	private int paginas;
 
-	public FolioVO() {
+	public VOFolio() {
 		super();
 	}
 
-	public FolioVO(String codigo, String caratula, int paginas) {
+	public VOFolio(String codigo, String caratula, int paginas) {
 		this.codigo = codigo;
 		this.caratula = caratula;
 		this.paginas = paginas;
