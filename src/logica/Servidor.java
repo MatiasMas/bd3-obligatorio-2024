@@ -1,9 +1,7 @@
 package logica;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.management.ManagementFactory;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -11,7 +9,6 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.sql.SQLException;
-import java.util.Properties;
 import logica.excepciones.PersistenciaException;
 
 public class Servidor {

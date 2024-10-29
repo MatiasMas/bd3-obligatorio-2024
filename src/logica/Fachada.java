@@ -21,6 +21,8 @@ import logica.valueObjects.VOFolio;
 import logica.valueObjects.VOFolioMaxRev;
 import logica.valueObjects.VOListarRevisiones;
 import logica.valueObjects.VORevision;
+import poolConexiones.IConexion;
+import poolConexiones.IPoolConexiones;
 import persistencia.daos.DAOFolios;
 
 public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFachada {
@@ -31,6 +33,7 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 	// Esta tiene que ser el DAO ahora
 	private DAOFolios diccio = new DAOFolios();
 	private static Fachada instancia;
+	private IPoolConexiones pool;
 
 	public Fachada() throws RemoteException, InstantiationException, ClassNotFoundException, IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
@@ -48,6 +51,7 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 		} catch (IOException e) {
 			System.out.println("Error, no se puede leer el archivo de configuracion!");
 		}
+		pool = (IPoolConexiones) Class.forName(nomPool).getDeclaredConstructor().newInstance();
 	}
 
 	public static Fachada getInstancia() throws PersistenciaException, ClassNotFoundException, FileNotFoundException,
@@ -60,17 +64,37 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 
 	public void agregarFolio(VOFolio voF) throws RemoteException, PersistenciaException, FolioYaExisteException {
 
-		String codigo = voF.getCodigo();
-		
-		if (!diccio.member(codigo)) {
+		boolean errorPersistencia = false;
+		boolean existeFolio = false;
+		String msgError = null;
+		IConexion icon = null;
+
+		try {
 			
-			String caratula = voF.getCaratula();
-			int paginas = voF.getPaginas();
-			Folio folio = new Folio(codigo, caratula, paginas);
-			
-			diccio.insert(folio);
-		} else
-			throw new FolioYaExisteException();
+			String codigo = voF.getCodigo();
+			existeFolio = diccio.member(codigo);
+
+			if (!diccio.member(codigo)) {
+				icon = pool.obtenerConexion(true);
+				String caratula = voF.getCaratula();
+				int paginas = voF.getPaginas();
+				Folio folio = new Folio(codigo, caratula, paginas);
+
+				diccio.insert(folio);
+			} else
+				msgError = "Folio ya existe";
+
+		} catch (Exception e) {
+			pool.liberarConexion(icon, false);
+			errorPersistencia = true;
+			msgError = "Error de acceso a los datos";
+		} finally {
+			if (existeFolio)
+				throw new FolioYaExisteException(msgError);
+			if (errorPersistencia)
+				throw new PersistenciaException(msgError);
+		}
+
 	}
 
 	public void agregarRevision(VORevision voR) throws RemoteException, PersistenciaException, FolioNoExisteException {
