@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 
 import grafica.controladores.ControladoragregarRevision;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -41,6 +42,7 @@ public class agregarRevision extends JFrame {
 	 * Create the frame.
 	 */
 	public agregarRevision() {
+		this.car = new ControladoragregarRevision(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -70,9 +72,19 @@ public class agregarRevision extends JFrame {
 		JButton btnNuevaRevision = new JButton("Crear nueva Revision");
 		btnNuevaRevision.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				car.agregarRevision(Integer.parseInt(txtCodigoFolio.getText()), txtDescripcion.getText());
+				JOptionPane.showMessageDialog(null, "Nueva Revision de Folio ingresada correctamente.");
+				txtCodigoFolio.setText("");
+				txtDescripcion.setText("");
+
+//				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
 		});
 		btnNuevaRevision.setBounds(155, 112, 156, 23);
 		contentPane.add(btnNuevaRevision);
+	}
+
+	public void visible() {
+		this.setVisible(true);
 	}
 }

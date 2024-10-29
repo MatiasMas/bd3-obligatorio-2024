@@ -40,6 +40,7 @@ public class eliminarFolioRevisiones extends JFrame {
 	 * Create the frame.
 	 */
 	public eliminarFolioRevisiones() {
+		this.cefr = new ControladoreliminarFolioRevisiones(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -64,5 +65,9 @@ public class eliminarFolioRevisiones extends JFrame {
 		});
 		btnEliminarFolioRevision.setBounds(104, 60, 207, 23);
 		contentPane.add(btnEliminarFolioRevision);
+	}
+
+	public void visible() {
+		this.setVisible(true);
 	}
 }

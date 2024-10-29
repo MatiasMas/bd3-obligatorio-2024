@@ -45,6 +45,7 @@ public class listarRevisiones extends JFrame {
 	 * Create the frame.
 	 */
 	public listarRevisiones() {
+		this.clr = new ControladorlistarRevisiones(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 901, 364);
 		contentPane = new JPanel();
@@ -79,6 +80,9 @@ public class listarRevisiones extends JFrame {
 		txtCodigoFolio.setBounds(231, 8, 319, 20);
 		contentPane.add(txtCodigoFolio);
 		txtCodigoFolio.setColumns(10);
-
+	}
+	
+	public void visible() {
+		this.setVisible(true);
 	}
 }
