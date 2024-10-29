@@ -7,6 +7,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import grafica.controladores.ControladoragregarFolio;
+import logica.excepciones.FolioNoExisteException;
+import logica.excepciones.PersistenciaException;
+import logica.excepciones.agregarFolioException;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -83,13 +87,17 @@ public class agregarFolio extends JFrame {
 		JButton btnNuevoFolio = new JButton("Crear nuevo Folio");
 		btnNuevoFolio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				caf.agregarFolio(txtCodigo.getText(), txtCaratula.getText(), Integer.parseInt(txtPaginas.getText()));
-				JOptionPane.showMessageDialog(null, "Nuevo Folio ingresado correctamente.");
-				txtCodigo.setText("");
-				txtCaratula.setText("");
-				txtPaginas.setText("");
-				
-//				JOptionPane.showMessageDialog(null, e1.getMessage());
+				try {
+					caf.agregarFolio(txtCodigo.getText(), txtCaratula.getText(),
+							Integer.parseInt(txtPaginas.getText()));
+					JOptionPane.showMessageDialog(null, "Nuevo Folio ingresado correctamente.");
+					txtCodigo.setText("");
+					txtCaratula.setText("");
+					txtPaginas.setText("");
+
+				} catch (FolioNoExisteException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				}
 			}
 		});
 		btnNuevoFolio.setBounds(155, 166, 156, 23);
