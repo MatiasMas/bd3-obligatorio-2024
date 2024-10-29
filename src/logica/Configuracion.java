@@ -13,7 +13,7 @@ public class Configuracion {
 
 	private Configuracion() {
 		Properties p = new Properties();
-		String fileConfig = "src/config.properties";
+		String fileConfig = "config/config.properties";
 		try {
 
 			p.load(new FileInputStream(fileConfig));

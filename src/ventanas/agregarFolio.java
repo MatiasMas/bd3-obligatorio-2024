@@ -8,9 +8,6 @@ import javax.swing.border.EmptyBorder;
 
 import grafica.controladores.ControladoragregarFolio;
 import logica.excepciones.FolioNoExisteException;
-import logica.excepciones.PersistenciaException;
-import logica.excepciones.agregarFolioException;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;

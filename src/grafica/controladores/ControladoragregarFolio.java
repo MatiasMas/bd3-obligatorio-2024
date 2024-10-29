@@ -24,10 +24,8 @@ public class ControladoragregarFolio {
 	public void agregarFolio(String codigo, String caratula, int paginas) throws PersistenciaException {
 		System.out.println("Codigo: " + codigo + " Caratula: " + caratula + " Paginas: " + paginas);
 
-//		Folio = new VOFolio(codigo, caratula, paginas);
-
 		Properties p = new Properties();
-		String nomArch = "src/cliente.properties";
+		String nomArch = "config/cliente.properties";
 		try {
 			p.load(new FileInputStream(nomArch));
 		} catch (IOException e1) {
@@ -41,7 +39,7 @@ public class ControladoragregarFolio {
 			VOFolio vo = new VOFolio(codigo, caratula, paginas);
 			fachada.agregarFolio(vo);
 		} catch (MalformedURLException | RemoteException | NotBoundException e) {
-			throw new PersistenciaException("Error en fachada");
+			throw new PersistenciaException("Error en fachada:" + e);
 		}
 	}
 

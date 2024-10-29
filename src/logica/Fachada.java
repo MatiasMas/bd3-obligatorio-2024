@@ -40,7 +40,7 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 
 		try {
 			Properties propiedades = new Properties();
-			propiedades.load(new FileInputStream("src/server.properties"));
+			propiedades.load(new FileInputStream("config/server.properties"));
 			nomPool = propiedades.getProperty("pool");
 			// System.out.print(propiedades.getProperty("fabrica"));
 		} catch (FileNotFoundException e) {
@@ -59,13 +59,18 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 	}
 
 	public void agregarFolio(VOFolio voF) throws RemoteException, PersistenciaException, FolioYaExisteException {
-		Folio folio = new Folio(voF.getCodigo(), voF.getCaratula(), voF.getPaginas());
 
-		if (diccio.member(voF.getCodigo())) {
+		String codigo = voF.getCodigo();
+		
+		if (!diccio.member(codigo)) {
+			
+			String caratula = voF.getCaratula();
+			int paginas = voF.getPaginas();
+			Folio folio = new Folio(codigo, caratula, paginas);
+			
+			diccio.insert(folio);
+		} else
 			throw new FolioYaExisteException();
-		}
-
-		diccio.insert(folio);
 	}
 
 	public void agregarRevision(VORevision voR) throws RemoteException, PersistenciaException, FolioNoExisteException {

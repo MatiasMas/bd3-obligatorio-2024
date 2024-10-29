@@ -1,5 +1,6 @@
 package logica;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import logica.valueObjects.VOFolioMaxRev;
 import logica.valueObjects.VOListarRevisiones;
 import logica.valueObjects.VORevision;
 
-public interface IFachada {
+public interface IFachada extends Remote {
 	public void agregarFolio(VOFolio voF) throws RemoteException, PersistenciaException, FolioYaExisteException;
 
 	public void agregarRevision(VORevision voR) throws RemoteException, PersistenciaException, FolioNoExisteException;
