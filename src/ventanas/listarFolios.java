@@ -68,4 +68,8 @@ public class listarFolios extends JFrame {
 		contentPane.add(btnObtenerFolios);
 
 	}
+
+	public void visible() {
+		this.setVisible(true);
+	}
 }
