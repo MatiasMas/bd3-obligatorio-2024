@@ -41,6 +41,7 @@ public class darDescripcion extends JFrame {
 	 * Create the frame.
 	 */
 	public darDescripcion() {
+		this.cdd = new ControladordarDescripcion(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -82,6 +83,9 @@ public class darDescripcion extends JFrame {
 		});
 		btnObtenerDescr.setBounds(155, 227, 156, 23);
 		contentPane.add(btnObtenerDescr);
+	}
 
+	public void visible() {
+		this.setVisible(true);
 	}
 }

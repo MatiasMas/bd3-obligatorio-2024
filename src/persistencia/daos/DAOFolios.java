@@ -26,10 +26,13 @@ public class DAOFolios {
 	}
 
 	public boolean member(String codigo) {
+
 		boolean existeFolio = false;
 
 		try {
 			Connection con = DriverManager.getConnection(url, usr, pwd);
+
+			System.out.println("url: " + url + " usr: " + usr + " pwd: " + pwd);
 			Consultas consultas = new Consultas();
 			String query = consultas.existeFolio();
 
@@ -38,14 +41,15 @@ public class DAOFolios {
 
 			ResultSet rs = pstmt1.executeQuery();
 
-			if (rs.next()) {
+			if (rs.next())
 				existeFolio = true;
-			}
 
 			rs.close();
 			pstmt1.close();
 			con.close();
 		} catch (SQLException e) {
+			System.out.println(e);
+			System.out.println("url: " + url + " usr: " + usr + " pwd: " + pwd);
 			throw new PersistenciaException();
 		}
 
@@ -178,7 +182,7 @@ public class DAOFolios {
 			ResultSet rs = stm.executeQuery(query);
 
 			if (rs.next()) {
-				if(rs.getInt(1) > 0) {
+				if (rs.getInt(1) > 0) {
 					existenFolios = true;
 				}
 			}
@@ -192,7 +196,7 @@ public class DAOFolios {
 
 		return !existenFolios;
 	}
-	
+
 	public VOFolioMaxRev folioMasRevisado() {
 		VOFolioMaxRev voFolio = null;
 		int maxRevisiones = -1;
@@ -208,11 +212,12 @@ public class DAOFolios {
 
 			while (rs.next()) {
 				Folio folio = new Folio(rs.getString("codigo"), rs.getString("caratula"), rs.getInt("paginas"));
-				
+
 				int cantidadRevisiones = folio.cantidadRevisiones();
-				
-				if(cantidadRevisiones > maxRevisiones) {
-					voFolio = new VOFolioMaxRev(folio.getCodigo(), folio.getCaratula(), folio.getPaginas(), cantidadRevisiones);
+
+				if (cantidadRevisiones > maxRevisiones) {
+					voFolio = new VOFolioMaxRev(folio.getCodigo(), folio.getCaratula(), folio.getPaginas(),
+							cantidadRevisiones);
 				}
 			}
 
