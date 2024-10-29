@@ -33,15 +33,15 @@ public class DAORevisiones {
 			PreparedStatement pstmt = con.prepareStatement(query);
 
 			pstmt.setInt(1, rev.getNumero());
-			pstmt.setString(2, rev.getDescripcion());
-			pstmt.setString(3, this.codFolio);
+			pstmt.setString(2, this.codFolio);
+			pstmt.setString(3, rev.getDescripcion());
 
 			pstmt.executeUpdate();
 
 			pstmt.close();
 			con.close();
 		} catch (SQLException e) {
-			throw new PersistenciaException();
+			throw new PersistenciaException(e.getMessage());
 		}
 	}
 
