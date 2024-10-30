@@ -1,4 +1,4 @@
-package ventanas;
+package grafica.ventanas;
 
 import java.awt.EventQueue;
 import java.io.FileNotFoundException;
@@ -9,22 +9,22 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import grafica.controladores.ControladorventanaMenu;
+import grafica.controladores.ControladorVentanaMenu;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Ventanamenu extends JFrame {
+public class VentanaMenu extends JFrame {
 
 //	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private ControladorventanaMenu cvm;
+	private ControladorVentanaMenu cvm;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Ventanamenu frame = new Ventanamenu();
+					VentanaMenu frame = new VentanaMenu();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -33,8 +33,8 @@ public class Ventanamenu extends JFrame {
 		});
 	}
 
-	public Ventanamenu() {
-		cvm = new ControladorventanaMenu(this);
+	public VentanaMenu() {
+		cvm = new ControladorVentanaMenu(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 570, 200);
 		contentPane = new JPanel();
@@ -137,37 +137,37 @@ public class Ventanamenu extends JFrame {
 	}
 
 	public void agregarFolio() throws FileNotFoundException, IOException, NotBoundException {
-		agregarFolio af = new agregarFolio();
+		AgregarFolio af = new AgregarFolio();
 		af.visible();
 	}
 
 	public void agregarRevision() throws FileNotFoundException, IOException, NotBoundException {
-		agregarRevision ar = new agregarRevision();
+		AgregarRevision ar = new AgregarRevision();
 		ar.visible();
 	}
 
 	public void listarFolios() throws FileNotFoundException, IOException, NotBoundException {
-		listarFolios lf = new listarFolios();
+		ListarFolios lf = new ListarFolios();
 		lf.visible();
 	}
 
 	public void listarRevisiones() throws FileNotFoundException, IOException, NotBoundException {
-		listarRevisiones lr = new listarRevisiones();
+		ListarRevisiones lr = new ListarRevisiones();
 		lr.visible();
 	}
 
 	public void folioMasRevisado() throws FileNotFoundException, IOException, NotBoundException {
-		folioMasRevisado fmr = new folioMasRevisado();
+		FolioMasRevisado fmr = new FolioMasRevisado();
 		fmr.visible();
 	}
 
 	public void darDescripcion() throws FileNotFoundException, IOException, NotBoundException {
-		darDescripcion dd = new darDescripcion();
+		DarDescripcion dd = new DarDescripcion();
 		dd.visible();
 	}
 
 	public void eliminarFolioRevisiones() throws FileNotFoundException, IOException, NotBoundException {
-		eliminarFolioRevisiones efr = new eliminarFolioRevisiones();
+		EliminarFolioRevisiones efr = new EliminarFolioRevisiones();
 		efr.visible();
 	}
 }

@@ -14,18 +14,18 @@ import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOFolio;
 import logica.valueObjects.VOFolioMaxRev;
 import persistencia.consultas.Consultas;
-import utilidades.GetProperties;
+import utilidades.Configuracion;
 
 public class DAOFolios {
-	private String url = GetProperties.getInstancia().getString("url");
-	private String usr = GetProperties.getInstancia().getString("user");
-	private String pwd = GetProperties.getInstancia().getString("password");
+	private String url = Configuracion.getInstancia().getUrl();
+	private String usr = Configuracion.getInstancia().getUser();
+	private String pwd = Configuracion.getInstancia().getPassword();
 
 	public DAOFolios() {
 
 	}
 
-	public boolean member(String codigo) {
+	public boolean member(String codigo) throws PersistenciaException {
 
 		boolean existeFolio = false;
 
@@ -56,7 +56,7 @@ public class DAOFolios {
 		return existeFolio;
 	}
 
-	public void insert(Folio fol) {
+	public void insert(Folio fol) throws PersistenciaException {
 		try {
 			Connection con = DriverManager.getConnection(url, usr, pwd);
 
@@ -77,7 +77,7 @@ public class DAOFolios {
 		}
 	}
 
-	public Folio find(String cod) {
+	public Folio find(String cod) throws PersistenciaException {
 		Folio folio = null;
 
 		try {
@@ -106,13 +106,14 @@ public class DAOFolios {
 		return folio;
 	}
 
-	public void delete(String cod) {
+	public void delete(String cod) throws PersistenciaException {
 		try {
 			Connection con = DriverManager.getConnection(url, usr, pwd);
 
 			Consultas consultas = new Consultas();
 			String queryExisteFolio = consultas.existeFolio();
 
+			//TODO: Mover esto a la fachada, es parte de la logica
 			PreparedStatement pstmt = con.prepareStatement(queryExisteFolio);
 
 			pstmt.setString(1, cod);
@@ -140,7 +141,7 @@ public class DAOFolios {
 		}
 	}
 
-	public List<VOFolio> listarFolios() {
+	public List<VOFolio> listarFolios() throws PersistenciaException {
 		List<VOFolio> folios = new ArrayList<>();
 
 		try {
@@ -169,7 +170,7 @@ public class DAOFolios {
 		return folios;
 	}
 
-	public boolean esVacio() {
+	public boolean esVacio() throws PersistenciaException {
 		boolean existenFolios = false;
 
 		try {
@@ -197,7 +198,7 @@ public class DAOFolios {
 		return !existenFolios;
 	}
 
-	public VOFolioMaxRev folioMasRevisado() {
+	public VOFolioMaxRev folioMasRevisado() throws PersistenciaException {
 		VOFolioMaxRev voFolio = null;
 		int maxRevisiones = -1;
 

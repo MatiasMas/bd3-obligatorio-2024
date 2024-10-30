@@ -1,4 +1,4 @@
-package ventanas;
+package grafica.ventanas;
 
 import java.awt.EventQueue;
 
@@ -6,21 +6,19 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import grafica.controladores.ControladoragregarRevision;
+import grafica.controladores.ControladorEliminarFolioRevisiones;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class agregarRevision extends JFrame {
+public class EliminarFolioRevisiones extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtCodigoFolio;
-	private JTextField txtDescripcion;
-	private ControladoragregarRevision car;
+	private ControladorEliminarFolioRevisiones cefr;
 
 	/**
 	 * Launch the application.
@@ -29,7 +27,7 @@ public class agregarRevision extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					agregarRevision frame = new agregarRevision();
+					EliminarFolioRevisiones frame = new EliminarFolioRevisiones();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,8 +39,8 @@ public class agregarRevision extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public agregarRevision() {
-		this.car = new ControladoragregarRevision(this);
+	public EliminarFolioRevisiones() {
+		this.cefr = new ControladorEliminarFolioRevisiones(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -55,33 +53,18 @@ public class agregarRevision extends JFrame {
 		labelCodigoFolio.setBounds(10, 11, 109, 14);
 		contentPane.add(labelCodigoFolio);
 
-		JLabel labelDescripcion = new JLabel("Descripcion:");
-		labelDescripcion.setBounds(10, 57, 109, 14);
-		contentPane.add(labelDescripcion);
-
 		txtCodigoFolio = new JTextField();
 		txtCodigoFolio.setBounds(155, 8, 156, 20);
 		contentPane.add(txtCodigoFolio);
 		txtCodigoFolio.setColumns(10);
 
-		txtDescripcion = new JTextField();
-		txtDescripcion.setBounds(155, 54, 156, 20);
-		contentPane.add(txtDescripcion);
-		txtDescripcion.setColumns(10);
-
-		JButton btnNuevaRevision = new JButton("Crear nueva Revision");
-		btnNuevaRevision.addActionListener(new ActionListener() {
+		JButton btnEliminarFolioRevision = new JButton("Eliminar Folio y Revisiones");
+		btnEliminarFolioRevision.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				car.agregarRevision(Integer.parseInt(txtCodigoFolio.getText()), txtDescripcion.getText());
-				JOptionPane.showMessageDialog(null, "Nueva Revision de Folio ingresada correctamente.");
-				txtCodigoFolio.setText("");
-				txtDescripcion.setText("");
-
-//				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
 		});
-		btnNuevaRevision.setBounds(155, 112, 156, 23);
-		contentPane.add(btnNuevaRevision);
+		btnEliminarFolioRevision.setBounds(104, 60, 207, 23);
+		contentPane.add(btnEliminarFolioRevision);
 	}
 
 	public void visible() {

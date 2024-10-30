@@ -1,4 +1,4 @@
-package logica;
+package rmi;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -9,7 +9,11 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.sql.SQLException;
+
+import logica.Fachada;
+import logica.IFachada;
 import logica.excepciones.PersistenciaException;
+import utilidades.Configuracion;
 
 public class Servidor {
 

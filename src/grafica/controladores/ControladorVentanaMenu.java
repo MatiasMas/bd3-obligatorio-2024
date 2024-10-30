@@ -4,13 +4,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 
-import ventanas.Ventanamenu;
+import grafica.ventanas.VentanaMenu;
 
-public class ControladorventanaMenu {
+public class ControladorVentanaMenu {
 
-	private Ventanamenu vm;
+	private VentanaMenu vm;
 
-	public ControladorventanaMenu(Ventanamenu ventanamenu) {
+	public ControladorVentanaMenu(VentanaMenu ventanamenu) {
 		this.vm = ventanamenu;
 	}
 

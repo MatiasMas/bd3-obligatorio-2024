@@ -1,12 +1,12 @@
 package grafica.controladores;
 
-import ventanas.agregarRevision;
+import grafica.ventanas.AgregarRevision;
 
-public class ControladoragregarRevision {
+public class ControladorAgregarRevision {
 
-	private agregarRevision ar;
+	private AgregarRevision ar;
 
-	public ControladoragregarRevision(agregarRevision ventana) {
+	public ControladorAgregarRevision(AgregarRevision ventana) {
 		this.ar = ventana;
 	}
 

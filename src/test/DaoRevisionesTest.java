@@ -4,12 +4,13 @@ import java.util.List;
 
 import logica.entidades.Folio;
 import logica.entidades.Revision;
+import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOFolio;
 import logica.valueObjects.VORevision;
 import persistencia.daos.DAOFolios;
 import persistencia.daos.DAORevisiones;
 
-public class DAORevisionesTest {
+public class DaoRevisionesTest {
 
 	public static void main(String[] args) {
 
@@ -36,7 +37,7 @@ public class DAORevisionesTest {
 	}
 
 	// metodo que prueba el metodo insBack de DAORevisiones
-	private static void pruebaInsback() {
+	private static void pruebaInsback() throws PersistenciaException {
 
 		Revision revisionResult;
 		Revision revision;
@@ -91,7 +92,7 @@ public class DAORevisionesTest {
 	}
 
 	// metodo que prueba el metodo largo de DAORevisiones
-	private static void pruebaLargo() {
+	private static void pruebaLargo() throws PersistenciaException {
 
 		Revision revision;
 
@@ -145,7 +146,7 @@ public class DAORevisionesTest {
 	}
 
 	// metodo que prueba el metodo kesimo de DAORevisiones
-	private static void pruebaKesimo() {
+	private static void pruebaKesimo() throws PersistenciaException {
 		DAOFolios daoFolios = new DAOFolios();
 
 		Revision revision;
@@ -197,7 +198,7 @@ public class DAORevisionesTest {
 	}
 
 	// metodo que prueba el metodo ListarRevisiones de DAORevisiones
-	private static void pruebaListarRevisiones() {
+	private static void pruebaListarRevisiones() throws PersistenciaException {
 		DAOFolios daoFolios = new DAOFolios();
 
 		Revision revision;
@@ -234,7 +235,7 @@ public class DAORevisionesTest {
 	}
 
 	// metodo que prueba el metodo borrarRevisiones de DAORevisiones
-	private static void pruebaBorrarRevisiones() {
+	private static void pruebaBorrarRevisiones() throws PersistenciaException {
 		DAOFolios daoFolios = new DAOFolios();
 
 		Revision revision;

@@ -8,16 +8,16 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Properties;
 
+import grafica.ventanas.AgregarFolio;
 import logica.IFachada;
 import logica.valueObjects.VOFolio;
 import logica.excepciones.PersistenciaException;
-import ventanas.agregarFolio;
 
-public class ControladoragregarFolio {
+public class ControladorAgregarFolio {
 
-	private agregarFolio caf;
+	private AgregarFolio caf;
 
-	public ControladoragregarFolio(agregarFolio ventana) {
+	public ControladorAgregarFolio(AgregarFolio ventana) {
 		this.caf = ventana;
 	}
 

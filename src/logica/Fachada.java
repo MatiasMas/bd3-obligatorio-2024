@@ -35,6 +35,7 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 	private static Fachada instancia;
 	private IPoolConexiones pool;
 
+	//TODO: Juntar excepciones en una personalizada
 	public Fachada() throws RemoteException, InstantiationException, ClassNotFoundException, IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		super();
@@ -75,7 +76,7 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 			existeFolio = diccio.member(codigo);
 
 			if (!diccio.member(codigo)) {
-				icon = pool.obtenerConexion(true);
+//				icon = pool.obtenerConexion(true);
 				String caratula = voF.getCaratula();
 				int paginas = voF.getPaginas();
 				Folio folio = new Folio(codigo, caratula, paginas);
@@ -85,7 +86,7 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 				msgError = "Folio ya existe";
 
 		} catch (Exception e) {
-			pool.liberarConexion(icon, false);
+//			pool.liberarConexion(icon, false);
 			errorPersistencia = true;
 			msgError = "Error de acceso a los datos";
 		} finally {

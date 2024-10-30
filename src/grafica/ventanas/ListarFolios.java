@@ -1,4 +1,4 @@
-package ventanas;
+package grafica.ventanas;
 
 import java.awt.EventQueue;
 
@@ -7,19 +7,19 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import grafica.controladores.ControladorlistarFolios;
+import grafica.controladores.ControladorListarFolios;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
-public class listarFolios extends JFrame {
+public class ListarFolios extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable tableFolios;
-	private ControladorlistarFolios clf;
+	private ControladorListarFolios clf;
 
 	/**
 	 * Launch the application.
@@ -28,7 +28,7 @@ public class listarFolios extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					listarFolios frame = new listarFolios();
+					ListarFolios frame = new ListarFolios();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,7 +40,7 @@ public class listarFolios extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public listarFolios() {
+	public ListarFolios() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 901, 299);
 		contentPane = new JPanel();

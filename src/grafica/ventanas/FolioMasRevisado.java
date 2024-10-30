@@ -1,4 +1,4 @@
-package ventanas;
+package grafica.ventanas;
 
 import java.awt.EventQueue;
 
@@ -7,19 +7,19 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import grafica.controladores.ControladorfolioMasVisitado;
+import grafica.controladores.ControladorFolioMasVisitado;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
-public class folioMasRevisado extends JFrame {
+public class FolioMasRevisado extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable tablefolioMasRevisado;
-	private ControladorfolioMasVisitado cfmv;
+	private ControladorFolioMasVisitado cfmv;
 
 	/**
 	 * Launch the application.
@@ -28,7 +28,7 @@ public class folioMasRevisado extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					folioMasRevisado frame = new folioMasRevisado();
+					FolioMasRevisado frame = new FolioMasRevisado();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,8 +40,8 @@ public class folioMasRevisado extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public folioMasRevisado() {
-		this.cfmv = new ControladorfolioMasVisitado(this);
+	public FolioMasRevisado() {
+		this.cfmv = new ControladorFolioMasVisitado(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 901, 299);
 		contentPane = new JPanel();

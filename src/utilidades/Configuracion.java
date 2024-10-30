@@ -1,4 +1,4 @@
-package logica;
+package utilidades;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -10,19 +10,27 @@ public class Configuracion {
 	private String ipServidor;
 	private int puertoServidor;
 	private String rutaRespaldo;
+	private String url;
+	private String user;
+	private String pwd;
 
 	private Configuracion() {
 		Properties p = new Properties();
 		String fileConfig = "config/config.properties";
+		
 		try {
 
 			p.load(new FileInputStream(fileConfig));
 		} catch (IOException e) {
-//			throw new PersistenciaException(e.getMessage());
+			System.out.println(e.getMessage());
 		}
+		
 		ipServidor = p.getProperty("ipServidor");
 		puertoServidor = Integer.parseInt(p.getProperty("puertoServidor"));
-		// rutaRespaldo = p.getProperty("rutaRespaldo");
+		url = p.getProperty("url");
+		user = p.getProperty("user");
+		pwd = p.getProperty("password");
+		
 	}
 
 	public static Configuracion getInstancia() {
@@ -41,5 +49,17 @@ public class Configuracion {
 
 	public String getRutaRespaldo() {
 		return rutaRespaldo;
+	}
+	
+	public String getUrl() {
+		return url;
+	}
+	
+	public String getUser() {
+		return user;
+	}
+	
+	public String getPassword() {
+		return pwd;
 	}
 }
