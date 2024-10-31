@@ -24,6 +24,7 @@ import logica.valueObjects.VORevision;
 import poolConexiones.IConexion;
 import poolConexiones.IPoolConexiones;
 import persistencia.daos.DAOFolios;
+import persistencia.daos.DAORevisiones;
 import persistencia.daos.IDAOFolios;
 
 public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFachada {
@@ -69,7 +70,7 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 		boolean errorPersistencia = false;
 		boolean existeFolio = false;
 		String msgError = null;
-		IConexion icon = null;
+//		IConexion icon = null;
 
 		try {
 
@@ -108,12 +109,11 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 			if (diccio.member(voR.getCodFolio())) {
 				Folio folio = diccio.find(voR.getCodFolio());
 				int numero = folio.cantidadRevisiones() + 1;
-				System.out.print(numero + "fachada");
 
 				// Crea nueva revision
 				Revision rev = new Revision(numero, voR.getDescripcion());
-				System.out.print(voR.getDescripcion());
-				folio.addRevision(rev);
+				DAORevisiones dicRevision = new DAORevisiones(voR.getCodFolio());
+				dicRevision.insback(rev);
 			} else {
 				noExisteFolio = true;
 				msgError = "Folio no existe";
@@ -134,11 +134,42 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 
 	public void borrarFolioRevisiones(VOBorrarFolio voF)
 			throws RemoteException, PersistenciaException, FolioNoExisteException {
-		if (!diccio.member(voF.getCodFolio())) {
-			throw new FolioNoExisteException();
-		}
 
-		diccio.delete(voF.getCodFolio());
+		String msgError = null;
+		boolean noExisteFolio = false;
+		boolean errorPersistencia = false;
+
+		try {
+			if (diccio.member(voF.getCodFolio())) {
+
+				// Primero elimino revisiones
+				DAORevisiones dicRevisiones = new DAORevisiones();
+				dicRevisiones.borrarRevisiones();
+
+				// Luego elimino Folio
+				DAOFolios dicFilio = new DAOFolios();
+				dicFilio.delete(voF.getCodFolio());
+
+			} else {
+				noExisteFolio = true;
+				msgError = "Folio NO existe";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			errorPersistencia = true;
+			msgError = "Error de persistencia";
+		} finally {
+			if (noExisteFolio)
+				throw new FolioNoExisteException(msgError);
+			if (errorPersistencia) {
+				throw new PersistenciaException(msgError);
+			}
+		}
+//		if (!diccio.member(voF.getCodFolio())) {
+//			throw new FolioNoExisteException();
+//		}
+//
+//		diccio.delete(voF.getCodFolio());
 	}
 
 	public VODescripcionRetornada darDescripcion(VODarDescripcion voD)

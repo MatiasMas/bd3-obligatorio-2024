@@ -14,6 +14,7 @@ import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOFolio;
 import logica.valueObjects.VOFolioMaxRev;
 import persistencia.consultas.Consultas;
+import poolConexiones.Conexion;
 import utilidades.Configuracion;
 
 public class DAOFolios {
@@ -107,37 +108,24 @@ public class DAOFolios {
 	}
 
 	public void delete(String cod) throws PersistenciaException {
+
 		try {
 			Connection con = DriverManager.getConnection(url, usr, pwd);
-
 			Consultas consultas = new Consultas();
-			String queryExisteFolio = consultas.existeFolio();
+			String deleteRevisiones = consultas.eliminarFolio();
+			PreparedStatement borrarR = null;
+			PreparedStatement borrarF = null;
 
-			//TODO: Mover esto a la fachada, es parte de la logica
-			PreparedStatement pstmt = con.prepareStatement(queryExisteFolio);
+			Folio f = this.find(cod);
+			f.borrarRevisiones();
+			borrarR = con.prepareStatement(deleteRevisiones);
+			borrarR.setString(1, cod);
+			borrarR.executeUpdate();
+			borrarR.close();
 
-			pstmt.setString(1, cod);
-
-			ResultSet rs = pstmt.executeQuery();
-
-			if (rs.next()) {
-				Folio folio = new Folio(rs.getString("codigo"), rs.getString("caratula"), rs.getInt("paginas"));
-				folio.borrarRevisiones();
-
-				String queryBorrarFolio = consultas.eliminarFolio();
-				PreparedStatement pstmt2 = con.prepareStatement(queryBorrarFolio);
-				pstmt2.setString(1, cod);
-
-				pstmt2.executeUpdate();
-
-				pstmt2.close();
-			}
-
-			rs.close();
-			pstmt.close();
-			con.close();
 		} catch (SQLException e) {
-			throw new PersistenciaException();
+			throw new PersistenciaException("Error en la persistencia");
+
 		}
 	}
 

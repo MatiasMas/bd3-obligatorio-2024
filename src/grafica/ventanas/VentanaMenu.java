@@ -16,7 +16,7 @@ import java.awt.event.ActionEvent;
 
 public class VentanaMenu extends JFrame {
 
-//	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private ControladorVentanaMenu cvm;
 
@@ -29,7 +29,7 @@ public class VentanaMenu extends JFrame {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			}
+			}		
 		});
 	}
 

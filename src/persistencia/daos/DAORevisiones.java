@@ -20,6 +20,10 @@ public class DAORevisiones {
 	private String pwd = Configuracion.getInstancia().getPassword();
 	private String codFolio;
 
+	public DAORevisiones() {
+
+	}
+
 	public DAORevisiones(String codF) {
 		this.codFolio = codF;
 	}

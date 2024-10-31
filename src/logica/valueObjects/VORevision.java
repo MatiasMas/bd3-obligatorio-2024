@@ -10,7 +10,7 @@ public class VORevision implements Serializable {
 	private String codFolio;
 
 	public VORevision() {
-		super();
+//		super();
 	}
 
 	public VORevision(int numero, String descripcion, String codFolio) {

@@ -7,7 +7,12 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import grafica.controladores.ControladorEliminarFolioRevisiones;
+import logica.excepciones.FolioNoExisteException;
+import logica.excepciones.FolioYaExisteException;
+import logica.excepciones.PersistenciaException;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -61,6 +66,16 @@ public class EliminarFolioRevisiones extends JFrame {
 		JButton btnEliminarFolioRevision = new JButton("Eliminar Folio y Revisiones");
 		btnEliminarFolioRevision.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					cefr.eliminarFolioRevisiones(txtCodigoFolio.getText());
+					JOptionPane.showMessageDialog(null, "Folio y Revisiones eliminadas correctamente.");
+					txtCodigoFolio.setText("");
+				} catch (PersistenciaException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				} catch (FolioNoExisteException e2) {
+					JOptionPane.showMessageDialog(null, e2.getMessage());
+				}
+
 			}
 		});
 		btnEliminarFolioRevision.setBounds(104, 60, 207, 23);
