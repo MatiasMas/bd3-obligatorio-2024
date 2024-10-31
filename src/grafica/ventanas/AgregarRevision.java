@@ -7,6 +7,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import grafica.controladores.ControladorAgregarRevision;
+import logica.excepciones.FolioNoExisteException;
+import logica.excepciones.PersistenciaException;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -72,12 +75,16 @@ public class AgregarRevision extends JFrame {
 		JButton btnNuevaRevision = new JButton("Crear nueva Revision");
 		btnNuevaRevision.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				car.agregarRevision(Integer.parseInt(txtCodigoFolio.getText()), txtDescripcion.getText());
-				JOptionPane.showMessageDialog(null, "Nueva Revision de Folio ingresada correctamente.");
-				txtCodigoFolio.setText("");
-				txtDescripcion.setText("");
-
-//				JOptionPane.showMessageDialog(null, e1.getMessage());
+				try {
+					car.agregarRevision(txtCodigoFolio.getText(), txtDescripcion.getText());
+					JOptionPane.showMessageDialog(null, "Nueva Revision de Folio ingresada correctamente.");
+					txtCodigoFolio.setText("");
+					txtDescripcion.setText("");
+				} catch (PersistenciaException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				} catch (FolioNoExisteException e2) {
+					JOptionPane.showMessageDialog(null, e2.getMessage());
+				}
 			}
 		});
 		btnNuevaRevision.setBounds(155, 112, 156, 23);

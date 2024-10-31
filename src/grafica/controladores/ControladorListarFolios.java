@@ -11,6 +11,7 @@ import java.util.Properties;
 
 import grafica.ventanas.ListarFolios;
 import logica.IFachada;
+import logica.excepciones.FolioNoExisteException;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOFolio;
 
@@ -21,7 +22,7 @@ public class ControladorListarFolios {
 		this.lf = ventana;
 	}
 	
-	public List<VOFolio> listarFolios() throws PersistenciaException {
+	public List<VOFolio> listarFolios() throws PersistenciaException, FolioNoExisteException {
 
 		Properties p = new Properties();
 		String nomArch = "config/cliente.properties";

@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import grafica.controladores.ControladorListarFolios;
+import logica.excepciones.FolioNoExisteException;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOFolio;
 
@@ -77,6 +78,9 @@ public class ListarFolios extends JFrame {
 				} catch (PersistenciaException e2) {
 					JOptionPane.showMessageDialog(null, "Error al obtener los folios: " + e2.getMessage(), 
 						"Error", JOptionPane.ERROR_MESSAGE);
+				} catch (FolioNoExisteException e1) {
+					JOptionPane.showMessageDialog(null, "Error NO existe folio: " + e1.getMessage(), 
+							"Error", JOptionPane.ERROR_MESSAGE);
 				}
 				
 			}

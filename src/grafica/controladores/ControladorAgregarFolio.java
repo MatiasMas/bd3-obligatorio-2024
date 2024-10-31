@@ -11,6 +11,7 @@ import java.util.Properties;
 import grafica.ventanas.AgregarFolio;
 import logica.IFachada;
 import logica.valueObjects.VOFolio;
+import logica.excepciones.FolioYaExisteException;
 import logica.excepciones.PersistenciaException;
 
 public class ControladorAgregarFolio {
@@ -21,7 +22,7 @@ public class ControladorAgregarFolio {
 		this.caf = ventana;
 	}
 
-	public void agregarFolio(String codigo, String caratula, int paginas) throws PersistenciaException {
+	public void agregarFolio(String codigo, String caratula, int paginas) throws PersistenciaException, FolioYaExisteException {
 		System.out.println("Codigo: " + codigo + " Caratula: " + caratula + " Paginas: " + paginas);
 
 		Properties p = new Properties();

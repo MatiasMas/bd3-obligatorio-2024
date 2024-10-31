@@ -1,6 +1,6 @@
 package logica.excepciones;
 
-public class RevisionYaExisteException extends RuntimeException{
+public class RevisionYaExisteException extends Exception{
 	
 	public RevisionYaExisteException() {
 		super();

@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import grafica.controladores.ControladorAgregarFolio;
-import logica.excepciones.FolioNoExisteException;
+import logica.excepciones.FolioYaExisteException;
 import logica.excepciones.PersistenciaException;
 
 import javax.swing.JLabel;
@@ -19,7 +19,7 @@ import java.awt.event.ActionEvent;
 
 public class AgregarFolio extends JFrame {
 
-//	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtCodigo;
 	private JTextField txtCaratula;
@@ -94,9 +94,9 @@ public class AgregarFolio extends JFrame {
 					txtCaratula.setText("");
 					txtPaginas.setText("");
 
-				} catch (FolioNoExisteException e1) {
+				} catch (PersistenciaException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
-				} catch (PersistenciaException e2) {
+				} catch (FolioYaExisteException e2) {
 					JOptionPane.showMessageDialog(null, e2.getMessage());
 				}
 			}

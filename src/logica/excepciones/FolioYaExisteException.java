@@ -1,6 +1,6 @@
 package logica.excepciones;
 
-public class FolioYaExisteException extends RuntimeException {
+public class FolioYaExisteException extends Exception {
 	
 	public FolioYaExisteException() {
 		super();

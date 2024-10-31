@@ -24,6 +24,7 @@ import logica.valueObjects.VORevision;
 import poolConexiones.IConexion;
 import poolConexiones.IPoolConexiones;
 import persistencia.daos.DAOFolios;
+import persistencia.daos.IDAOFolios;
 
 public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFachada {
 	/**
@@ -35,7 +36,7 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 	private static Fachada instancia;
 	private IPoolConexiones pool;
 
-	//TODO: Juntar excepciones en una personalizada
+	// TODO: Juntar excepciones en una personalizada
 	public Fachada() throws RemoteException, InstantiationException, ClassNotFoundException, IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		super();
@@ -71,7 +72,7 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 		IConexion icon = null;
 
 		try {
-			
+
 			String codigo = voF.getCodigo();
 			existeFolio = diccio.member(codigo);
 
@@ -99,17 +100,36 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 	}
 
 	public void agregarRevision(VORevision voR) throws RemoteException, PersistenciaException, FolioNoExisteException {
-		Folio folio;
-		Revision rev;
+		String msgError = null;
+		boolean noExisteFolio = false;
+		boolean errorPersistencia = false;
 
-		if (!diccio.member(voR.getCodFolio())) {
-			throw new FolioNoExisteException();
+		try {
+			if (diccio.member(voR.getCodFolio())) {
+				Folio folio = diccio.find(voR.getCodFolio());
+				int numero = folio.cantidadRevisiones() + 1;
+				System.out.print(numero + "fachada");
+
+				// Crea nueva revision
+				Revision rev = new Revision(numero, voR.getDescripcion());
+				System.out.print(voR.getDescripcion());
+				folio.addRevision(rev);
+			} else {
+				noExisteFolio = true;
+				msgError = "Folio no existe";
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			errorPersistencia = true;
+			msgError = "Error de persistencia";
+		} finally {
+			if (noExisteFolio)
+				throw new FolioNoExisteException(msgError);
+			if (errorPersistencia) {
+				throw new PersistenciaException(msgError);
+			}
 		}
-
-		folio = diccio.find(voR.getCodFolio());
-		rev = new Revision(voR.getNumero(), voR.getDescripcion());
-
-		folio.addRevision(rev);
 	}
 
 	public void borrarFolioRevisiones(VOBorrarFolio voF)

@@ -1,6 +1,6 @@
 package logica.excepciones;
 
-public class NoSePudoConectarServidorException extends RuntimeException{
+public class NoSePudoConectarServidorException extends Exception{
 	
 	public NoSePudoConectarServidorException() {
 		super();

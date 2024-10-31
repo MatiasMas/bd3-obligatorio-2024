@@ -1,6 +1,6 @@
 package logica.excepciones;
 
-public class NoHayRevisionesException extends RuntimeException{
+public class NoHayRevisionesException extends Exception{
 	
 	public NoHayRevisionesException() {
 		super();
