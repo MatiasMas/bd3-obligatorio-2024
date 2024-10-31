@@ -114,7 +114,6 @@ public class DAOFolios {
 			Consultas consultas = new Consultas();
 			String deleteRevisiones = consultas.eliminarFolio();
 			PreparedStatement borrarR = null;
-			PreparedStatement borrarF = null;
 
 			Folio f = this.find(cod);
 			f.borrarRevisiones();
