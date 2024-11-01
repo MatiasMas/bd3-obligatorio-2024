@@ -113,8 +113,7 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 
 				// Crea nueva revision
 				Revision rev = new Revision(numero, voR.getDescripcion());
-				DAORevisiones dicRevision = new DAORevisiones(voR.getCodFolio());
-				dicRevision.insback(rev);
+				folio.addRevision(rev);
 			} else {
 				noExisteFolio = true;
 				msgError = "Folio no existe";

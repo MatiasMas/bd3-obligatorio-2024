@@ -39,8 +39,8 @@ public class ControladorAgregarRevision {
 
 		try {
 			IFachada fachada = (IFachada) Naming.lookup(path);
-			// Ver si esta OK mandar null aca o hacemos
-			VORevision vo = new VORevision(0, descripcion, codigoFolio);
+			
+			VORevision vo = new VORevision(descripcion, codigoFolio);
 			fachada.agregarRevision(vo);
 		} catch (MalformedURLException | RemoteException | NotBoundException e) {
 			throw new PersistenciaException("Error en fachada:" + e);
