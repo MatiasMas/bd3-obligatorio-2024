@@ -1,6 +1,6 @@
 package logica.excepciones;
 
-public class PersistenciaException extends RuntimeException{
+public class PersistenciaException extends Exception {
 
 	/**
 	 * 

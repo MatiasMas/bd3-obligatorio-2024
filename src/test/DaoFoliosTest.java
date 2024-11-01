@@ -3,6 +3,7 @@ package test;
 import java.util.List;
 
 import logica.entidades.Folio;
+import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOFolio;
 import logica.valueObjects.VOFolioMaxRev;
 import persistencia.daos.DAOFolios;
@@ -41,7 +42,7 @@ public class DaoFoliosTest {
 	}
 
 	// metodo que prueba el metodo insert de DAOFolios
-	private static void pruebaInsert() {
+	private static void pruebaInsert() throws PersistenciaException {
 		DAOFolios dao = new DAOFolios();
 		boolean existe;
 		boolean error = false;
@@ -74,7 +75,7 @@ public class DaoFoliosTest {
 	}
 
 	// metodo que prueba el metodo delete de DAOFolios
-	private static void pruebaDelete() {
+	private static void pruebaDelete() throws PersistenciaException {
 		DAOFolios dao = new DAOFolios();
 		boolean existe;
 		boolean error = false;
@@ -116,7 +117,7 @@ public class DaoFoliosTest {
 	}
 
 	// metodo que prueba el metodo member de DAOFolios
-	private static void pruebaMember() {
+	private static void pruebaMember() throws PersistenciaException {
 		DAOFolios dao = new DAOFolios();
 		boolean existe;
 		boolean error = false;
@@ -154,7 +155,7 @@ public class DaoFoliosTest {
 	}
 
 	// metodo que prueba el metodo find de DAOFolios
-	private static void pruebaFind() {
+	private static void pruebaFind() throws PersistenciaException {
 		DAOFolios dao = new DAOFolios();
 		Folio folioResult;
 		boolean error = false;
@@ -195,7 +196,7 @@ public class DaoFoliosTest {
 	}
 	
 	// metodo que prueba el metodo listarFolios de DAOFolios
-	private static void pruebaLitarFolios() {
+	private static void pruebaLitarFolios() throws PersistenciaException {
 		DAOFolios dao = new DAOFolios();
 		List<VOFolio> listaFolios;
 		boolean error = false;
@@ -257,7 +258,7 @@ public class DaoFoliosTest {
 	}
 
 	// metodo que prueba el metodo esvacio de DAOFolios
-	private static void pruebaEsVacio() {
+	private static void pruebaEsVacio() throws PersistenciaException {
 		DAOFolios dao = new DAOFolios();
 		boolean vacio;
 		boolean error = false;
@@ -295,7 +296,7 @@ public class DaoFoliosTest {
 	}
 
 	// metodo que prueba el metodo folioMasRevisado de DAOFolios
-	private static void pruebaFolioMasRevisado() {
+	private static void pruebaFolioMasRevisado() throws PersistenciaException {
 		DAOFolios dao = new DAOFolios();
 		VOFolioMaxRev folioResult;
 		boolean error = false;

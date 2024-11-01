@@ -1,6 +1,6 @@
 package logica.excepciones;
 
-public class NoExistenFoliosException extends RuntimeException {
+public class NoExistenFoliosException extends Exception {
 	public NoExistenFoliosException() {
 		super();
 	}

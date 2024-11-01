@@ -1,4 +1,4 @@
-package ventanas;
+package grafica.ventanas;
 
 import java.awt.EventQueue;
 
@@ -6,20 +6,20 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import grafica.controladores.ControladordarDescripcion;
+import grafica.controladores.ControladorDarDescripcion;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class darDescripcion extends JFrame {
+public class DarDescripcion extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtCodigo;
 	private JTextField txtNroRevision;
-	private ControladordarDescripcion cdd;
+	private ControladorDarDescripcion cdd;
 
 	/**
 	 * Launch the application.
@@ -28,7 +28,7 @@ public class darDescripcion extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					darDescripcion frame = new darDescripcion();
+					DarDescripcion frame = new DarDescripcion();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,8 +40,8 @@ public class darDescripcion extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public darDescripcion() {
-		this.cdd = new ControladordarDescripcion(this);
+	public DarDescripcion() {
+		this.cdd = new ControladorDarDescripcion(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

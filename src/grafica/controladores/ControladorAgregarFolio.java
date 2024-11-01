@@ -8,20 +8,21 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Properties;
 
+import grafica.ventanas.AgregarFolio;
 import logica.IFachada;
 import logica.valueObjects.VOFolio;
+import logica.excepciones.FolioYaExisteException;
 import logica.excepciones.PersistenciaException;
-import ventanas.agregarFolio;
 
-public class ControladoragregarFolio {
+public class ControladorAgregarFolio {
 
-	private agregarFolio caf;
+	private AgregarFolio caf;
 
-	public ControladoragregarFolio(agregarFolio ventana) {
+	public ControladorAgregarFolio(AgregarFolio ventana) {
 		this.caf = ventana;
 	}
 
-	public void agregarFolio(String codigo, String caratula, int paginas) throws PersistenciaException {
+	public void agregarFolio(String codigo, String caratula, int paginas) throws PersistenciaException, FolioYaExisteException {
 		System.out.println("Codigo: " + codigo + " Caratula: " + caratula + " Paginas: " + paginas);
 
 		Properties p = new Properties();

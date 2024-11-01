@@ -1,4 +1,4 @@
-package ventanas;
+package grafica.ventanas;
 
 import java.awt.EventQueue;
 
@@ -6,8 +6,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import grafica.controladores.ControladoragregarFolio;
-import logica.excepciones.FolioNoExisteException;
+import grafica.controladores.ControladorAgregarFolio;
+import logica.excepciones.FolioYaExisteException;
+import logica.excepciones.PersistenciaException;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -15,14 +17,14 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class agregarFolio extends JFrame {
+public class AgregarFolio extends JFrame {
 
-//	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtCodigo;
 	private JTextField txtCaratula;
 	private JTextField txtPaginas;
-	private ControladoragregarFolio caf;
+	private ControladorAgregarFolio caf;
 
 	/**
 	 * Launch the application.
@@ -31,7 +33,7 @@ public class agregarFolio extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					agregarFolio frame = new agregarFolio();
+					AgregarFolio frame = new AgregarFolio();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,8 +45,8 @@ public class agregarFolio extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public agregarFolio() {
-		this.caf = new ControladoragregarFolio(this);
+	public AgregarFolio() {
+		this.caf = new ControladorAgregarFolio(this);
 		// this.caf = new ControladoragregarFolio(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -92,8 +94,10 @@ public class agregarFolio extends JFrame {
 					txtCaratula.setText("");
 					txtPaginas.setText("");
 
-				} catch (FolioNoExisteException e1) {
+				} catch (PersistenciaException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
+				} catch (FolioYaExisteException e2) {
+					JOptionPane.showMessageDialog(null, e2.getMessage());
 				}
 			}
 		});

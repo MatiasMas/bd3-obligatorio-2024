@@ -2,6 +2,7 @@ package logica.entidades;
 
 import java.util.List;
 
+import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VORevision;
 import persistencia.daos.DAORevisiones;
 
@@ -30,29 +31,29 @@ public class Folio {
 		return paginas;
 	}
 
-	public boolean tieneRevision(int numR) {
+	public boolean tieneRevision(int numR) throws PersistenciaException {
 		Revision revision = secuencia.kesimo(numR);
 		
 		return (revision != null);
 	}
 
-	public int cantidadRevisiones() {
+	public int cantidadRevisiones() throws PersistenciaException {
 		return secuencia.largo();
 	}
 
-	public void addRevision(Revision rev) {
+	public void addRevision(Revision rev) throws PersistenciaException {
      	secuencia.insback(rev);
 	}
 
-	public Revision obtenerRevision(int numR) {
+	public Revision obtenerRevision(int numR) throws PersistenciaException {
 		return secuencia.kesimo(numR);
 	}
 
-	public List<VORevision> listarRevisiones() {
+	public List<VORevision> listarRevisiones() throws PersistenciaException {
 		  return secuencia.listarRevisiones();
 	}
 
-	public void borrarRevisiones() {
+	public void borrarRevisiones() throws PersistenciaException {
 		secuencia.borrarRevisiones();
 	}
 }

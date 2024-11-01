@@ -1,4 +1,4 @@
-package ventanas;
+package grafica.ventanas;
 
 import java.awt.EventQueue;
 
@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import grafica.controladores.ControladorlistarRevisiones;
+import grafica.controladores.ControladorListarRevisiones;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -16,14 +16,14 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
-public class listarRevisiones extends JFrame {
+public class ListarRevisiones extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable tableRevision;
 	private JLabel lblCodigoFolio;
 	private JTextField txtCodigoFolio;
-	private ControladorlistarRevisiones clr;
+	private ControladorListarRevisiones clr;
 
 	/**
 	 * Launch the application.
@@ -32,7 +32,7 @@ public class listarRevisiones extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					listarRevisiones frame = new listarRevisiones();
+					ListarRevisiones frame = new ListarRevisiones();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,8 +44,8 @@ public class listarRevisiones extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public listarRevisiones() {
-		this.clr = new ControladorlistarRevisiones(this);
+	public ListarRevisiones() {
+		this.clr = new ControladorListarRevisiones(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 901, 364);
 		contentPane = new JPanel();

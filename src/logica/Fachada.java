@@ -24,6 +24,8 @@ import logica.valueObjects.VORevision;
 import poolConexiones.IConexion;
 import poolConexiones.IPoolConexiones;
 import persistencia.daos.DAOFolios;
+import persistencia.daos.DAORevisiones;
+import persistencia.daos.IDAOFolios;
 
 public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFachada {
 	/**
@@ -35,6 +37,7 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 	private static Fachada instancia;
 	private IPoolConexiones pool;
 
+	// TODO: Juntar excepciones en una personalizada
 	public Fachada() throws RemoteException, InstantiationException, ClassNotFoundException, IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		super();
@@ -67,15 +70,15 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 		boolean errorPersistencia = false;
 		boolean existeFolio = false;
 		String msgError = null;
-		IConexion icon = null;
+//		IConexion icon = null;
 
 		try {
-			
+
 			String codigo = voF.getCodigo();
 			existeFolio = diccio.member(codigo);
 
 			if (!diccio.member(codigo)) {
-				icon = pool.obtenerConexion(true);
+//				icon = pool.obtenerConexion(true);
 				String caratula = voF.getCaratula();
 				int paginas = voF.getPaginas();
 				Folio folio = new Folio(codigo, caratula, paginas);
@@ -85,7 +88,7 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 				msgError = "Folio ya existe";
 
 		} catch (Exception e) {
-			pool.liberarConexion(icon, false);
+//			pool.liberarConexion(icon, false);
 			errorPersistencia = true;
 			msgError = "Error de acceso a los datos";
 		} finally {
@@ -98,26 +101,74 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 	}
 
 	public void agregarRevision(VORevision voR) throws RemoteException, PersistenciaException, FolioNoExisteException {
-		Folio folio;
-		Revision rev;
+		String msgError = null;
+		boolean noExisteFolio = false;
+		boolean errorPersistencia = false;
 
-		if (!diccio.member(voR.getCodFolio())) {
-			throw new FolioNoExisteException();
+		try {
+			if (diccio.member(voR.getCodFolio())) {
+				Folio folio = diccio.find(voR.getCodFolio());
+				int numero = folio.cantidadRevisiones() + 1;
+
+				// Crea nueva revision
+				Revision rev = new Revision(numero, voR.getDescripcion());
+				folio.addRevision(rev);
+			} else {
+				noExisteFolio = true;
+				msgError = "Folio no existe";
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			errorPersistencia = true;
+			msgError = "Error de persistencia";
+		} finally {
+			if (noExisteFolio)
+				throw new FolioNoExisteException(msgError);
+			if (errorPersistencia) {
+				throw new PersistenciaException(msgError);
+			}
 		}
-
-		folio = diccio.find(voR.getCodFolio());
-		rev = new Revision(voR.getNumero(), voR.getDescripcion());
-
-		folio.addRevision(rev);
 	}
 
 	public void borrarFolioRevisiones(VOBorrarFolio voF)
 			throws RemoteException, PersistenciaException, FolioNoExisteException {
-		if (!diccio.member(voF.getCodFolio())) {
-			throw new FolioNoExisteException();
-		}
 
-		diccio.delete(voF.getCodFolio());
+		String msgError = null;
+		boolean noExisteFolio = false;
+		boolean errorPersistencia = false;
+
+		try {
+			if (diccio.member(voF.getCodFolio())) {
+
+				// Primero elimino revisiones
+				DAORevisiones dicRevisiones = new DAORevisiones();
+				dicRevisiones.borrarRevisiones();
+
+				// Luego elimino Folio
+				DAOFolios dicFilio = new DAOFolios();
+				dicFilio.delete(voF.getCodFolio());
+
+			} else {
+				noExisteFolio = true;
+				msgError = "Folio NO existe";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			errorPersistencia = true;
+			msgError = "Error de persistencia";
+		} finally {
+			if (noExisteFolio)
+				throw new FolioNoExisteException(msgError);
+			if (errorPersistencia) {
+				throw new PersistenciaException(msgError);
+			}
+		}
+//		if (!diccio.member(voF.getCodFolio())) {
+//			throw new FolioNoExisteException();
+//		}
+//
+//		diccio.delete(voF.getCodFolio());
 	}
 
 	public VODescripcionRetornada darDescripcion(VODarDescripcion voD)
