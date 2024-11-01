@@ -7,10 +7,16 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import grafica.controladores.ControladorDarDescripcion;
+import logica.excepciones.FolioNoExisteException;
+import logica.excepciones.PersistenciaException;
+import logica.valueObjects.VOFolio;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class DarDescripcion extends JFrame {
@@ -79,6 +85,21 @@ public class DarDescripcion extends JFrame {
 		JButton btnObtenerDescr = new JButton("Obtener descripcion");
 		btnObtenerDescr.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+
+					lblResultadoDescripcion.setText(
+							cdd.darDescripcion(txtCodigo.getText(), Integer.parseInt(txtNroRevision.getText())));
+
+				} catch (PersistenciaException e2) {
+					JOptionPane.showMessageDialog(null, "Error al obtener los folios: " + e2.getMessage(), "Error",
+							JOptionPane.ERROR_MESSAGE);
+				} catch (FolioNoExisteException e1) {
+//					JOptionPane.showMessageDialog(null, "Error NO existe folio: " + e1.getMessage(), "Error",
+//							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (Exception e3) {
+					JOptionPane.showMessageDialog(null, e3.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		btnObtenerDescr.setBounds(155, 227, 156, 23);

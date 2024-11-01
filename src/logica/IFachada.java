@@ -4,6 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
+import logica.excepciones.DarDescripcionException;
 import logica.excepciones.FolioNoExisteException;
 import logica.excepciones.FolioYaExisteException;
 import logica.excepciones.NoExistenFoliosException;
@@ -24,8 +25,8 @@ public interface IFachada extends Remote {
 	public void borrarFolioRevisiones(VOBorrarFolio voF)
 			throws RemoteException, PersistenciaException, FolioNoExisteException;
 
-	public VODescripcionRetornada darDescripcion(VODarDescripcion voD)
-			throws RemoteException, PersistenciaException, FolioNoExisteException;
+	public String darDescripcion(VODarDescripcion voD)
+			throws RemoteException, PersistenciaException, FolioNoExisteException, DarDescripcionException;
 
 	public List<VOFolio> listarFolios() throws RemoteException, PersistenciaException, FolioNoExisteException;
 
