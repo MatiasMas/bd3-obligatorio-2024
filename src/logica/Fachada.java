@@ -10,6 +10,7 @@ import java.util.Properties;
 
 import logica.entidades.Folio;
 import logica.entidades.Revision;
+import logica.excepciones.DarDescripcionException;
 import logica.excepciones.FolioNoExisteException;
 import logica.excepciones.FolioYaExisteException;
 import logica.excepciones.NoExistenFoliosException;
@@ -164,23 +165,49 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 				throw new PersistenciaException(msgError);
 			}
 		}
-//		if (!diccio.member(voF.getCodFolio())) {
-//			throw new FolioNoExisteException();
-//		}
-//
-//		diccio.delete(voF.getCodFolio());
 	}
 
-	public VODescripcionRetornada darDescripcion(VODarDescripcion voD)
-			throws RemoteException, PersistenciaException, FolioNoExisteException {
-		if (!diccio.member(voD.getCodFolio())) {
-			throw new FolioNoExisteException();
+	public String darDescripcion(VODarDescripcion voD)
+			throws RemoteException, PersistenciaException, FolioNoExisteException, DarDescripcionException {
+
+		String msgError = null;
+		String descripcion = null;
+		boolean noExisteFolio = false;
+		boolean errorConexion = false;
+		boolean noExisteRevision = false;
+		
+		try {
+
+			if (diccio.member(voD.getCodFolio())) {
+				DAOFolios dicFilio = new DAOFolios();
+				Folio fol = dicFilio.find(voD.getCodFolio());
+				if (fol.tieneRevision(voD.getNumRevision())) {
+					Revision rev = fol.obtenerRevision(voD.getNumRevision());
+					descripcion = rev.getDescripcion();
+				} else {
+					noExisteRevision = true;
+					msgError = "No existe una revision con ese n�mero";
+				}
+			} else {
+				noExisteFolio = true;
+				msgError = "Folio no existe";
+			}
+
+		} catch (PersistenciaException e) {
+			throw new DarDescripcionException(msgError);
+		} catch (Exception e1) {
+			errorConexion = true;
+			msgError = "Error de persistencia";
+		} finally {
+			if (noExisteFolio)
+				throw new DarDescripcionException(msgError);
+			if (noExisteRevision)
+				throw new DarDescripcionException(msgError);
+			if (errorConexion)
+				throw new DarDescripcionException(msgError);
 		}
-
-		Folio folio = diccio.find(voD.getCodFolio());
-		Revision revision = folio.obtenerRevision(voD.getNumRevision());
-
-		return new VODescripcionRetornada(revision.getDescripcion());
+		
+		return descripcion;
 	}
 
 	public List<VOFolio> listarFolios() throws RemoteException, PersistenciaException, FolioNoExisteException {

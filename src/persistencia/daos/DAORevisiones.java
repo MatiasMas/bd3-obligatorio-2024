@@ -12,6 +12,7 @@ import logica.entidades.Revision;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VORevision;
 import persistencia.consultas.Consultas;
+import poolConexiones.IConexion;
 import utilidades.Configuracion;
 
 public class DAORevisiones {
@@ -75,7 +76,7 @@ public class DAORevisiones {
 
 		return largo;
 	}
-
+	
 	public Revision kesimo(int numero) throws PersistenciaException {
 		Revision revision = null;
 
