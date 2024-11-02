@@ -106,16 +106,17 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 		try {
 			icon = pool.obtenerConexion(true);
 			if (diccio.member(icon, voR.getCodFolio())) {
-				Folio folio = diccio.find(voR.getCodFolio());
-				int numero = folio.cantidadRevisiones() + 1;
+				Folio folio = diccio.find(icon, voR.getCodFolio());
+				int numero = folio.cantidadRevisiones(icon) + 1;
 
 				// Crea nueva revision
 				Revision rev = new Revision(numero, voR.getDescripcion());
-				folio.addRevision(rev);
+				folio.addRevision(icon, rev);
 			} else {
 				noExisteFolio = true;
 				msgError = "Folio no existe";
 			}
+			pool.liberarConexion(icon, true);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -176,7 +177,7 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 			icon = pool.obtenerConexion(true);
 			if (diccio.member(icon, voD.getCodFolio())) {
 				DAOFolios dicFilio = new DAOFolios();
-				Folio fol = dicFilio.find(voD.getCodFolio());
+				Folio fol = dicFilio.find(icon, voD.getCodFolio());
 				if (fol.tieneRevision(voD.getNumRevision())) {
 					Revision rev = fol.obtenerRevision(voD.getNumRevision());
 					descripcion = rev.getDescripcion();
@@ -218,16 +219,18 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 			throw new FolioNoExisteException();
 		}
 
-		Folio folio = diccio.find(voL.getCodFolio());
+		Folio folio = diccio.find(icon, voL.getCodFolio());
 
 		return folio.listarRevisiones();
 	}
 
 	public VOFolioMaxRev folioMasRevisado() throws RemoteException, PersistenciaException, NoExistenFoliosException {
+		IConexion icon = null;
+		icon = pool.obtenerConexion(true);
 		if (diccio.esVacio()) {
 			throw new NoExistenFoliosException();
 		}
 
-		return diccio.folioMasRevisado();
+		return diccio.folioMasRevisado(icon);
 	}
 }

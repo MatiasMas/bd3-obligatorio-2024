@@ -12,6 +12,7 @@ import logica.entidades.Revision;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VORevision;
 import persistencia.consultas.Consultas;
+import poolConexiones.Conexion;
 import poolConexiones.IConexion;
 import utilidades.Configuracion;
 
@@ -29,36 +30,33 @@ public class DAORevisiones {
 		this.codFolio = codF;
 	}
 
-	public void insback(Revision rev) throws PersistenciaException {
+	public void insback(IConexion icon, Revision rev) throws PersistenciaException {
 		try {
-			Connection con = DriverManager.getConnection(url, usr, pwd);
 
 			Consultas consultas = new Consultas();
 			String query = consultas.agregarRevision();
-			PreparedStatement pstmt = con.prepareStatement(query);
+			Conexion con = (Conexion) icon;
+			PreparedStatement pstmt = con.getCon().prepareStatement(query);
 
 			pstmt.setInt(1, rev.getNumero());
 			pstmt.setString(2, this.codFolio);
 			pstmt.setString(3, rev.getDescripcion());
-
 			pstmt.executeUpdate();
-
 			pstmt.close();
-			con.close();
 		} catch (SQLException e) {
 			throw new PersistenciaException(e.getMessage());
 		}
 	}
 
-	public int largo() throws PersistenciaException {
+	public int largo(IConexion icon) throws PersistenciaException {
 		int largo = 0;
 
 		try {
-			Connection con = DriverManager.getConnection(url, usr, pwd);
 
 			Consultas consultas = new Consultas();
 			String query = consultas.contarRevisionesPorFolio();
-			PreparedStatement pstmt = con.prepareStatement(query);
+			Conexion con = (Conexion) icon;
+			PreparedStatement pstmt = con.getCon().prepareStatement(query);
 
 			pstmt.setString(1, this.codFolio);
 
@@ -69,14 +67,13 @@ public class DAORevisiones {
 			}
 
 			pstmt.close();
-			con.close();
 		} catch (SQLException e) {
 			throw new PersistenciaException();
 		}
 
 		return largo;
 	}
-	
+
 	public Revision kesimo(int numero) throws PersistenciaException {
 		Revision revision = null;
 

@@ -76,16 +76,15 @@ public class DAOFolios {
 		}
 	}
 
-	public Folio find(String cod) throws PersistenciaException {
+	public Folio find(IConexion icon, String cod) throws PersistenciaException {
 		Folio folio = null;
 
 		try {
-			Connection con = DriverManager.getConnection(url, usr, pwd);
 
 			Consultas consultas = new Consultas();
 			String query = consultas.existeFolio();
-
-			PreparedStatement pstmt = con.prepareStatement(query);
+			Conexion con = (Conexion) icon;
+			PreparedStatement pstmt = con.getCon().prepareStatement(query);
 
 			pstmt.setString(1, cod);
 
@@ -97,7 +96,6 @@ public class DAOFolios {
 
 			rs.close();
 			pstmt.close();
-			con.close();
 		} catch (SQLException e) {
 			throw new PersistenciaException();
 		}
@@ -113,7 +111,7 @@ public class DAOFolios {
 			String deleteRevisiones = consultas.eliminarFolio();
 			PreparedStatement borrarR = null;
 
-			Folio f = this.find(cod);
+			Folio f = this.find(icon, cod);
 			f.borrarRevisiones();
 			borrarR = con.getCon().prepareStatement(deleteRevisiones);
 			borrarR.setString(1, cod);
@@ -182,23 +180,22 @@ public class DAOFolios {
 		return !existenFolios;
 	}
 
-	public VOFolioMaxRev folioMasRevisado() throws PersistenciaException {
+	public VOFolioMaxRev folioMasRevisado(IConexion icon) throws PersistenciaException {
 		VOFolioMaxRev voFolio = null;
 		int maxRevisiones = -1;
 
 		try {
-			Connection con = DriverManager.getConnection(url, usr, pwd);
 			Consultas consultas = new Consultas();
 			String query = consultas.listarFolios();
-
-			Statement stm = con.createStatement();
+			Conexion con = (Conexion) icon;
+			Statement stm = con.getCon().createStatement();
 
 			ResultSet rs = stm.executeQuery(query);
 
 			while (rs.next()) {
 				Folio folio = new Folio(rs.getString("codigo"), rs.getString("caratula"), rs.getInt("paginas"));
 
-				int cantidadRevisiones = folio.cantidadRevisiones();
+				int cantidadRevisiones = folio.cantidadRevisiones(con);
 
 				if (cantidadRevisiones > maxRevisiones) {
 					voFolio = new VOFolioMaxRev(folio.getCodigo(), folio.getCaratula(), folio.getPaginas(),
@@ -208,7 +205,6 @@ public class DAOFolios {
 
 			rs.close();
 			stm.close();
-			con.close();
 		} catch (SQLException e) {
 			throw new PersistenciaException();
 		}

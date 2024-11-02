@@ -38,12 +38,12 @@ public class Folio {
 		return (revision != null);
 	}
 
-	public int cantidadRevisiones() throws PersistenciaException {
-		return secuencia.largo();
+	public int cantidadRevisiones(IConexion icon) throws PersistenciaException {
+		return secuencia.largo(icon);
 	}
 
-	public void addRevision(Revision rev) throws PersistenciaException {
-     	secuencia.insback(rev);
+	public void addRevision(IConexion icon,Revision rev) throws PersistenciaException {
+     	secuencia.insback(icon,rev);
 	}
 
 	public Revision obtenerRevision(int numR) throws PersistenciaException {
