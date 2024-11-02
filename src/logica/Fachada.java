@@ -49,7 +49,6 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 			Properties propiedades = new Properties();
 			propiedades.load(new FileInputStream("config/server.properties"));
 			nomPool = propiedades.getProperty("pool");
-			// System.out.print(propiedades.getProperty("fabrica"));
 		} catch (FileNotFoundException e) {
 			System.out.println("Error, el archivo de configuracion no existe!");
 		} catch (IOException e) {
@@ -76,15 +75,12 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 		try {
 
 			String codigo = voF.getCodigo();
-			existeFolio = diccio.member(codigo);
-
-			if (!diccio.member(codigo)) {
-				icon = pool.obtenerConexion(true);
+			icon = pool.obtenerConexion(true);
+			if (!diccio.member(icon, codigo)) {
 				String caratula = voF.getCaratula();
 				int paginas = voF.getPaginas();
 				Folio folio = new Folio(codigo, caratula, paginas);
-
-				diccio.insert(icon,folio);
+				diccio.insert(icon, folio);
 			} else {
 				existeFolio = true;
 				msgError = "Folio ya existe";
@@ -106,9 +102,10 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 		String msgError = null;
 		boolean noExisteFolio = false;
 		boolean errorPersistencia = false;
-
+		IConexion icon = null;
 		try {
-			if (diccio.member(voR.getCodFolio())) {
+			icon = pool.obtenerConexion(true);
+			if (diccio.member(icon, voR.getCodFolio())) {
 				Folio folio = diccio.find(voR.getCodFolio());
 				int numero = folio.cantidadRevisiones() + 1;
 
@@ -139,22 +136,19 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 		String msgError = null;
 		boolean noExisteFolio = false;
 		boolean errorPersistencia = false;
+		IConexion icon = null;
 
 		try {
-			if (diccio.member(voF.getCodFolio())) {
-
+			icon = pool.obtenerConexion(true);
+			if (diccio.member(icon, voF.getCodFolio())) {
 				// Primero elimino revisiones
-				DAORevisiones dicRevisiones = new DAORevisiones();
-				dicRevisiones.borrarRevisiones();
-
-				// Luego elimino Folio
-				DAOFolios dicFilio = new DAOFolios();
-				dicFilio.delete(voF.getCodFolio());
-
+//				DAORevisiones dicRevisiones = new DAORevisiones();
+				diccio.delete(icon, voF.getCodFolio());
 			} else {
 				noExisteFolio = true;
 				msgError = "Folio NO existe";
 			}
+			pool.liberarConexion(icon, true);
 		} catch (Exception e) {
 			e.printStackTrace();
 			errorPersistencia = true;
@@ -176,10 +170,11 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 		boolean noExisteFolio = false;
 		boolean errorConexion = false;
 		boolean noExisteRevision = false;
-		
-		try {
+		IConexion icon = null;
 
-			if (diccio.member(voD.getCodFolio())) {
+		try {
+			icon = pool.obtenerConexion(true);
+			if (diccio.member(icon, voD.getCodFolio())) {
 				DAOFolios dicFilio = new DAOFolios();
 				Folio fol = dicFilio.find(voD.getCodFolio());
 				if (fol.tieneRevision(voD.getNumRevision())) {
@@ -207,7 +202,7 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 			if (errorConexion)
 				throw new DarDescripcionException(msgError);
 		}
-		
+
 		return descripcion;
 	}
 
@@ -217,7 +212,9 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 
 	public List<VORevision> listarRevisiones(VOListarRevisiones voL)
 			throws RemoteException, PersistenciaException, FolioNoExisteException {
-		if (!diccio.member(voL.getCodFolio())) {
+		IConexion icon = null;
+		icon = pool.obtenerConexion(true);
+		if (!diccio.member(icon, voL.getCodFolio())) {
 			throw new FolioNoExisteException();
 		}
 

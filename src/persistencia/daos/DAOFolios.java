@@ -27,18 +27,18 @@ public class DAOFolios {
 
 	}
 
-	public boolean member(String codigo) throws PersistenciaException {
+	public boolean member(IConexion icon, String codigo) throws PersistenciaException {
 
 		boolean existeFolio = false;
 
 		try {
-			Connection con = DriverManager.getConnection(url, usr, pwd);
 
 			System.out.println("url: " + url + " usr: " + usr + " pwd: " + pwd);
 			Consultas consultas = new Consultas();
+			Conexion con = (Conexion) icon;
 			String query = consultas.existeFolio();
 
-			PreparedStatement pstmt1 = con.prepareStatement(query);
+			PreparedStatement pstmt1 = con.getCon().prepareStatement(query);
 			pstmt1.setString(1, codigo);
 
 			ResultSet rs = pstmt1.executeQuery();
@@ -48,7 +48,6 @@ public class DAOFolios {
 
 			rs.close();
 			pstmt1.close();
-			con.close();
 		} catch (SQLException e) {
 			System.out.println(e);
 			System.out.println("url: " + url + " usr: " + usr + " pwd: " + pwd);
@@ -106,24 +105,23 @@ public class DAOFolios {
 		return folio;
 	}
 
-	public void delete(String cod) throws PersistenciaException {
+	public void delete(IConexion icon, String cod) throws PersistenciaException {
 
 		try {
-			Connection con = DriverManager.getConnection(url, usr, pwd);
+			Conexion con = (Conexion) icon;
 			Consultas consultas = new Consultas();
 			String deleteRevisiones = consultas.eliminarFolio();
 			PreparedStatement borrarR = null;
 
 			Folio f = this.find(cod);
 			f.borrarRevisiones();
-			borrarR = con.prepareStatement(deleteRevisiones);
+			borrarR = con.getCon().prepareStatement(deleteRevisiones);
 			borrarR.setString(1, cod);
 			borrarR.executeUpdate();
 			borrarR.close();
 
 		} catch (SQLException e) {
 			throw new PersistenciaException("Error en la persistencia");
-
 		}
 	}
 
