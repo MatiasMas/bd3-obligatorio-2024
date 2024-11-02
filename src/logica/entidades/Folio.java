@@ -5,6 +5,7 @@ import java.util.List;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VORevision;
 import persistencia.daos.DAORevisiones;
+import poolConexiones.IConexion;
 
 public class Folio {
 	private String codigo;

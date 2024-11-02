@@ -15,6 +15,7 @@ import logica.valueObjects.VOFolio;
 import logica.valueObjects.VOFolioMaxRev;
 import persistencia.consultas.Consultas;
 import poolConexiones.Conexion;
+import poolConexiones.IConexion;
 import utilidades.Configuracion;
 
 public class DAOFolios {
@@ -57,22 +58,20 @@ public class DAOFolios {
 		return existeFolio;
 	}
 
-	public void insert(Folio fol) throws PersistenciaException {
+	public void insert(IConexion icon, Folio fol) throws PersistenciaException {
 		try {
-			Connection con = DriverManager.getConnection(url, usr, pwd);
+//			Connection con = DriverManager.getConnection(url, usr, pwd);
 
 			Consultas consultas = new Consultas();
 			String query = consultas.agregarFolio();
-			PreparedStatement pstmt = con.prepareStatement(query);
+			Conexion con = (Conexion) icon;
+			PreparedStatement pstmt = con.getCon().prepareStatement(query);
 
 			pstmt.setString(1, fol.getCodigo());
 			pstmt.setString(2, fol.getCaratula());
 			pstmt.setInt(3, fol.getPaginas());
-
 			pstmt.executeUpdate();
-
 			pstmt.close();
-			con.close();
 		} catch (SQLException e) {
 			throw new PersistenciaException();
 		}

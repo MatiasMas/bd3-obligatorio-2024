@@ -38,7 +38,6 @@ public class Servidor {
 			LocateRegistry.createRegistry(fileConfig.getPuertoServidor());
 			Naming.rebind(ubicacionServidor, (Remote) fachada);
 
-			System.out.println("" + ubicacionServidor);
 			System.out.println("Fachada publicada correctamente");
 
 		} catch (RemoteException e) {

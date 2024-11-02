@@ -55,7 +55,7 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 		} catch (IOException e) {
 			System.out.println("Error, no se puede leer el archivo de configuracion!");
 		}
-		pool = (IPoolConexiones) Class.forName(nomPool).getDeclaredConstructor().newInstance();
+		pool = (IPoolConexiones) Class.forName(nomPool).newInstance();
 	}
 
 	public static Fachada getInstancia() throws PersistenciaException, ClassNotFoundException, FileNotFoundException,
@@ -71,7 +71,7 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 		boolean errorPersistencia = false;
 		boolean existeFolio = false;
 		String msgError = null;
-//		IConexion icon = null;
+		IConexion icon = null;
 
 		try {
 
@@ -79,17 +79,19 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 			existeFolio = diccio.member(codigo);
 
 			if (!diccio.member(codigo)) {
-//				icon = pool.obtenerConexion(true);
+				icon = pool.obtenerConexion(true);
 				String caratula = voF.getCaratula();
 				int paginas = voF.getPaginas();
 				Folio folio = new Folio(codigo, caratula, paginas);
 
-				diccio.insert(folio);
-			} else
+				diccio.insert(icon,folio);
+			} else {
+				existeFolio = true;
 				msgError = "Folio ya existe";
+			}
+			pool.liberarConexion(icon, true);
 
 		} catch (Exception e) {
-//			pool.liberarConexion(icon, false);
 			errorPersistencia = true;
 			msgError = "Error de acceso a los datos";
 		} finally {
@@ -98,7 +100,6 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 			if (errorPersistencia)
 				throw new PersistenciaException(msgError);
 		}
-
 	}
 
 	public void agregarRevision(VORevision voR) throws RemoteException, PersistenciaException, FolioNoExisteException {
