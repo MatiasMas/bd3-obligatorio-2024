@@ -14,22 +14,26 @@ import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOFolio;
 import logica.valueObjects.VOFolioMaxRev;
 import persistencia.consultas.Consultas;
-import utilidades.GetProperties;
+import poolConexiones.Conexion;
+import utilidades.Configuracion;
 
 public class DAOFolios {
-	private String url = GetProperties.getInstancia().getString("url");
-	private String usr = GetProperties.getInstancia().getString("user");
-	private String pwd = GetProperties.getInstancia().getString("password");
+	private String url = Configuracion.getInstancia().getUrl();
+	private String usr = Configuracion.getInstancia().getUser();
+	private String pwd = Configuracion.getInstancia().getPassword();
 
 	public DAOFolios() {
 
 	}
 
-	public boolean member(String codigo) {
+	public boolean member(String codigo) throws PersistenciaException {
+
 		boolean existeFolio = false;
 
 		try {
 			Connection con = DriverManager.getConnection(url, usr, pwd);
+
+			System.out.println("url: " + url + " usr: " + usr + " pwd: " + pwd);
 			Consultas consultas = new Consultas();
 			String query = consultas.existeFolio();
 
@@ -38,21 +42,22 @@ public class DAOFolios {
 
 			ResultSet rs = pstmt1.executeQuery();
 
-			if (rs.next()) {
+			if (rs.next())
 				existeFolio = true;
-			}
 
 			rs.close();
 			pstmt1.close();
 			con.close();
 		} catch (SQLException e) {
+			System.out.println(e);
+			System.out.println("url: " + url + " usr: " + usr + " pwd: " + pwd);
 			throw new PersistenciaException();
 		}
 
 		return existeFolio;
 	}
 
-	public void insert(Folio fol) {
+	public void insert(Folio fol) throws PersistenciaException {
 		try {
 			Connection con = DriverManager.getConnection(url, usr, pwd);
 
@@ -73,7 +78,7 @@ public class DAOFolios {
 		}
 	}
 
-	public Folio find(String cod) {
+	public Folio find(String cod) throws PersistenciaException {
 		Folio folio = null;
 
 		try {
@@ -102,41 +107,28 @@ public class DAOFolios {
 		return folio;
 	}
 
-	public void delete(String cod) {
+	public void delete(String cod) throws PersistenciaException {
+
 		try {
 			Connection con = DriverManager.getConnection(url, usr, pwd);
-
 			Consultas consultas = new Consultas();
-			String queryExisteFolio = consultas.existeFolio();
+			String deleteRevisiones = consultas.eliminarFolio();
+			PreparedStatement borrarR = null;
 
-			PreparedStatement pstmt = con.prepareStatement(queryExisteFolio);
+			Folio f = this.find(cod);
+			f.borrarRevisiones();
+			borrarR = con.prepareStatement(deleteRevisiones);
+			borrarR.setString(1, cod);
+			borrarR.executeUpdate();
+			borrarR.close();
 
-			pstmt.setString(1, cod);
-
-			ResultSet rs = pstmt.executeQuery();
-
-			if (rs.next()) {
-				Folio folio = new Folio(rs.getString("codigo"), rs.getString("caratula"), rs.getInt("paginas"));
-				folio.borrarRevisiones();
-
-				String queryBorrarFolio = consultas.eliminarFolio();
-				PreparedStatement pstmt2 = con.prepareStatement(queryBorrarFolio);
-				pstmt2.setString(1, cod);
-
-				pstmt2.executeUpdate();
-
-				pstmt2.close();
-			}
-
-			rs.close();
-			pstmt.close();
-			con.close();
 		} catch (SQLException e) {
-			throw new PersistenciaException();
+			throw new PersistenciaException("Error en la persistencia");
+
 		}
 	}
 
-	public List<VOFolio> listarFolios() {
+	public List<VOFolio> listarFolios() throws PersistenciaException {
 		List<VOFolio> folios = new ArrayList<>();
 
 		try {
@@ -165,7 +157,7 @@ public class DAOFolios {
 		return folios;
 	}
 
-	public boolean esVacio() {
+	public boolean esVacio() throws PersistenciaException {
 		boolean existenFolios = false;
 
 		try {
@@ -178,7 +170,7 @@ public class DAOFolios {
 			ResultSet rs = stm.executeQuery(query);
 
 			if (rs.next()) {
-				if(rs.getInt(1) > 0) {
+				if (rs.getInt(1) > 0) {
 					existenFolios = true;
 				}
 			}
@@ -192,8 +184,8 @@ public class DAOFolios {
 
 		return !existenFolios;
 	}
-	
-	public VOFolioMaxRev folioMasRevisado() {
+
+	public VOFolioMaxRev folioMasRevisado() throws PersistenciaException {
 		VOFolioMaxRev voFolio = null;
 		int maxRevisiones = -1;
 
@@ -208,11 +200,12 @@ public class DAOFolios {
 
 			while (rs.next()) {
 				Folio folio = new Folio(rs.getString("codigo"), rs.getString("caratula"), rs.getInt("paginas"));
-				
+
 				int cantidadRevisiones = folio.cantidadRevisiones();
-				
-				if(cantidadRevisiones > maxRevisiones) {
-					voFolio = new VOFolioMaxRev(folio.getCodigo(), folio.getCaratula(), folio.getPaginas(), cantidadRevisiones);
+
+				if (cantidadRevisiones > maxRevisiones) {
+					voFolio = new VOFolioMaxRev(folio.getCodigo(), folio.getCaratula(), folio.getPaginas(),
+							cantidadRevisiones);
 				}
 			}
 

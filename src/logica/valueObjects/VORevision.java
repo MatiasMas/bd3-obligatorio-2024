@@ -1,12 +1,20 @@
 package logica.valueObjects;
 
-public class VORevision {
+import java.io.Serializable;
+
+public class VORevision implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	private int numero;
 	private String descripcion;
 	private String codFolio;
 
 	public VORevision() {
-		super();
+	}
+	
+	public VORevision(String descripcion, String codFolio) {
+		this.descripcion = descripcion;
+		this.codFolio = codFolio;
 	}
 
 	public VORevision(int numero, String descripcion, String codFolio) {

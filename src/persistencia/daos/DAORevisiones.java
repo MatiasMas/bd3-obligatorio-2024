@@ -12,19 +12,24 @@ import logica.entidades.Revision;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VORevision;
 import persistencia.consultas.Consultas;
-import utilidades.GetProperties;
+import poolConexiones.IConexion;
+import utilidades.Configuracion;
 
 public class DAORevisiones {
-	private String url = GetProperties.getInstancia().getString("url");
-	private String usr = GetProperties.getInstancia().getString("user");
-	private String pwd = GetProperties.getInstancia().getString("password");
+	private String url = Configuracion.getInstancia().getUrl();
+	private String usr = Configuracion.getInstancia().getUser();
+	private String pwd = Configuracion.getInstancia().getPassword();
 	private String codFolio;
+
+	public DAORevisiones() {
+
+	}
 
 	public DAORevisiones(String codF) {
 		this.codFolio = codF;
 	}
 
-	public void insback(Revision rev) {
+	public void insback(Revision rev) throws PersistenciaException {
 		try {
 			Connection con = DriverManager.getConnection(url, usr, pwd);
 
@@ -33,19 +38,19 @@ public class DAORevisiones {
 			PreparedStatement pstmt = con.prepareStatement(query);
 
 			pstmt.setInt(1, rev.getNumero());
-			pstmt.setString(2, rev.getDescripcion());
-			pstmt.setString(3, this.codFolio);
+			pstmt.setString(2, this.codFolio);
+			pstmt.setString(3, rev.getDescripcion());
 
 			pstmt.executeUpdate();
 
 			pstmt.close();
 			con.close();
 		} catch (SQLException e) {
-			throw new PersistenciaException();
+			throw new PersistenciaException(e.getMessage());
 		}
 	}
 
-	public int largo() {
+	public int largo() throws PersistenciaException {
 		int largo = 0;
 
 		try {
@@ -71,8 +76,8 @@ public class DAORevisiones {
 
 		return largo;
 	}
-
-	public Revision kesimo(int numero) {
+	
+	public Revision kesimo(int numero) throws PersistenciaException {
 		Revision revision = null;
 
 		try {
@@ -101,7 +106,7 @@ public class DAORevisiones {
 		return revision;
 	}
 
-	public List<VORevision> listarRevisiones() {
+	public List<VORevision> listarRevisiones() throws PersistenciaException {
 		List<VORevision> revisiones = new ArrayList<>();
 
 		try {
@@ -134,7 +139,7 @@ public class DAORevisiones {
 		return revisiones;
 	}
 
-	public void borrarRevisiones() {
+	public void borrarRevisiones() throws PersistenciaException {
 		try {
 			Connection con = DriverManager.getConnection(url, usr, pwd);
 

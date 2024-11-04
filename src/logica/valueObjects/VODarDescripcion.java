@@ -1,6 +1,12 @@
 package logica.valueObjects;
 
-public class VODarDescripcion {
+import java.io.Serializable;
+
+public class VODarDescripcion implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String codFolio;
 	private int numRevision;
 

@@ -1,4 +1,4 @@
-package ventanas;
+package grafica.ventanas;
 
 import java.awt.EventQueue;
 
@@ -6,20 +6,26 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import grafica.controladores.ControladordarDescripcion;
+import grafica.controladores.ControladorDarDescripcion;
+import logica.excepciones.FolioNoExisteException;
+import logica.excepciones.PersistenciaException;
+import logica.valueObjects.VOFolio;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
-public class darDescripcion extends JFrame {
+public class DarDescripcion extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtCodigo;
 	private JTextField txtNroRevision;
-	private ControladordarDescripcion cdd;
+	private ControladorDarDescripcion cdd;
 
 	/**
 	 * Launch the application.
@@ -28,7 +34,7 @@ public class darDescripcion extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					darDescripcion frame = new darDescripcion();
+					DarDescripcion frame = new DarDescripcion();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,7 +46,8 @@ public class darDescripcion extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public darDescripcion() {
+	public DarDescripcion() {
+		this.cdd = new ControladorDarDescripcion(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -78,10 +85,28 @@ public class darDescripcion extends JFrame {
 		JButton btnObtenerDescr = new JButton("Obtener descripcion");
 		btnObtenerDescr.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+
+					lblResultadoDescripcion.setText(
+							cdd.darDescripcion(txtCodigo.getText(), Integer.parseInt(txtNroRevision.getText())));
+
+				} catch (PersistenciaException e2) {
+					JOptionPane.showMessageDialog(null, "Error al obtener los folios: " + e2.getMessage(), "Error",
+							JOptionPane.ERROR_MESSAGE);
+				} catch (FolioNoExisteException e1) {
+//					JOptionPane.showMessageDialog(null, "Error NO existe folio: " + e1.getMessage(), "Error",
+//							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (Exception e3) {
+					JOptionPane.showMessageDialog(null, e3.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		btnObtenerDescr.setBounds(155, 227, 156, 23);
 		contentPane.add(btnObtenerDescr);
+	}
 
+	public void visible() {
+		this.setVisible(true);
 	}
 }
