@@ -1,5 +1,6 @@
 package persistencia.daos;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,10 +13,12 @@ import logica.entidades.Revision;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VORevision;
 import persistencia.consultas.Consultas;
-import poolConexiones.IConexion;
 import utilidades.Configuracion;
 
-public class DAORevisiones {
+public class DAORevisiones implements Serializable {
+
+	private static final long serialVersionUID = 444443211990804249L;
+
 	private String url = Configuracion.getInstancia().getUrl();
 	private String usr = Configuracion.getInstancia().getUser();
 	private String pwd = Configuracion.getInstancia().getPassword();
@@ -76,7 +79,7 @@ public class DAORevisiones {
 
 		return largo;
 	}
-	
+
 	public Revision kesimo(int numero) throws PersistenciaException {
 		Revision revision = null;
 
