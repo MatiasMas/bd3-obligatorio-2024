@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import grafica.controladores.ControladorEliminarFolioRevisiones;
 import logica.excepciones.FolioNoExisteException;
 import logica.excepciones.FolioYaExisteException;
+import logica.excepciones.NoHayRevisionesException;
 import logica.excepciones.PersistenciaException;
 
 import javax.swing.JLabel;
@@ -74,8 +75,9 @@ public class EliminarFolioRevisiones extends JFrame {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				} catch (FolioNoExisteException e2) {
 					JOptionPane.showMessageDialog(null, e2.getMessage());
+				} catch (NoHayRevisionesException e3) {
+					JOptionPane.showMessageDialog(null, e3.getMessage());
 				}
-
 			}
 		});
 		btnEliminarFolioRevision.setBounds(104, 60, 207, 23);

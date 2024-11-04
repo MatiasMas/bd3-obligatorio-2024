@@ -14,6 +14,7 @@ import logica.excepciones.DarDescripcionException;
 import logica.excepciones.FolioNoExisteException;
 import logica.excepciones.FolioYaExisteException;
 import logica.excepciones.NoExistenFoliosException;
+import logica.excepciones.NoHayRevisionesException;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOBorrarFolio;
 import logica.valueObjects.VODarDescripcion;
@@ -133,23 +134,27 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 	}
 
 	public void borrarFolioRevisiones(VOBorrarFolio voF)
-			throws RemoteException, PersistenciaException, FolioNoExisteException {
+			throws RemoteException, PersistenciaException, FolioNoExisteException, NoHayRevisionesException {
 
 		String msgError = null;
 		boolean noExisteFolio = false;
 		boolean errorPersistencia = false;
+		boolean noHayRevisiones = false;
 
 		try {
 			if (diccio.member(voF.getCodFolio())) {
+				Folio folio = diccio.find(voF.getCodFolio());
 
-				// Primero elimino revisiones
-				DAORevisiones dicRevisiones = new DAORevisiones();
-				dicRevisiones.borrarRevisiones();
+				if(folio.cantidadRevisiones() != 0) {
+					// Primero elimino revisiones
+					folio.borrarRevisiones();
 
-				// Luego elimino Folio
-				DAOFolios dicFilio = new DAOFolios();
-				dicFilio.delete(voF.getCodFolio());
-
+					// Luego elimino Folio
+					diccio.delete(folio.getCodigo());
+				} else {
+					noHayRevisiones = true;
+					msgError = "No hay revisiones en el folio dado";
+				}
 			} else {
 				noExisteFolio = true;
 				msgError = "Folio NO existe";
@@ -161,6 +166,8 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 		} finally {
 			if (noExisteFolio)
 				throw new FolioNoExisteException(msgError);
+			if (noHayRevisiones)
+				throw new NoHayRevisionesException(msgError);
 			if (errorPersistencia) {
 				throw new PersistenciaException(msgError);
 			}
