@@ -209,22 +209,19 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 		
 		return descripcion;
 	}
-
+	
 	public List<VOFolio> listarFolios() throws RemoteException, PersistenciaException, FolioNoExisteException {
 		return diccio.listarFolios();
 	}
-
-	public List<VORevision> listarRevisiones(VOListarRevisiones voL)
-			throws RemoteException, PersistenciaException, FolioNoExisteException {
-		if (!diccio.member(voL.getCodFolio())) {
-			throw new FolioNoExisteException();
-		}
-
+	
+	@Override
+	public List<VORevision> listarRevisiones(VOListarRevisiones voL) throws RemoteException, PersistenciaException, FolioNoExisteException {
+		if (!diccio.member(voL.getCodFolio())) throw new FolioNoExisteException();
 		Folio folio = diccio.find(voL.getCodFolio());
-
 		return folio.listarRevisiones();
 	}
 
+	@Override
 	public VOFolioMaxRev folioMasRevisado() throws RemoteException, PersistenciaException, NoExistenFoliosException {
 		if (diccio.esVacio()) {
 			throw new NoExistenFoliosException();
@@ -232,4 +229,5 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 
 		return diccio.folioMasRevisado();
 	}
+
 }
