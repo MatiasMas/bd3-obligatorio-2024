@@ -31,7 +31,7 @@ public class PoolConexiones extends UnicastRemoteObject implements IPoolConexion
 			driver = p.getProperty("driver");
 			url = p.getProperty("url");
 			user = p.getProperty("user");
-			password = "";
+			password = p.getProperty("password");
 			nivelTransaccional = Integer.parseInt(p.getProperty("nivelTransaccional"));
 			tamanio = Integer.parseInt(p.getProperty("tamanioPool"));
 			creadas = 0;

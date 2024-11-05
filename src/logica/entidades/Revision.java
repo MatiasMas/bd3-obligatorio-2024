@@ -1,6 +1,10 @@
 package logica.entidades;
 
-public class Revision {
+import java.io.Serializable;
+
+public class Revision implements Serializable {
+
+	private static final long serialVersionUID = 3308446847347329678L;
 	private int numero;
 	private String descripcion;
 
