@@ -13,6 +13,8 @@ import logica.entidades.Revision;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VORevision;
 import persistencia.consultas.Consultas;
+import poolConexiones.Conexion;
+import poolConexiones.IConexion;
 import utilidades.Configuracion;
 
 public class DAORevisiones implements Serializable {
@@ -32,36 +34,33 @@ public class DAORevisiones implements Serializable {
 		this.codFolio = codF;
 	}
 
-	public void insback(Revision rev) throws PersistenciaException {
+	public void insback(IConexion icon, Revision rev) throws PersistenciaException {
 		try {
-			Connection con = DriverManager.getConnection(url, usr, pwd);
 
 			Consultas consultas = new Consultas();
 			String query = consultas.agregarRevision();
-			PreparedStatement pstmt = con.prepareStatement(query);
+			Conexion con = (Conexion) icon;
+			PreparedStatement pstmt = con.getCon().prepareStatement(query);
 
 			pstmt.setInt(1, rev.getNumero());
 			pstmt.setString(2, this.codFolio);
 			pstmt.setString(3, rev.getDescripcion());
-
 			pstmt.executeUpdate();
-
 			pstmt.close();
-			con.close();
 		} catch (SQLException e) {
 			throw new PersistenciaException(e.getMessage());
 		}
 	}
 
-	public int largo() throws PersistenciaException {
+	public int largo(IConexion icon) throws PersistenciaException {
 		int largo = 0;
 
 		try {
-			Connection con = DriverManager.getConnection(url, usr, pwd);
 
 			Consultas consultas = new Consultas();
 			String query = consultas.contarRevisionesPorFolio();
-			PreparedStatement pstmt = con.prepareStatement(query);
+			Conexion con = (Conexion) icon;
+			PreparedStatement pstmt = con.getCon().prepareStatement(query);
 
 			pstmt.setString(1, this.codFolio);
 
@@ -72,7 +71,6 @@ public class DAORevisiones implements Serializable {
 			}
 
 			pstmt.close();
-			con.close();
 		} catch (SQLException e) {
 			throw new PersistenciaException();
 		}
@@ -80,15 +78,15 @@ public class DAORevisiones implements Serializable {
 		return largo;
 	}
 
-	public Revision kesimo(int numero) throws PersistenciaException {
+	public Revision kesimo(IConexion icon, int numero) throws PersistenciaException {
 		Revision revision = null;
 
 		try {
-			Connection con = DriverManager.getConnection(url, usr, pwd);
 
 			Consultas consultas = new Consultas();
 			String query = consultas.existeRevision();
-			PreparedStatement pstmt = con.prepareStatement(query);
+			Conexion con = (Conexion) icon;
+			PreparedStatement pstmt = con.getCon().prepareStatement(query);
 
 			pstmt.setString(1, this.codFolio);
 			pstmt.setInt(2, numero);
@@ -101,7 +99,6 @@ public class DAORevisiones implements Serializable {
 
 			rs.close();
 			pstmt.close();
-			con.close();
 		} catch (SQLException e) {
 			throw new PersistenciaException();
 		}
@@ -109,15 +106,15 @@ public class DAORevisiones implements Serializable {
 		return revision;
 	}
 
-	public List<VORevision> listarRevisiones() throws PersistenciaException {
+	public List<VORevision> listarRevisiones(IConexion icon) throws PersistenciaException {
 		List<VORevision> revisiones = new ArrayList<>();
 
 		try {
-			Connection con = DriverManager.getConnection(url, usr, pwd);
 
 			Consultas consultas = new Consultas();
 			String query = consultas.listarRevisionesPorFolio();
-			PreparedStatement pstmt = con.prepareStatement(query);
+			Conexion con = (Conexion) icon;
+			PreparedStatement pstmt = con.getCon().prepareStatement(query);
 
 			pstmt.setString(1, this.codFolio);
 
@@ -128,13 +125,11 @@ public class DAORevisiones implements Serializable {
 				revision.setNumero(rs.getInt("numero"));
 				revision.setDescripcion(rs.getString("descripcion"));
 				revision.setCodFolio(rs.getString("codFolio"));
-
 				revisiones.add(revision);
 			}
 
 			rs.close();
 			pstmt.close();
-			con.close();
 		} catch (SQLException e) {
 			throw new PersistenciaException();
 		}
@@ -142,20 +137,17 @@ public class DAORevisiones implements Serializable {
 		return revisiones;
 	}
 
-	public void borrarRevisiones() throws PersistenciaException {
+	public void borrarRevisiones(IConexion icon) throws PersistenciaException {
 		try {
-			Connection con = DriverManager.getConnection(url, usr, pwd);
 
 			Consultas consultas = new Consultas();
 			String query = consultas.eliminarRevisionesPorFolio();
-
-			PreparedStatement pstmt = con.prepareStatement(query);
+			Conexion con = (Conexion) icon;
+			PreparedStatement pstmt = con.getCon().prepareStatement(query);
 
 			pstmt.setString(1, this.codFolio);
 			pstmt.executeUpdate();
-
 			pstmt.close();
-			con.close();
 
 		} catch (SQLException e) {
 			throw new PersistenciaException();

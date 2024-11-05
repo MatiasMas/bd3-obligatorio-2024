@@ -6,6 +6,7 @@ import java.util.List;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VORevision;
 import persistencia.daos.DAORevisiones;
+import poolConexiones.IConexion;
 
 public class Folio implements Serializable {
 
@@ -16,8 +17,6 @@ public class Folio implements Serializable {
 	private int paginas;
 	private DAORevisiones secuencia;
 
-	
-	
 	public Folio() {
 		super();
 	}
@@ -41,29 +40,29 @@ public class Folio implements Serializable {
 		return paginas;
 	}
 
-	public boolean tieneRevision(int numR) throws PersistenciaException {
-		Revision revision = secuencia.kesimo(numR);
+	public boolean tieneRevision(IConexion icon, int numR) throws PersistenciaException {
+		Revision revision = secuencia.kesimo(icon, numR);
 
 		return (revision != null);
 	}
 
-	public int cantidadRevisiones() throws PersistenciaException {
-		return secuencia.largo();
+	public int cantidadRevisiones(IConexion icon) throws PersistenciaException {
+		return secuencia.largo(icon);
 	}
 
-	public void addRevision(Revision rev) throws PersistenciaException {
-		secuencia.insback(rev);
+	public void addRevision(IConexion icon, Revision rev) throws PersistenciaException {
+		secuencia.insback(icon, rev);
 	}
 
-	public Revision obtenerRevision(int numR) throws PersistenciaException {
-		return secuencia.kesimo(numR);
+	public Revision obtenerRevision(IConexion icon, int numR) throws PersistenciaException {
+		return secuencia.kesimo(icon, numR);
 	}
 
-	public List<VORevision> listarRevisiones() throws PersistenciaException {
-		return secuencia.listarRevisiones();
+	public List<VORevision> listarRevisiones(IConexion icon) throws PersistenciaException {
+		return secuencia.listarRevisiones(icon);
 	}
 
-	public void borrarRevisiones() throws PersistenciaException {
-		secuencia.borrarRevisiones();
+	public void borrarRevisiones(IConexion icon) throws PersistenciaException {
+		secuencia.borrarRevisiones(icon);
 	}
 }
