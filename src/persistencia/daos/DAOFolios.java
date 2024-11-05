@@ -1,7 +1,5 @@
 package persistencia.daos;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,13 +14,8 @@ import logica.valueObjects.VOFolioMaxRev;
 import persistencia.consultas.Consultas;
 import poolConexiones.Conexion;
 import poolConexiones.IConexion;
-import utilidades.Configuracion;
 
 public class DAOFolios {
-	private String url = Configuracion.getInstancia().getUrl();
-	private String usr = Configuracion.getInstancia().getUser();
-	private String pwd = Configuracion.getInstancia().getPassword();
-
 	public DAOFolios() {
 
 	}
@@ -33,7 +26,6 @@ public class DAOFolios {
 
 		try {
 
-			System.out.println("url: " + url + " usr: " + usr + " pwd: " + pwd);
 			Consultas consultas = new Consultas();
 			Conexion con = (Conexion) icon;
 			String query = consultas.existeFolio();
@@ -50,7 +42,6 @@ public class DAOFolios {
 			pstmt1.close();
 		} catch (SQLException e) {
 			System.out.println(e);
-			System.out.println("url: " + url + " usr: " + usr + " pwd: " + pwd);
 			throw new PersistenciaException();
 		}
 
@@ -123,16 +114,16 @@ public class DAOFolios {
 		}
 	}
 
-	public List<VOFolio> listarFolios() throws PersistenciaException {
+	public List<VOFolio> listarFolios(IConexion icon) throws PersistenciaException {
 		List<VOFolio> folios = new ArrayList<>();
 
 		try {
-			Connection con = DriverManager.getConnection(url, usr, pwd);
+			Conexion con = (Conexion) icon;
 
 			Consultas consultas = new Consultas();
 			String query = consultas.listarFolios();
 
-			PreparedStatement pstmt = con.prepareStatement(query);
+			PreparedStatement pstmt = con.getCon().prepareStatement(query);
 
 			ResultSet rs = pstmt.executeQuery();
 
@@ -144,7 +135,6 @@ public class DAOFolios {
 
 			rs.close();
 			pstmt.close();
-			con.close();
 		} catch (SQLException e) {
 			throw new PersistenciaException();
 		}
@@ -152,15 +142,15 @@ public class DAOFolios {
 		return folios;
 	}
 
-	public boolean esVacio() throws PersistenciaException {
+	public boolean esVacio(IConexion icon) throws PersistenciaException {
 		boolean existenFolios = false;
 
 		try {
-			Connection con = DriverManager.getConnection(url, usr, pwd);
+			Conexion con = (Conexion) icon;
 			Consultas consultas = new Consultas();
 			String query = consultas.contarFolios();
 
-			Statement stm = con.createStatement();
+			Statement stm = con.getCon().createStatement();
 
 			ResultSet rs = stm.executeQuery(query);
 
@@ -172,7 +162,6 @@ public class DAOFolios {
 
 			rs.close();
 			stm.close();
-			con.close();
 		} catch (SQLException e) {
 			throw new PersistenciaException();
 		}

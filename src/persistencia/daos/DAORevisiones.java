@@ -1,8 +1,6 @@
 package persistencia.daos;
 
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,15 +13,10 @@ import logica.valueObjects.VORevision;
 import persistencia.consultas.Consultas;
 import poolConexiones.Conexion;
 import poolConexiones.IConexion;
-import utilidades.Configuracion;
 
 public class DAORevisiones implements Serializable {
 
 	private static final long serialVersionUID = 444443211990804249L;
-
-	private String url = Configuracion.getInstancia().getUrl();
-	private String usr = Configuracion.getInstancia().getUser();
-	private String pwd = Configuracion.getInstancia().getPassword();
 	private String codFolio;
 
 	public DAORevisiones() {

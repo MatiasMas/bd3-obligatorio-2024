@@ -17,16 +17,13 @@ import logica.excepciones.NoExistenFoliosException;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOBorrarFolio;
 import logica.valueObjects.VODarDescripcion;
-import logica.valueObjects.VODescripcionRetornada;
 import logica.valueObjects.VOFolio;
 import logica.valueObjects.VOFolioMaxRev;
 import logica.valueObjects.VOListarRevisiones;
 import logica.valueObjects.VORevision;
+import persistencia.daos.DAOFolios;
 import poolConexiones.IConexion;
 import poolConexiones.IPoolConexiones;
-import persistencia.daos.DAOFolios;
-import persistencia.daos.DAORevisiones;
-import persistencia.daos.IDAOFolios;
 
 public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFachada {
 	/**
@@ -209,7 +206,10 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 	}
 
 	public List<VOFolio> listarFolios() throws RemoteException, PersistenciaException, FolioNoExisteException {
-		return diccio.listarFolios();
+		IConexion icon = pool.obtenerConexion(true);
+		List<VOFolio> folios = diccio.listarFolios(icon);
+		pool.liberarConexion(icon, true);
+		return folios;
 	}
 
 	public List<VORevision> listarRevisiones(VOListarRevisiones voL)
@@ -230,7 +230,7 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 		IConexion icon = null;
 		icon = pool.obtenerConexion(true);
 		
-		if (diccio.esVacio()) {
+		if (diccio.esVacio(icon)) {
 			throw new NoExistenFoliosException();
 		}
 		
