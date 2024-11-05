@@ -2,6 +2,8 @@
 package logica.valueObjects;
 
 public class VOFolioMaxRev extends VOFolio {
+	
+	private static final long serialVersionUID = 1L;
 	private int cantRevisiones;
 
 	public VOFolioMaxRev(String codigo, String caratula, int paginas, int cantRevisiones) {
