@@ -206,24 +206,32 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 
 		return descripcion;
 	}
-
+	
 	public List<VOFolio> listarFolios() throws RemoteException, PersistenciaException, FolioNoExisteException {
 		return diccio.listarFolios();
 	}
 
-	public List<VORevision> listarRevisiones(VOListarRevisiones voL)
-			throws RemoteException, PersistenciaException, FolioNoExisteException {
-		IConexion icon = null;
-		icon = pool.obtenerConexion(true);
-		if (!diccio.member(icon, voL.getCodFolio())) {
-			throw new FolioNoExisteException();
-		}
+//	public List<VORevision> listarRevisiones(VOListarRevisiones voL)
+//			throws RemoteException, PersistenciaException, FolioNoExisteException {
+//		IConexion icon = null;
+//		icon = pool.obtenerConexion(true);
+//		if (!diccio.member(icon, voL.getCodFolio())) {
+//			throw new FolioNoExisteException();
+//		}
+//
+//		Folio folio = diccio.find(icon, voL.getCodFolio());
+//	}
 
+	
+	@Override
+	public List<VORevision> listarRevisiones(VOListarRevisiones voL) throws RemoteException, PersistenciaException, FolioNoExisteException {
+		IConexion icon = pool.obtenerConexion(true);
+		if (!diccio.member(icon, voL.getCodFolio())) throw new FolioNoExisteException();
 		Folio folio = diccio.find(icon, voL.getCodFolio());
-
 		return folio.listarRevisiones();
 	}
 
+	@Override
 	public VOFolioMaxRev folioMasRevisado() throws RemoteException, PersistenciaException, NoExistenFoliosException {
 		IConexion icon = null;
 		icon = pool.obtenerConexion(true);
@@ -233,4 +241,5 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 
 		return diccio.folioMasRevisado(icon);
 	}
+
 }

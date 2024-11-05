@@ -1,5 +1,6 @@
 package logica.entidades;
 
+import java.io.Serializable;
 import java.util.List;
 
 import logica.excepciones.PersistenciaException;
@@ -7,11 +8,20 @@ import logica.valueObjects.VORevision;
 import persistencia.daos.DAORevisiones;
 import poolConexiones.IConexion;
 
-public class Folio {
+public class Folio implements Serializable {
+
+	private static final long serialVersionUID = -9054308125777347738L;
+
 	private String codigo;
 	private String caratula;
 	private int paginas;
 	private DAORevisiones secuencia;
+
+	
+	
+	public Folio() {
+		super();
+	}
 
 	public Folio(String codigo, String caratula, int paginas) {
 		this.codigo = codigo;
@@ -34,7 +44,7 @@ public class Folio {
 
 	public boolean tieneRevision(int numR) throws PersistenciaException {
 		Revision revision = secuencia.kesimo(numR);
-		
+
 		return (revision != null);
 	}
 
@@ -44,14 +54,13 @@ public class Folio {
 
 	public void addRevision(IConexion icon,Revision rev) throws PersistenciaException {
      	secuencia.insback(icon,rev);
-	}
 
 	public Revision obtenerRevision(int numR) throws PersistenciaException {
 		return secuencia.kesimo(numR);
 	}
 
 	public List<VORevision> listarRevisiones() throws PersistenciaException {
-		  return secuencia.listarRevisiones();
+		return secuencia.listarRevisiones();
 	}
 
 	public void borrarRevisiones() throws PersistenciaException {
