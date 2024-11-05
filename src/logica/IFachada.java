@@ -11,7 +11,6 @@ import logica.excepciones.NoExistenFoliosException;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOBorrarFolio;
 import logica.valueObjects.VODarDescripcion;
-import logica.valueObjects.VODescripcionRetornada;
 import logica.valueObjects.VOFolio;
 import logica.valueObjects.VOFolioMaxRev;
 import logica.valueObjects.VOListarRevisiones;
