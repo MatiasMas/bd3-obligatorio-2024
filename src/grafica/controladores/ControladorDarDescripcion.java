@@ -22,7 +22,7 @@ public class ControladorDarDescripcion {
 		this.dd = ventana;
 	}	
 	
-	public VODescripcionRetornada darDescripcion (int numero, String codFolio) throws Exception {
+	public String darDescripcion (String codFolio, int numero) throws Exception {
 		
 		Properties p = new Properties();
 		String nomArch = "config/cliente.properties";
