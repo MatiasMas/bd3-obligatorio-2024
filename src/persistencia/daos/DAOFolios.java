@@ -106,13 +106,13 @@ public class DAOFolios {
 	public void delete(IConexion icon, String cod) throws PersistenciaException {
 
 		try {
-			Conexion con = (Conexion) icon;
 			Consultas consultas = new Consultas();
 			String deleteRevisiones = consultas.eliminarFolio();
+			Conexion con = (Conexion) icon;
 			PreparedStatement borrarR = null;
 
 			Folio f = this.find(icon, cod);
-			f.borrarRevisiones();
+			f.borrarRevisiones(icon);
 			borrarR = con.getCon().prepareStatement(deleteRevisiones);
 			borrarR.setString(1, cod);
 			borrarR.executeUpdate();

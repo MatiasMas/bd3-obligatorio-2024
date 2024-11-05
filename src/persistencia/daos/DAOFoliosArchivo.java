@@ -13,6 +13,7 @@ import logica.entidades.Folio;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOFolio;
 import logica.valueObjects.VOFolioMaxRev;
+import poolConexiones.IConexion;
 import utilidades.Configuracion;
 
 public class DAOFoliosArchivo {
@@ -111,7 +112,7 @@ public class DAOFoliosArchivo {
 		return null;
 	}
 
-	public void delete(String cod) throws PersistenciaException {
+	public void delete(IConexion icon, String cod) throws PersistenciaException {
 
 		String rutaArchivo = Configuracion.getInstancia().getRutaRespaldo();
 		List<Folio> folios = new ArrayList<>();
@@ -131,7 +132,7 @@ public class DAOFoliosArchivo {
 
 		for (Folio folio : folios) {
 			if (folio.getCodigo().equals(cod)) {
-				folio.borrarRevisiones();
+				folio.borrarRevisiones(icon);
 				folios.remove(folio);
 				break;
 			}
@@ -194,7 +195,7 @@ public class DAOFoliosArchivo {
 		return !existenFolios;
 	}
 
-	public VOFolioMaxRev folioMasRevisado() throws PersistenciaException {
+	public VOFolioMaxRev folioMasRevisado(IConexion icon) throws PersistenciaException {
 		VOFolioMaxRev voFolio = null;
 		int maxRevisiones = -1;
 		String rutaArchivo = Configuracion.getInstancia().getRutaRespaldo();
@@ -207,7 +208,7 @@ public class DAOFoliosArchivo {
 			oInput.close();
 
 			for (Folio folio : listaFolios) {
-				int cantidadRevisiones = folio.cantidadRevisiones();
+				int cantidadRevisiones = folio.cantidadRevisiones(icon);
 
 				if (cantidadRevisiones > maxRevisiones) {
 					maxRevisiones = cantidadRevisiones;

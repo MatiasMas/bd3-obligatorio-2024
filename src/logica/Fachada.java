@@ -178,8 +178,8 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 			if (diccio.member(icon, voD.getCodFolio())) {
 				DAOFolios dicFilio = new DAOFolios();
 				Folio fol = dicFilio.find(icon, voD.getCodFolio());
-				if (fol.tieneRevision(voD.getNumRevision())) {
-					Revision rev = fol.obtenerRevision(voD.getNumRevision());
+				if (fol.tieneRevision(icon, voD.getNumRevision())) {
+					Revision rev = fol.obtenerRevision(icon, voD.getNumRevision());
 					descripcion = rev.getDescripcion();
 				} else {
 					noExisteRevision = true;
@@ -189,6 +189,7 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 				noExisteFolio = true;
 				msgError = "Folio no existe";
 			}
+			pool.liberarConexion(icon, true);
 
 		} catch (PersistenciaException e) {
 			throw new DarDescripcionException(msgError);
@@ -206,39 +207,35 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 
 		return descripcion;
 	}
-	
+
 	public List<VOFolio> listarFolios() throws RemoteException, PersistenciaException, FolioNoExisteException {
 		return diccio.listarFolios();
 	}
 
-//	public List<VORevision> listarRevisiones(VOListarRevisiones voL)
-//			throws RemoteException, PersistenciaException, FolioNoExisteException {
-//		IConexion icon = null;
-//		icon = pool.obtenerConexion(true);
-//		if (!diccio.member(icon, voL.getCodFolio())) {
-//			throw new FolioNoExisteException();
-//		}
-//
-//		Folio folio = diccio.find(icon, voL.getCodFolio());
-//	}
-
-	
-	@Override
-	public List<VORevision> listarRevisiones(VOListarRevisiones voL) throws RemoteException, PersistenciaException, FolioNoExisteException {
+	public List<VORevision> listarRevisiones(VOListarRevisiones voL)
+			throws RemoteException, PersistenciaException, FolioNoExisteException {
+		
 		IConexion icon = pool.obtenerConexion(true);
-		if (!diccio.member(icon, voL.getCodFolio())) throw new FolioNoExisteException();
+		
+		if (!diccio.member(icon, voL.getCodFolio()))
+			throw new FolioNoExisteException();
 		Folio folio = diccio.find(icon, voL.getCodFolio());
-		return folio.listarRevisiones();
+		
+		pool.liberarConexion(icon, true);
+		
+		return folio.listarRevisiones(icon);
 	}
 
-	@Override
 	public VOFolioMaxRev folioMasRevisado() throws RemoteException, PersistenciaException, NoExistenFoliosException {
 		IConexion icon = null;
 		icon = pool.obtenerConexion(true);
+		
 		if (diccio.esVacio()) {
 			throw new NoExistenFoliosException();
 		}
-
+		
+		pool.liberarConexion(icon, true);
+		
 		return diccio.folioMasRevisado(icon);
 	}
 

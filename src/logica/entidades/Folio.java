@@ -17,8 +17,6 @@ public class Folio implements Serializable {
 	private int paginas;
 	private DAORevisiones secuencia;
 
-	
-	
 	public Folio() {
 		super();
 	}
@@ -42,8 +40,8 @@ public class Folio implements Serializable {
 		return paginas;
 	}
 
-	public boolean tieneRevision(int numR) throws PersistenciaException {
-		Revision revision = secuencia.kesimo(numR);
+	public boolean tieneRevision(IConexion icon, int numR) throws PersistenciaException {
+		Revision revision = secuencia.kesimo(icon, numR);
 
 		return (revision != null);
 	}
@@ -52,18 +50,19 @@ public class Folio implements Serializable {
 		return secuencia.largo(icon);
 	}
 
-	public void addRevision(IConexion icon,Revision rev) throws PersistenciaException {
-     	secuencia.insback(icon,rev);
-
-	public Revision obtenerRevision(int numR) throws PersistenciaException {
-		return secuencia.kesimo(numR);
+	public void addRevision(IConexion icon, Revision rev) throws PersistenciaException {
+		secuencia.insback(icon, rev);
 	}
 
-	public List<VORevision> listarRevisiones() throws PersistenciaException {
-		return secuencia.listarRevisiones();
+	public Revision obtenerRevision(IConexion icon, int numR) throws PersistenciaException {
+		return secuencia.kesimo(icon, numR);
 	}
 
-	public void borrarRevisiones() throws PersistenciaException {
-		secuencia.borrarRevisiones();
+	public List<VORevision> listarRevisiones(IConexion icon) throws PersistenciaException {
+		return secuencia.listarRevisiones(icon);
+	}
+
+	public void borrarRevisiones(IConexion icon) throws PersistenciaException {
+		secuencia.borrarRevisiones(icon);
 	}
 }
