@@ -11,37 +11,22 @@ import java.util.Properties;
 
 import logica.excepciones.PersistenciaException;
 
-public class PoolConexiones implements IPoolConexiones {
+public class PoolConexionesArchivo implements IPoolConexiones {
 
-	private String driver, url, user, password;
-	private int nivelTransaccional;
-	private IConexion conexiones[];
-	private int tamanio, creadas, tope;
+	private int cantLectores;
+	private boolean escribiendo;
 
-	public PoolConexiones() throws RemoteException, PersistenciaException, ClassNotFoundException {
+	public PoolConexionesArchivo() {
 
-		try {
-			Properties p = new Properties();
-			String fileConfig = "config/config.properties";
+		
+			//Properties p = new Properties();
+			//String fileConfig = "config/config.properties";
 
-			p.load(new FileInputStream(fileConfig));
-			driver = p.getProperty("driver");
-			url = p.getProperty("url");
-			user = p.getProperty("user");
-			password = p.getProperty("password");
-			nivelTransaccional = Integer.parseInt(p.getProperty("nivelTransaccional"));
-			tamanio = Integer.parseInt(p.getProperty("tamanioPool"));
-			creadas = 0;
-			tope = 0;
+			//p.load(new FileInputStream(fileConfig));
+			
 
-			Class.forName(driver);
-			conexiones = new IConexion[tamanio];
-
-		} catch (FileNotFoundException e) {
-			System.out.println("Error, El archivo no existe!");
-		} catch (IOException e) {
-			System.out.println("Error, No se puede leer el archivo!");
-		}
+			
+	
 	}
 
 	public IConexion obtenerConexion(boolean mod) throws PersistenciaException {
