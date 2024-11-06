@@ -1,7 +1,5 @@
 package persistencia.daos;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,29 +13,24 @@ import logica.valueObjects.VOFolio;
 import logica.valueObjects.VOFolioMaxRev;
 import persistencia.consultas.Consultas;
 import poolConexiones.Conexion;
-import utilidades.Configuracion;
+import poolConexiones.IConexion;
 
-public class DAOFolios {
-	private String url = Configuracion.getInstancia().getUrl();
-	private String usr = Configuracion.getInstancia().getUser();
-	private String pwd = Configuracion.getInstancia().getPassword();
-
+public class DAOFolios implements IDAOFolios{
 	public DAOFolios() {
 
 	}
 
-	public boolean member(String codigo) throws PersistenciaException {
+	public boolean member(IConexion icon, String codigo) throws PersistenciaException {
 
 		boolean existeFolio = false;
 
 		try {
-			Connection con = DriverManager.getConnection(url, usr, pwd);
 
-			System.out.println("url: " + url + " usr: " + usr + " pwd: " + pwd);
 			Consultas consultas = new Consultas();
+			Conexion con = (Conexion) icon;
 			String query = consultas.existeFolio();
 
-			PreparedStatement pstmt1 = con.prepareStatement(query);
+			PreparedStatement pstmt1 = con.getCon().prepareStatement(query);
 			pstmt1.setString(1, codigo);
 
 			ResultSet rs = pstmt1.executeQuery();
@@ -47,47 +40,42 @@ public class DAOFolios {
 
 			rs.close();
 			pstmt1.close();
-			con.close();
 		} catch (SQLException e) {
 			System.out.println(e);
-			System.out.println("url: " + url + " usr: " + usr + " pwd: " + pwd);
 			throw new PersistenciaException();
 		}
 
 		return existeFolio;
 	}
 
-	public void insert(Folio fol) throws PersistenciaException {
+	public void insert(IConexion icon, Folio fol) throws PersistenciaException {
 		try {
-			Connection con = DriverManager.getConnection(url, usr, pwd);
+//			Connection con = DriverManager.getConnection(url, usr, pwd);
 
 			Consultas consultas = new Consultas();
 			String query = consultas.agregarFolio();
-			PreparedStatement pstmt = con.prepareStatement(query);
+			Conexion con = (Conexion) icon;
+			PreparedStatement pstmt = con.getCon().prepareStatement(query);
 
 			pstmt.setString(1, fol.getCodigo());
 			pstmt.setString(2, fol.getCaratula());
 			pstmt.setInt(3, fol.getPaginas());
-
 			pstmt.executeUpdate();
-
 			pstmt.close();
-			con.close();
 		} catch (SQLException e) {
 			throw new PersistenciaException();
 		}
 	}
 
-	public Folio find(String cod) throws PersistenciaException {
+	public Folio find(IConexion icon, String cod) throws PersistenciaException {
 		Folio folio = null;
 
 		try {
-			Connection con = DriverManager.getConnection(url, usr, pwd);
 
 			Consultas consultas = new Consultas();
 			String query = consultas.existeFolio();
-
-			PreparedStatement pstmt = con.prepareStatement(query);
+			Conexion con = (Conexion) icon;
+			PreparedStatement pstmt = con.getCon().prepareStatement(query);
 
 			pstmt.setString(1, cod);
 
@@ -99,7 +87,6 @@ public class DAOFolios {
 
 			rs.close();
 			pstmt.close();
-			con.close();
 		} catch (SQLException e) {
 			throw new PersistenciaException();
 		}
@@ -107,37 +94,36 @@ public class DAOFolios {
 		return folio;
 	}
 
-	public void delete(String cod) throws PersistenciaException {
+	public void delete(IConexion icon, String cod) throws PersistenciaException {
 
 		try {
-			Connection con = DriverManager.getConnection(url, usr, pwd);
 			Consultas consultas = new Consultas();
 			String deleteRevisiones = consultas.eliminarFolio();
+			Conexion con = (Conexion) icon;
 			PreparedStatement borrarR = null;
 
-			Folio f = this.find(cod);
-			f.borrarRevisiones();
-			borrarR = con.prepareStatement(deleteRevisiones);
+			Folio f = this.find(icon, cod);
+			f.borrarRevisiones(icon);
+			borrarR = con.getCon().prepareStatement(deleteRevisiones);
 			borrarR.setString(1, cod);
 			borrarR.executeUpdate();
 			borrarR.close();
 
 		} catch (SQLException e) {
 			throw new PersistenciaException("Error en la persistencia");
-
 		}
 	}
 
-	public List<VOFolio> listarFolios() throws PersistenciaException {
+	public List<VOFolio> listarFolios(IConexion icon) throws PersistenciaException {
 		List<VOFolio> folios = new ArrayList<>();
 
 		try {
-			Connection con = DriverManager.getConnection(url, usr, pwd);
+			Conexion con = (Conexion) icon;
 
 			Consultas consultas = new Consultas();
 			String query = consultas.listarFolios();
 
-			PreparedStatement pstmt = con.prepareStatement(query);
+			PreparedStatement pstmt = con.getCon().prepareStatement(query);
 
 			ResultSet rs = pstmt.executeQuery();
 
@@ -149,7 +135,6 @@ public class DAOFolios {
 
 			rs.close();
 			pstmt.close();
-			con.close();
 		} catch (SQLException e) {
 			throw new PersistenciaException();
 		}
@@ -157,15 +142,15 @@ public class DAOFolios {
 		return folios;
 	}
 
-	public boolean esVacio() throws PersistenciaException {
+	public boolean esVacio(IConexion icon) throws PersistenciaException {
 		boolean existenFolios = false;
 
 		try {
-			Connection con = DriverManager.getConnection(url, usr, pwd);
+			Conexion con = (Conexion) icon;
 			Consultas consultas = new Consultas();
 			String query = consultas.contarFolios();
 
-			Statement stm = con.createStatement();
+			Statement stm = con.getCon().createStatement();
 
 			ResultSet rs = stm.executeQuery(query);
 
@@ -177,7 +162,6 @@ public class DAOFolios {
 
 			rs.close();
 			stm.close();
-			con.close();
 		} catch (SQLException e) {
 			throw new PersistenciaException();
 		}
@@ -185,23 +169,22 @@ public class DAOFolios {
 		return !existenFolios;
 	}
 
-	public VOFolioMaxRev folioMasRevisado() throws PersistenciaException {
+	public VOFolioMaxRev folioMasRevisado(IConexion icon) throws PersistenciaException {
 		VOFolioMaxRev voFolio = null;
 		int maxRevisiones = -1;
 
 		try {
-			Connection con = DriverManager.getConnection(url, usr, pwd);
 			Consultas consultas = new Consultas();
 			String query = consultas.listarFolios();
-
-			Statement stm = con.createStatement();
+			Conexion con = (Conexion) icon;
+			Statement stm = con.getCon().createStatement();
 
 			ResultSet rs = stm.executeQuery(query);
 
 			while (rs.next()) {
 				Folio folio = new Folio(rs.getString("codigo"), rs.getString("caratula"), rs.getInt("paginas"));
 
-				int cantidadRevisiones = folio.cantidadRevisiones();
+				int cantidadRevisiones = folio.cantidadRevisiones(con);
 
 				if (cantidadRevisiones > maxRevisiones) {
 					voFolio = new VOFolioMaxRev(folio.getCodigo(), folio.getCaratula(), folio.getPaginas(),
@@ -211,7 +194,6 @@ public class DAOFolios {
 
 			rs.close();
 			stm.close();
-			con.close();
 		} catch (SQLException e) {
 			throw new PersistenciaException();
 		}

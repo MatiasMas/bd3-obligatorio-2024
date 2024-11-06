@@ -23,7 +23,6 @@ public class ControladorAgregarFolio {
 	}
 
 	public void agregarFolio(String codigo, String caratula, int paginas) throws PersistenciaException, FolioYaExisteException {
-		System.out.println("Codigo: " + codigo + " Caratula: " + caratula + " Paginas: " + paginas);
 
 		Properties p = new Properties();
 		String nomArch = "config/cliente.properties";

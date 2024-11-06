@@ -4,7 +4,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -12,9 +11,7 @@ import java.util.Properties;
 
 import logica.excepciones.PersistenciaException;
 
-public class PoolConexiones extends UnicastRemoteObject implements IPoolConexiones {
-
-	private static final long serialVersionUID = 1L;
+public class PoolConexiones implements IPoolConexiones {
 
 	private String driver, url, user, password;
 	private int nivelTransaccional;
@@ -31,7 +28,7 @@ public class PoolConexiones extends UnicastRemoteObject implements IPoolConexion
 			driver = p.getProperty("driver");
 			url = p.getProperty("url");
 			user = p.getProperty("user");
-			password = "";
+			password = p.getProperty("password");
 			nivelTransaccional = Integer.parseInt(p.getProperty("nivelTransaccional"));
 			tamanio = Integer.parseInt(p.getProperty("tamanioPool"));
 			creadas = 0;

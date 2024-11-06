@@ -30,6 +30,7 @@ public class Configuracion {
 		url = p.getProperty("url");
 		user = p.getProperty("user");
 		pwd = p.getProperty("password");
+		rutaRespaldo = p.getProperty("rutaRespaldo");
 		
 	}
 

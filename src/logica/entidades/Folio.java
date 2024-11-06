@@ -1,21 +1,33 @@
 package logica.entidades;
 
+import java.io.Serializable;
 import java.util.List;
 
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VORevision;
 import persistencia.daos.DAORevisiones;
+import persistencia.daos.IDAORevisiones;
+import poolConexiones.IConexion;
+import utilidades.Configuracion;
 
-public class Folio {
+public class Folio implements Serializable {
+
+	private static final long serialVersionUID = -9054308125777347738L;
+
 	private String codigo;
 	private String caratula;
 	private int paginas;
-	private DAORevisiones secuencia;
+	private IDAORevisiones secuencia;
+
+	public Folio() {
+		super();
+	}
 
 	public Folio(String codigo, String caratula, int paginas) {
 		this.codigo = codigo;
 		this.caratula = caratula;
 		this.paginas = paginas;
+		//TODO: aca se va a instanciar usando abstract factory (pagina 63 del teorico 3 capas)
 		this.secuencia = new DAORevisiones(this.codigo);
 	}
 
@@ -31,29 +43,29 @@ public class Folio {
 		return paginas;
 	}
 
-	public boolean tieneRevision(int numR) throws PersistenciaException {
-		Revision revision = secuencia.kesimo(numR);
-		
+	public boolean tieneRevision(IConexion icon, int numR) throws PersistenciaException {
+		Revision revision = secuencia.kesimo(icon, numR);
+
 		return (revision != null);
 	}
 
-	public int cantidadRevisiones() throws PersistenciaException {
-		return secuencia.largo();
+	public int cantidadRevisiones(IConexion icon) throws PersistenciaException {
+		return secuencia.largo(icon);
 	}
 
-	public void addRevision(Revision rev) throws PersistenciaException {
-     	secuencia.insback(rev);
+	public void addRevision(IConexion icon, Revision rev) throws PersistenciaException {
+		secuencia.insback(icon, rev);
 	}
 
-	public Revision obtenerRevision(int numR) throws PersistenciaException {
-		return secuencia.kesimo(numR);
+	public Revision obtenerRevision(IConexion icon, int numR) throws PersistenciaException {
+		return secuencia.kesimo(icon, numR);
 	}
 
-	public List<VORevision> listarRevisiones() throws PersistenciaException {
-		  return secuencia.listarRevisiones();
+	public List<VORevision> listarRevisiones(IConexion icon) throws PersistenciaException {
+		return secuencia.listarRevisiones(icon);
 	}
 
-	public void borrarRevisiones() throws PersistenciaException {
-		secuencia.borrarRevisiones();
+	public void borrarRevisiones(IConexion icon) throws PersistenciaException {
+		secuencia.borrarRevisiones(icon);
 	}
 }
