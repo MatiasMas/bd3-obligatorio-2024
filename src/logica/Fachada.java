@@ -27,7 +27,6 @@ import poolConexiones.IPoolConexiones;
 
 public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFachada {
 
-	
 	private static final long serialVersionUID = 1L;
 	// Esta tiene que ser el DAO ahora
 	private DAOFolios diccio = new DAOFolios();
@@ -214,28 +213,28 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 
 	public List<VORevision> listarRevisiones(VOListarRevisiones voL)
 			throws RemoteException, PersistenciaException, FolioNoExisteException {
-		
+
 		IConexion icon = pool.obtenerConexion(true);
-		
+
 		if (!diccio.member(icon, voL.getCodFolio()))
 			throw new FolioNoExisteException();
 		Folio folio = diccio.find(icon, voL.getCodFolio());
-		
+
 		pool.liberarConexion(icon, true);
-		
+
 		return folio.listarRevisiones(icon);
 	}
 
 	public VOFolioMaxRev folioMasRevisado() throws RemoteException, PersistenciaException, NoExistenFoliosException {
 		IConexion icon = null;
 		icon = pool.obtenerConexion(true);
-		
+
 		if (diccio.esVacio(icon)) {
 			throw new NoExistenFoliosException();
 		}
-		
+
 		pool.liberarConexion(icon, true);
-		
+
 		return diccio.folioMasRevisado(icon);
 	}
 
