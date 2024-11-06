@@ -8,7 +8,6 @@ import logica.excepciones.DarDescripcionException;
 import logica.excepciones.FolioNoExisteException;
 import logica.excepciones.FolioYaExisteException;
 import logica.excepciones.NoExistenFoliosException;
-import logica.excepciones.NoHayRevisionesException;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOBorrarFolio;
 import logica.valueObjects.VODarDescripcion;
@@ -23,7 +22,7 @@ public interface IFachada extends Remote {
 	public void agregarRevision(VORevision voR) throws RemoteException, PersistenciaException, FolioNoExisteException;
 
 	public void borrarFolioRevisiones(VOBorrarFolio voF)
-			throws RemoteException, PersistenciaException, FolioNoExisteException, NoHayRevisionesException;
+			throws RemoteException, PersistenciaException, FolioNoExisteException;
 
 	public String darDescripcion(VODarDescripcion voD)
 			throws RemoteException, PersistenciaException, FolioNoExisteException, DarDescripcionException;

@@ -11,7 +11,6 @@ import java.util.Properties;
 import grafica.ventanas.EliminarFolioRevisiones;
 import logica.IFachada;
 import logica.excepciones.FolioNoExisteException;
-import logica.excepciones.NoHayRevisionesException;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOBorrarFolio;
 
@@ -23,7 +22,7 @@ public class ControladorEliminarFolioRevisiones {
 		this.efr = ventana;
 	}
 
-	public void eliminarFolioRevisiones(String codigoFolio) throws PersistenciaException, FolioNoExisteException, NoHayRevisionesException {
+	public void eliminarFolioRevisiones(String codigoFolio) throws PersistenciaException, FolioNoExisteException {
 		System.out.println("codigoFolio: " + codigoFolio);
 
 		Properties p = new Properties();

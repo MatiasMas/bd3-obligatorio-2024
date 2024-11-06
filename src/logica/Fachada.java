@@ -14,7 +14,6 @@ import logica.excepciones.DarDescripcionException;
 import logica.excepciones.FolioNoExisteException;
 import logica.excepciones.FolioYaExisteException;
 import logica.excepciones.NoExistenFoliosException;
-import logica.excepciones.NoHayRevisionesException;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOBorrarFolio;
 import logica.valueObjects.VODarDescripcion;
@@ -129,7 +128,7 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 	}
 
 	public void borrarFolioRevisiones(VOBorrarFolio voF)
-			throws RemoteException, PersistenciaException, FolioNoExisteException, NoHayRevisionesException {
+			throws RemoteException, PersistenciaException, FolioNoExisteException {
 
 		String msgError = null;
 		boolean noExisteFolio = false;

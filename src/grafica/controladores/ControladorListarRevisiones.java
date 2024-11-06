@@ -12,7 +12,6 @@ import java.util.Properties;
 import grafica.ventanas.ListarRevisiones;
 import logica.IFachada;
 import logica.excepciones.FolioNoExisteException;
-import logica.excepciones.NoHayRevisionesException;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOListarRevisiones;
 import logica.valueObjects.VORevision;
@@ -25,7 +24,7 @@ public class ControladorListarRevisiones {
 		this.lr = ventana;
 	}
 	
-	public List<VORevision> listarRevisiones(String codigoFolio) throws PersistenciaException, NoHayRevisionesException, FolioNoExisteException {
+	public List<VORevision> listarRevisiones(String codigoFolio) throws PersistenciaException, FolioNoExisteException {
 		
 
 		Properties p = new Properties();

@@ -10,7 +10,6 @@ import javax.swing.table.DefaultTableModel;
 
 import grafica.controladores.ControladorListarRevisiones;
 import logica.excepciones.FolioNoExisteException;
-import logica.excepciones.NoHayRevisionesException;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VORevision;
 
@@ -96,10 +95,7 @@ public class ListarRevisiones extends JFrame {
 		            } catch (FolioNoExisteException e2) {
 		                JOptionPane.showMessageDialog(null, "Error NO existe Folio: " + e2.getMessage(), 
 		                    "Error", JOptionPane.ERROR_MESSAGE);
-		            } catch (NoHayRevisionesException e3) {
-		                JOptionPane.showMessageDialog(null, "Error NO existe Revision: " + e3.getMessage(), 
-		                    "Error", JOptionPane.ERROR_MESSAGE);
-		            }
+		            } 
 		        }
 		    });
 		    contentPane.add(btnObtenerRevisiones);

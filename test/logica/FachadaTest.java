@@ -155,29 +155,29 @@ class FachadaTest {
 		});
 	}
 	
-	@Test
-	void testBorrarFolioRevisiones_NoExistenRevisiones() throws RemoteException, InstantiationException, ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, PersistenciaException, FolioYaExisteException, SQLException {
-		try {
-			Fachada fachada = new Fachada();
-			VOFolio voF = new VOFolio("CodigoD", "CaratulaGenerica D", 60);
-			VOBorrarFolio voB = new VOBorrarFolio("CodigoD");
-			
-			fachada.agregarFolio(voF);
-
-			assertThrows(NoHayRevisionesException.class, () -> {
-				fachada.borrarFolioRevisiones(voB);
-			});
-		} finally {
-			String consultaBorradoFolio = "DELETE FROM folios WHERE codigo = 'CodigoD'";
-			Statement stm1 = con.createStatement();
-			assertEquals(1, stm1.executeUpdate(consultaBorradoFolio));
-
-			stm1.close();
-		}
-	}
+//	@Test
+//	void testBorrarFolioRevisiones_NoExistenRevisiones() throws RemoteException, InstantiationException, ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, PersistenciaException, FolioYaExisteException, SQLException {
+//		try {
+//			Fachada fachada = new Fachada();
+//			VOFolio voF = new VOFolio("CodigoD", "CaratulaGenerica D", 60);
+//			VOBorrarFolio voB = new VOBorrarFolio("CodigoD");
+//			
+//			fachada.agregarFolio(voF);
+//
+//			assertThrows(NoHayRevisionesException.class, () -> {
+//				fachada.borrarFolioRevisiones(voB);
+//			});
+//		} finally {
+//			String consultaBorradoFolio = "DELETE FROM folios WHERE codigo = 'CodigoD'";
+//			Statement stm1 = con.createStatement();
+//			assertEquals(1, stm1.executeUpdate(consultaBorradoFolio));
+//
+//			stm1.close();
+//		}
+//	}
 	
 	@Test
-	void testBorrarFolioRevisiones_ExisteFolio() throws RemoteException, InstantiationException, ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, PersistenciaException, FolioYaExisteException, SQLException, FolioNoExisteException, NoHayRevisionesException {
+	void testBorrarFolioRevisiones_ExisteFolio() throws RemoteException, InstantiationException, ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, PersistenciaException, FolioYaExisteException, SQLException, FolioNoExisteException {
 		Fachada fachada = new Fachada();
 		VOFolio voF = new VOFolio("CodigoD", "CaratulaGenerica D", 60);
 		VOBorrarFolio voB = new VOBorrarFolio("CodigoD");
