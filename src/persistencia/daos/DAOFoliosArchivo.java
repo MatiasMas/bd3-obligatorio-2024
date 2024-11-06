@@ -64,7 +64,7 @@ public class DAOFoliosArchivo implements IDAOFolios{
 
 	public void delete(IConexion icon, String cod) throws PersistenciaException {
 		
-		deleteRevisionsFile(cod);
+		deleteRevisionsFile(icon,cod);
 		// Eliminar el archivo del folio
 		File folioFile = new File(crearNombreArchivoFolio(cod));
 		folioFile.delete();
