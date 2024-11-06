@@ -75,7 +75,6 @@ public class EliminarFolioRevisiones extends JFrame {
 				} catch (FolioNoExisteException e2) {
 					JOptionPane.showMessageDialog(null, e2.getMessage());
 				}
-
 			}
 		});
 		btnEliminarFolioRevision.setBounds(104, 60, 207, 23);

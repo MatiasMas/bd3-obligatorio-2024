@@ -11,7 +11,10 @@ import java.util.Properties;
 import grafica.ventanas.AgregarFolio;
 import logica.IFachada;
 import logica.valueObjects.VOFolio;
+import utilidades.Validador;
 import logica.excepciones.FolioYaExisteException;
+import logica.excepciones.FormatoAlfanumericoException;
+import logica.excepciones.FormatoNumeroException;
 import logica.excepciones.PersistenciaException;
 
 public class ControladorAgregarFolio {
@@ -22,10 +25,10 @@ public class ControladorAgregarFolio {
 		this.caf = ventana;
 	}
 
-	public void agregarFolio(String codigo, String caratula, int paginas) throws PersistenciaException, FolioYaExisteException {
-
+	public void agregarFolio(String codigo, String caratula, String paginas) throws PersistenciaException, FolioYaExisteException, FormatoNumeroException, FormatoAlfanumericoException {
 		Properties p = new Properties();
 		String nomArch = "config/cliente.properties";
+		
 		try {
 			p.load(new FileInputStream(nomArch));
 		} catch (IOException e1) {
@@ -33,10 +36,14 @@ public class ControladorAgregarFolio {
 		}
 
 		String path = p.getProperty("fachada");
+		
+		if(!Validador.esAlfaNumerico(codigo)) throw new FormatoAlfanumericoException("El valor de codigo debe ser alfanumerico."); 
+		if(!Validador.esNumerico(paginas)) throw new FormatoNumeroException("El valor de paginas no es numerico."); 
 
 		try {
 			IFachada fachada = (IFachada) Naming.lookup(path);
-			VOFolio vo = new VOFolio(codigo, caratula, paginas);
+			VOFolio vo = new VOFolio(codigo, caratula, Integer.parseInt(paginas));
+			
 			fachada.agregarFolio(vo);
 		} catch (MalformedURLException | RemoteException | NotBoundException e) {
 			throw new PersistenciaException("Error en fachada:" + e);
