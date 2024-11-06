@@ -8,6 +8,8 @@ import javax.swing.border.EmptyBorder;
 
 import grafica.controladores.ControladorAgregarFolio;
 import logica.excepciones.FolioYaExisteException;
+import logica.excepciones.FormatoAlfanumericoException;
+import logica.excepciones.FormatoNumeroException;
 import logica.excepciones.PersistenciaException;
 
 import javax.swing.JLabel;
@@ -87,8 +89,8 @@ public class AgregarFolio extends JFrame {
 		btnNuevoFolio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					caf.agregarFolio(txtCodigo.getText(), txtCaratula.getText(),
-							Integer.parseInt(txtPaginas.getText()));
+					caf.agregarFolio(txtCodigo.getText(), txtCaratula.getText(), txtPaginas.getText());
+					
 					JOptionPane.showMessageDialog(null, "Nuevo Folio ingresado correctamente.");
 					txtCodigo.setText("");
 					txtCaratula.setText("");
@@ -98,6 +100,10 @@ public class AgregarFolio extends JFrame {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				} catch (FolioYaExisteException e2) {
 					JOptionPane.showMessageDialog(null, e2.getMessage());
+				} catch (FormatoNumeroException e3) {
+					JOptionPane.showMessageDialog(null, e3.getMessage());
+				} catch (FormatoAlfanumericoException e4) {
+					JOptionPane.showMessageDialog(null, e4.getMessage());
 				}
 			}
 		});
