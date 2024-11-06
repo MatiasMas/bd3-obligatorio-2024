@@ -15,7 +15,7 @@ import persistencia.consultas.Consultas;
 import poolConexiones.Conexion;
 import poolConexiones.IConexion;
 
-public class DAOFolios {
+public class DAOFolios implements IDAOFolios{
 	public DAOFolios() {
 
 	}

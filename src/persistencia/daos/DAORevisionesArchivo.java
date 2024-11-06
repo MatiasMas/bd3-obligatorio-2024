@@ -13,9 +13,12 @@ import java.util.List;
 import logica.entidades.Revision;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VORevision;
+import poolConexiones.IConexion;
 import utilidades.Configuracion;
 
-public class DAORevisionesArchivo {
+//TODO: arreglar este dao, inserta una revision por archivo
+
+public class DAORevisionesArchivo implements IDAORevisiones{
 
     private String codFolio;
 
@@ -26,7 +29,7 @@ public class DAORevisionesArchivo {
         this.codFolio = codF;
     }
 
-    public void insback(Revision rev) throws PersistenciaException {
+    public void insback(IConexion icon, Revision rev) throws PersistenciaException {
         String rutaRevision = crearNombreArchivoRevision(rev.getNumero());
         try {ObjectOutputStream oOutput = new ObjectOutputStream(new FileOutputStream(rutaRevision));
             oOutput.writeObject(rev);
@@ -37,7 +40,7 @@ public class DAORevisionesArchivo {
         }
     }
 
-    public int largo() throws PersistenciaException {
+    public int largo(IConexion icon) throws PersistenciaException {
         int largo = 0;
         File dir = new File(Configuracion.getInstancia().getRutaRespaldo());
         File[] files = dir.listFiles((d, name) -> name.startsWith("revision-") && name.endsWith(".txt"));
@@ -48,7 +51,7 @@ public class DAORevisionesArchivo {
         return largo;
     }
 
-    public Revision kesimo(int numero) throws PersistenciaException {
+    public Revision kesimo(IConexion icon, int numero) throws PersistenciaException {
         String rutaRevision = crearNombreArchivoRevision(numero);
         try (ObjectInputStream oInput = new ObjectInputStream(new FileInputStream(rutaRevision))) {
             return (Revision) oInput.readObject();
@@ -59,7 +62,7 @@ public class DAORevisionesArchivo {
         }
     }
 
-    public List<VORevision> listarRevisiones() throws PersistenciaException {
+    public List<VORevision> listarRevisiones(IConexion icon) throws PersistenciaException {
         List<VORevision> revisiones = new ArrayList<>();
         File dir = new File(Configuracion.getInstancia().getRutaRespaldo());
         File[] files = dir.listFiles((d, name) -> name.startsWith("revision-") && name.endsWith(".txt"));
@@ -81,7 +84,7 @@ public class DAORevisionesArchivo {
         return revisiones;
     }
 
-    public void borrarRevisiones() throws PersistenciaException {
+    public void borrarRevisiones(IConexion icon) throws PersistenciaException {
         File dir = new File(Configuracion.getInstancia().getRutaRespaldo());
         File[] files = dir.listFiles((d, name) -> name.startsWith("revision-") && name.endsWith(".txt"));
 

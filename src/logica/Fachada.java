@@ -26,9 +26,8 @@ import poolConexiones.IConexion;
 import poolConexiones.IPoolConexiones;
 
 public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFachada {
-	/**
-	 * 
-	 */
+
+	
 	private static final long serialVersionUID = 1L;
 	// Esta tiene que ser el DAO ahora
 	private DAOFolios diccio = new DAOFolios();
@@ -84,9 +83,10 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 			}
 			pool.liberarConexion(icon, true);
 
-		} catch (Exception e) {
+		} catch (PersistenciaException e) {
 			errorPersistencia = true;
 			msgError = "Error de acceso a los datos";
+			pool.liberarConexion(icon, false);
 		} finally {
 			if (existeFolio)
 				throw new FolioYaExisteException(msgError);
