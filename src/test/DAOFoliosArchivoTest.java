@@ -33,10 +33,10 @@ public class DAOFoliosArchivoTest {
 	private void testInsert() throws PersistenciaException {
 		// Crear un folio temporal
 		Folio folioTemporal = new Folio(codigoFolioTemporal, "Caratula de prueba", 10);
-		daoFoliosArchivo.insert(folioTemporal);
+		daoFoliosArchivo.insert(null, folioTemporal);
 
 		// Verificar que el folio fue insertado
-		if (daoFoliosArchivo.member(codigoFolioTemporal)) {
+		if (daoFoliosArchivo.member(null, codigoFolioTemporal)) {
 			System.out.println("testInsert paso.");
 		} else {
 			throw new RuntimeException("testInsert fallo: el folio no fue insertado.");
@@ -44,7 +44,7 @@ public class DAOFoliosArchivoTest {
 	}
 
 	private void testFind() throws PersistenciaException {
-		Folio folioEncontrado = daoFoliosArchivo.find(codigoFolioTemporal);
+		Folio folioEncontrado = daoFoliosArchivo.find(null, codigoFolioTemporal);
 
 		if (folioEncontrado != null && folioEncontrado.getCodigo().equals(codigoFolioTemporal)) {
 			System.out.println("testFind paso.");
@@ -57,10 +57,10 @@ public class DAOFoliosArchivoTest {
 		// Inserta un folio temporal para garantizar que haya al menos un folio en la
 		// lista
 		Folio folioTemporal = new Folio("TEMP-001", "Folio temporal", 5);
-		daoFoliosArchivo.insert(folioTemporal);
+		daoFoliosArchivo.insert(null, folioTemporal);
 
 		// Ahora intenta listar los folios
-		List<VOFolio> folios = daoFoliosArchivo.listarFolios();
+		List<VOFolio> folios = daoFoliosArchivo.listarFolios(null);
 
 		// Verifica si se encontró al menos un folio
 		if (folios != null && !folios.isEmpty()) {
@@ -70,13 +70,13 @@ public class DAOFoliosArchivoTest {
 		}
 
 		// Opcion para eliminar el folio temporal despues de la prueba (si es necesario)
-		daoFoliosArchivo.delete("TEMP-001");
+		daoFoliosArchivo.delete(null, "TEMP-001");
 	}
 
 	private void testDelete() throws PersistenciaException {
-		daoFoliosArchivo.delete(codigoFolioTemporal);
+		daoFoliosArchivo.delete(null, codigoFolioTemporal);
 
-		if (!daoFoliosArchivo.member(codigoFolioTemporal)) {
+		if (!daoFoliosArchivo.member(null, codigoFolioTemporal)) {
 			System.out.println("testDelete paso.");
 		} else {
 			throw new RuntimeException("testDelete fallo: el folio no fue eliminado.");

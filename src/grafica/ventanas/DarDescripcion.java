@@ -1,23 +1,20 @@
 package grafica.ventanas;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import grafica.controladores.ControladorDarDescripcion;
 import logica.excepciones.FolioNoExisteException;
 import logica.excepciones.PersistenciaException;
-import logica.valueObjects.VOFolio;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.util.List;
-import java.awt.event.ActionEvent;
 
 public class DarDescripcion extends JFrame {
 
@@ -48,7 +45,7 @@ public class DarDescripcion extends JFrame {
 	 */
 	public DarDescripcion() {
 		this.cdd = new ControladorDarDescripcion(this);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

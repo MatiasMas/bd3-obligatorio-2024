@@ -8,7 +8,6 @@ import logica.valueObjects.VORevision;
 import persistencia.daos.DAORevisiones;
 import persistencia.daos.IDAORevisiones;
 import poolConexiones.IConexion;
-import utilidades.Configuracion;
 
 public class Folio implements Serializable {
 

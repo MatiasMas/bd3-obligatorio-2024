@@ -33,9 +33,9 @@ public class DAORevisionesArchivoTest {
 
 	private void testInsback() throws PersistenciaException {
 		Revision revision = new Revision(1, "Descripcion de la revision 1");
-		daoRevisionesArchivo.insback(revision);
+		daoRevisionesArchivo.insback(null, revision);
 
-		if (daoRevisionesArchivo.kesimo(1) != null) {
+		if (daoRevisionesArchivo.kesimo(null, 1) != null) {
 			System.out.println("testInsback paso.");
 		} else {
 			throw new RuntimeException("testInsback fallo: la revision no fue insertada.");
@@ -43,7 +43,7 @@ public class DAORevisionesArchivoTest {
 	}
 
 	private void testLargo() throws PersistenciaException {
-		int largo = daoRevisionesArchivo.largo();
+		int largo = daoRevisionesArchivo.largo(null);
 
 		if (largo >= 0) {
 			System.out.println("testLargo paso.");
@@ -56,9 +56,9 @@ public class DAORevisionesArchivoTest {
 		// Inserta una revision temporal para garantizar que haya una revision en la
 		// lista
 		Revision revisionTemporal = new Revision(1, "Descripcion de la revision 1");
-		daoRevisionesArchivo.insback(revisionTemporal);
+		daoRevisionesArchivo.insback(null, revisionTemporal);
 
-		Revision revision = daoRevisionesArchivo.kesimo(1);
+		Revision revision = daoRevisionesArchivo.kesimo(null, 1);
 
 		if (revision != null) {
 			System.out.println("testKesimo paso.");
@@ -71,9 +71,9 @@ public class DAORevisionesArchivoTest {
 		// Inserta una revision temporal para garantizar que haya al menos una revision
 		// en la lista
 		Revision revisionTemporal = new Revision(2, "Descripcion de la revision 2");
-		daoRevisionesArchivo.insback(revisionTemporal);
+		daoRevisionesArchivo.insback(null, revisionTemporal);
 
-		List<VORevision> revisiones = daoRevisionesArchivo.listarRevisiones();
+		List<VORevision> revisiones = daoRevisionesArchivo.listarRevisiones(null);
 
 		if (revisiones != null && !revisiones.isEmpty()) {
 			System.out.println("testListarRevisiones paso.");
@@ -83,13 +83,13 @@ public class DAORevisionesArchivoTest {
 
 		// Opcion para eliminar la revision temporal despues de la prueba, si es
 		// necesario
-		daoRevisionesArchivo.borrarRevisiones();
+		daoRevisionesArchivo.borrarRevisiones(null);
 	}
 
 	private void testBorrarRevisiones() throws PersistenciaException {
-		daoRevisionesArchivo.borrarRevisiones();
+		daoRevisionesArchivo.borrarRevisiones(null);
 
-		if (daoRevisionesArchivo.largo() == 0) {
+		if (daoRevisionesArchivo.largo(null) == 0) {
 			System.out.println("testBorrarRevisiones paso.");
 		} else {
 			throw new RuntimeException("testBorrarRevisiones fallo: las revisiones no fueron eliminadas.");

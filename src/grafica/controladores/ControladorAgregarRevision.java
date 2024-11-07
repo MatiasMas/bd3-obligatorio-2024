@@ -12,7 +12,6 @@ import grafica.ventanas.AgregarRevision;
 import logica.IFachada;
 import logica.excepciones.FolioNoExisteException;
 import logica.excepciones.PersistenciaException;
-import logica.valueObjects.VOFolio;
 import logica.valueObjects.VORevision;
 
 public class ControladorAgregarRevision {
