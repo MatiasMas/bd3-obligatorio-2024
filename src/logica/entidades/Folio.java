@@ -5,10 +5,9 @@ import java.util.List;
 
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VORevision;
-import persistencia.daos.DAORevisiones;
+import persistencia.daos.DAORevisionesArchivo;
 import persistencia.daos.IDAORevisiones;
 import poolConexiones.IConexion;
-import utilidades.Configuracion;
 
 public class Folio implements Serializable {
 
@@ -28,7 +27,7 @@ public class Folio implements Serializable {
 		this.caratula = caratula;
 		this.paginas = paginas;
 		//TODO: aca se va a instanciar usando abstract factory (pagina 63 del teorico 3 capas)
-		this.secuencia = new DAORevisiones(this.codigo);
+		this.secuencia = new DAORevisionesArchivo(this.codigo);
 	}
 
 	public String getCodigo() {

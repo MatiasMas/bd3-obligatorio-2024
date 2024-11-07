@@ -22,6 +22,7 @@ import logica.valueObjects.VOFolioMaxRev;
 import logica.valueObjects.VOListarRevisiones;
 import logica.valueObjects.VORevision;
 import persistencia.daos.DAOFolios;
+import persistencia.daos.DAOFoliosArchivo;
 import poolConexiones.IConexion;
 import poolConexiones.IPoolConexiones;
 
@@ -29,7 +30,7 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 
 	private static final long serialVersionUID = 1L;
 	// Esta tiene que ser el DAO ahora
-	private DAOFolios diccio = new DAOFolios();
+	private DAOFoliosArchivo diccio = new DAOFoliosArchivo();
 	private static Fachada instancia;
 	private IPoolConexiones pool;
 
