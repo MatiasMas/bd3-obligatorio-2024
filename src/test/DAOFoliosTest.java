@@ -6,7 +6,7 @@ import logica.entidades.Folio;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOFolio;
 import logica.valueObjects.VOFolioMaxRev;
-import persistencia.daos.DAOFolios;
+import persistencia.daos.DAOFoliosMySQL;
 import poolConexiones.IConexion;
 import poolConexiones.PoolConexiones;
 
@@ -45,7 +45,7 @@ public class DAOFoliosTest {
 
 	// Metodo para limpiar la base de datos antes de ejecutar las pruebas
 	private void clearDatabase() throws PersistenciaException {
-		DAOFolios dao = new DAOFolios();
+		DAOFoliosMySQL dao = new DAOFoliosMySQL();
 		IConexion conexion = poolConexiones.obtenerConexion(true);
 
 		// Obtener todos los folios y eliminarlos
@@ -59,7 +59,7 @@ public class DAOFoliosTest {
 	}
 
 	private void testMember() throws PersistenciaException {
-		DAOFolios dao = new DAOFolios();
+		DAOFoliosMySQL dao = new DAOFoliosMySQL();
 		IConexion conexion = poolConexiones.obtenerConexion(true);
 
 		String codigoFolio = "F001";
@@ -83,7 +83,7 @@ public class DAOFoliosTest {
 	}
 
 	private void testInsert() throws PersistenciaException {
-		DAOFolios dao = new DAOFolios();
+		DAOFoliosMySQL dao = new DAOFoliosMySQL();
 		IConexion conexion = poolConexiones.obtenerConexion(true);
 
 		Folio nuevoFolio = new Folio("F002", "Caratula de prueba", 10);
@@ -101,7 +101,7 @@ public class DAOFoliosTest {
 	}
 
 	private void testFind() throws PersistenciaException {
-		DAOFolios dao = new DAOFolios();
+		DAOFoliosMySQL dao = new DAOFoliosMySQL();
 		IConexion conexion = poolConexiones.obtenerConexion(true);
 
 		String codigoFolio = "F001";
@@ -125,7 +125,7 @@ public class DAOFoliosTest {
 	}
 
 	private void testDelete() throws PersistenciaException {
-		DAOFolios dao = new DAOFolios();
+		DAOFoliosMySQL dao = new DAOFoliosMySQL();
 		IConexion conexion = poolConexiones.obtenerConexion(true);
 
 		String codigo = "F002";
@@ -143,7 +143,7 @@ public class DAOFoliosTest {
 	}
 
 	private void testListarFolios() throws PersistenciaException {
-		DAOFolios dao = new DAOFolios();
+		DAOFoliosMySQL dao = new DAOFoliosMySQL();
 		IConexion conexion = poolConexiones.obtenerConexion(false);
 
 		// Insertar folios temporales
@@ -175,7 +175,7 @@ public class DAOFoliosTest {
 	}
 
 	private void testEsVacio() throws PersistenciaException {
-		DAOFolios dao = new DAOFolios();
+		DAOFoliosMySQL dao = new DAOFoliosMySQL();
 		IConexion conexion = poolConexiones.obtenerConexion(true);
 
 		// Insertar un folio temporal para asegurar que no este vacio
@@ -198,7 +198,7 @@ public class DAOFoliosTest {
 	}
 
 	private void testFolioMasRevisado() throws PersistenciaException {
-		DAOFolios dao = new DAOFolios();
+		DAOFoliosMySQL dao = new DAOFoliosMySQL();
 		IConexion conexion = poolConexiones.obtenerConexion(true);
 
 		// Insertar algunos folios temporales para la prueba

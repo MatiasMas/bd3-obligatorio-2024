@@ -14,16 +14,16 @@ import persistencia.consultas.Consultas;
 import poolConexiones.Conexion;
 import poolConexiones.IConexion;
 
-public class DAORevisiones implements IDAORevisiones, Serializable {
+public class DAORevisionesMySQL implements IDAORevisiones, Serializable {
 
 	private static final long serialVersionUID = 444443211990804249L;
 	private String codFolio;
 
-	public DAORevisiones() {
+	public DAORevisionesMySQL() {
 
 	}
 
-	public DAORevisiones(String codF) {
+	public DAORevisionesMySQL(String codF) {
 		this.codFolio = codF;
 	}
 

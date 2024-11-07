@@ -15,8 +15,8 @@ import persistencia.consultas.Consultas;
 import poolConexiones.Conexion;
 import poolConexiones.IConexion;
 
-public class DAOFolios implements IDAOFolios{
-	public DAOFolios() {
+public class DAOFoliosMySQL implements IDAOFolios{
+	public DAOFoliosMySQL() {
 
 	}
 

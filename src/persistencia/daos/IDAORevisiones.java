@@ -8,7 +8,6 @@ import logica.valueObjects.VORevision;
 import poolConexiones.IConexion;
 
 public interface IDAORevisiones {
-
 	public void insback(IConexion icon, Revision rev) throws PersistenciaException;
 
 	public int largo(IConexion icon) throws PersistenciaException;
@@ -18,5 +17,4 @@ public interface IDAORevisiones {
 	public List<VORevision> listarRevisiones(IConexion icon) throws PersistenciaException;
 
 	public void borrarRevisiones(IConexion icon) throws PersistenciaException;
-
 }

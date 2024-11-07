@@ -21,7 +21,7 @@ import logica.valueObjects.VOFolio;
 import logica.valueObjects.VOFolioMaxRev;
 import logica.valueObjects.VOListarRevisiones;
 import logica.valueObjects.VORevision;
-import persistencia.daos.DAOFolios;
+import persistencia.daos.DAOFoliosMySQL;
 import poolConexiones.IConexion;
 import poolConexiones.IPoolConexiones;
 
@@ -29,7 +29,7 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 
 	private static final long serialVersionUID = 1L;
 	// Esta tiene que ser el DAO ahora
-	private DAOFolios diccio = new DAOFolios();
+	private DAOFoliosMySQL diccio = new DAOFoliosMySQL();
 	private static Fachada instancia;
 	private IPoolConexiones pool;
 
@@ -172,7 +172,7 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 		try {
 			icon = pool.obtenerConexion(true);
 			if (diccio.member(icon, voD.getCodFolio())) {
-				DAOFolios dicFilio = new DAOFolios();
+				DAOFoliosMySQL dicFilio = new DAOFoliosMySQL();
 				Folio fol = dicFilio.find(icon, voD.getCodFolio());
 				if (fol.tieneRevision(icon, voD.getNumRevision())) {
 					Revision rev = fol.obtenerRevision(icon, voD.getNumRevision());

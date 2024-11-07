@@ -7,8 +7,8 @@ import logica.entidades.Revision;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOFolio;
 import logica.valueObjects.VORevision;
-import persistencia.daos.DAOFolios;
-import persistencia.daos.DAORevisiones;
+import persistencia.daos.DAOFoliosMySQL;
+import persistencia.daos.DAORevisionesMySQL;
 import poolConexiones.IConexion;
 import poolConexiones.PoolConexiones;
 
@@ -44,7 +44,7 @@ public class DAORevisionesTest {
 	}
 
 	private void clearDatabase() throws PersistenciaException {
-		DAOFolios daoFolios = new DAOFolios();
+		DAOFoliosMySQL daoFolios = new DAOFoliosMySQL();
 		IConexion conexion = poolConexiones.obtenerConexion(true);
 
 		// Obtener todos los folios y eliminarlos
@@ -59,7 +59,7 @@ public class DAORevisionesTest {
 
 	private void testInsback() throws PersistenciaException {
 		// Crear un DAOFolios para insertar un folio temporal
-		DAOFolios daoFolios = new DAOFolios();
+		DAOFoliosMySQL daoFolios = new DAOFoliosMySQL();
 		IConexion conexion = poolConexiones.obtenerConexion(true);
 
 		// Crear un folio temporal
@@ -67,7 +67,7 @@ public class DAORevisionesTest {
 		daoFolios.insert(conexion, folioTemporal);
 
 		// Crear un DAORevisiones para insertar la revision
-		DAORevisiones daoRevisiones = new DAORevisiones(codigoFolioTemporal);
+		DAORevisionesMySQL daoRevisiones = new DAORevisionesMySQL(codigoFolioTemporal);
 
 		// Insertar una revision para el folio temporal
 		Revision revision = new Revision(1, "Descripcion de prueba");
@@ -85,7 +85,7 @@ public class DAORevisionesTest {
 	}
 
 	private void testLargo() throws PersistenciaException {
-		DAORevisiones dao = new DAORevisiones(codigoFolioTemporal);
+		DAORevisionesMySQL dao = new DAORevisionesMySQL(codigoFolioTemporal);
 		IConexion conexion = poolConexiones.obtenerConexion(true);
 
 		int largo = dao.largo(conexion);
@@ -99,7 +99,7 @@ public class DAORevisionesTest {
 	}
 
 	private void testKesimo() throws PersistenciaException {
-		DAORevisiones dao = new DAORevisiones(codigoFolioTemporal);
+		DAORevisionesMySQL dao = new DAORevisionesMySQL(codigoFolioTemporal);
 		IConexion conexion = poolConexiones.obtenerConexion(true);
 
 		// Insertar una revision para la prueba
@@ -119,7 +119,7 @@ public class DAORevisionesTest {
 	}
 
 	private void testListarRevisiones() throws PersistenciaException {
-		DAORevisiones dao = new DAORevisiones(codigoFolioTemporal);
+		DAORevisionesMySQL dao = new DAORevisionesMySQL(codigoFolioTemporal);
 		IConexion conexion = poolConexiones.obtenerConexion(true);
 
 		// Insertar una revision temporal
@@ -139,7 +139,7 @@ public class DAORevisionesTest {
 	}
 
 	private void testBorrarRevisiones() throws PersistenciaException {
-		DAORevisiones dao = new DAORevisiones(codigoFolioTemporal);
+		DAORevisionesMySQL dao = new DAORevisionesMySQL(codigoFolioTemporal);
 		IConexion conexion = poolConexiones.obtenerConexion(true);
 
 		// Insertar una revision para luego eliminarla
