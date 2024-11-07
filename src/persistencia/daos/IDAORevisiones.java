@@ -1,6 +1,5 @@
 package persistencia.daos;
 
-import java.io.Serializable;
 import java.util.List;
 
 import logica.entidades.Revision;

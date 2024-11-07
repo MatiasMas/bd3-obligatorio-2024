@@ -1,6 +1,9 @@
 package logica;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.lang.reflect.InvocationTargetException;
 import java.rmi.RemoteException;
@@ -15,10 +18,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import logica.entidades.Folio;
-import logica.entidades.Revision;
 import logica.excepciones.FolioNoExisteException;
 import logica.excepciones.FolioYaExisteException;
-import logica.excepciones.NoHayRevisionesException;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOBorrarFolio;
 import logica.valueObjects.VOFolio;

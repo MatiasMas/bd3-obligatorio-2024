@@ -10,9 +10,8 @@ import java.util.Properties;
 
 import grafica.ventanas.DarDescripcion;
 import logica.IFachada;
-import logica.valueObjects.VODarDescripcion;
-import logica.valueObjects.VODescripcionRetornada;
 import logica.excepciones.PersistenciaException;
+import logica.valueObjects.VODarDescripcion;
 
 public class ControladorDarDescripcion {
 	
