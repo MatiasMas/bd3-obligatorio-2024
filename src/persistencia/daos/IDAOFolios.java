@@ -14,13 +14,13 @@ public interface IDAOFolios {
 
 	public void insert(IConexion icon, Folio fol) throws PersistenciaException;
 
-	public Folio find(IConexion icon, String cod) throws PersistenciaException;
+	public Folio find(IConexion icon, String cod) throws PersistenciaException, InstantiationException, IllegalAccessException, ClassNotFoundException;
 
-	public void delete(IConexion icon, String cod) throws PersistenciaException;
+	public void delete(IConexion icon, String cod) throws PersistenciaException, InstantiationException, IllegalAccessException, ClassNotFoundException;
 
 	public List<VOFolio> listarFolios(IConexion icon) throws PersistenciaException;
 
 	public boolean esVacio(IConexion icon) throws PersistenciaException;
 
-	public VOFolioMaxRev folioMasRevisado(IConexion icon) throws PersistenciaException;
+	public VOFolioMaxRev folioMasRevisado(IConexion icon) throws PersistenciaException, InstantiationException, IllegalAccessException, ClassNotFoundException;
 }

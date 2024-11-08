@@ -22,20 +22,22 @@ import logica.valueObjects.VOFolioMaxRev;
 import logica.valueObjects.VOListarRevisiones;
 import logica.valueObjects.VORevision;
 import persistencia.daos.DAOFoliosMySQL;
+import persistencia.daos.IDAOFolios;
 import poolConexiones.IConexion;
 import poolConexiones.IPoolConexiones;
+import utilidades.Configuracion;
+import persistencia.abstractFactory.*;
 
 public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFachada {
 
 	private static final long serialVersionUID = 1L;
-	// Esta tiene que ser el DAO ahora
-	private DAOFoliosMySQL diccio = new DAOFoliosMySQL();
+	private IDAOFolios diccio;
 	private static Fachada instancia;
 	private IPoolConexiones pool;
 
 	// TODO: Juntar excepciones en una personalizada
 	public Fachada() throws RemoteException, InstantiationException, ClassNotFoundException, IllegalAccessException,
-			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, PersistenciaException {
 		super();
 
 		String nomPool = null;
@@ -49,7 +51,12 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 		} catch (IOException e) {
 			System.out.println("Error, no se puede leer el archivo de configuracion!");
 		}
-		pool = (IPoolConexiones) Class.forName(nomPool).newInstance();
+		
+		
+		String nomFab = Configuracion.getInstancia().getMetodoPersistencia();
+		IFabricaAbstracta fabrica = (IFabricaAbstracta) Class.forName(nomFab).newInstance();
+		diccio = fabrica.crearIDAOFolios();
+		pool = fabrica.crearIPoolConexiones();
 	}
 
 	public static Fachada getInstancia() throws PersistenciaException, ClassNotFoundException, FileNotFoundException,
@@ -60,7 +67,7 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 		return instancia;
 	}
 
-	public void agregarFolio(VOFolio voF) throws RemoteException, PersistenciaException, FolioYaExisteException {
+	public void agregarFolio(VOFolio voF) throws RemoteException, PersistenciaException, FolioYaExisteException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 
 		boolean errorPersistencia = false;
 		boolean existeFolio = false;
@@ -212,12 +219,15 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 	}
 
 	public List<VORevision> listarRevisiones(VOListarRevisiones voL)
-			throws RemoteException, PersistenciaException, FolioNoExisteException {
+			throws RemoteException, PersistenciaException, FolioNoExisteException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 
 		IConexion icon = pool.obtenerConexion(true);
 
-		if (!diccio.member(icon, voL.getCodFolio()))
+		if (!diccio.member(icon, voL.getCodFolio())) {
+			pool.liberarConexion(icon, false);
 			throw new FolioNoExisteException();
+		}
+			
 		Folio folio = diccio.find(icon, voL.getCodFolio());
 
 		pool.liberarConexion(icon, true);
@@ -225,7 +235,7 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 		return folio.listarRevisiones(icon);
 	}
 
-	public VOFolioMaxRev folioMasRevisado() throws RemoteException, PersistenciaException, NoExistenFoliosException {
+	public VOFolioMaxRev folioMasRevisado() throws RemoteException, PersistenciaException, NoExistenFoliosException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		IConexion icon = null;
 		icon = pool.obtenerConexion(true);
 

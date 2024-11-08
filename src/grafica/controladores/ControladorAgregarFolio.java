@@ -25,7 +25,7 @@ public class ControladorAgregarFolio {
 		this.caf = ventana;
 	}
 
-	public void agregarFolio(String codigo, String caratula, String paginas) throws PersistenciaException, FolioYaExisteException, FormatoNumeroException, FormatoAlfanumericoException {
+	public void agregarFolio(String codigo, String caratula, String paginas) throws PersistenciaException, FolioYaExisteException, FormatoNumeroException, FormatoAlfanumericoException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		Properties p = new Properties();
 		String nomArch = "config/cliente.properties";
 		

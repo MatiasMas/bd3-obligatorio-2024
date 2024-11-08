@@ -22,7 +22,7 @@ public class ControladorFolioMasVisitado {
 		this.fmr = ventana;
 	}
 
-	public VOFolioMaxRev getFolioMasRev()  throws PersistenciaException, NoExistenFoliosException {
+	public VOFolioMaxRev getFolioMasRev()  throws PersistenciaException, NoExistenFoliosException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		
 		Properties p = new Properties();
 		String nomArch = "config/cliente.properties";

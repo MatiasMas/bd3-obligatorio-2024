@@ -22,10 +22,6 @@ public class DAORevisionesArchivo implements IDAORevisiones, Serializable {
 	private static final long serialVersionUID = -4359856492938099682L;
 	private String codFolio;
 
-	public DAORevisionesArchivo() {
-		super();
-	}
-
 	public DAORevisionesArchivo(String codF) {
 		this.codFolio = codF;
 	}

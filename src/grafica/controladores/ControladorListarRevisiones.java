@@ -24,7 +24,7 @@ public class ControladorListarRevisiones {
 		this.lr = ventana;
 	}
 	
-	public List<VORevision> listarRevisiones(String codigoFolio) throws PersistenciaException, FolioNoExisteException {
+	public List<VORevision> listarRevisiones(String codigoFolio) throws PersistenciaException, FolioNoExisteException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		
 
 		Properties p = new Properties();

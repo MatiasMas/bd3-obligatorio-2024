@@ -5,9 +5,11 @@ import java.util.List;
 
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VORevision;
+import persistencia.abstractFactory.IFabricaAbstracta;
 import persistencia.daos.DAORevisionesMySQL;
 import persistencia.daos.IDAORevisiones;
 import poolConexiones.IConexion;
+import utilidades.Configuracion;
 
 public class Folio implements Serializable {
 
@@ -22,12 +24,15 @@ public class Folio implements Serializable {
 		super();
 	}
 
-	public Folio(String codigo, String caratula, int paginas) {
+	public Folio(String codigo, String caratula, int paginas) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		this.codigo = codigo;
 		this.caratula = caratula;
 		this.paginas = paginas;
-		//TODO: aca se va a instanciar usando abstract factory (pagina 63 del teorico 3 capas)
-		this.secuencia = new DAORevisionesMySQL(this.codigo);
+		
+		String nomFab = Configuracion.getInstancia().getMetodoPersistencia();
+		IFabricaAbstracta fabrica = (IFabricaAbstracta) Class.forName(nomFab).newInstance();
+		
+		this.secuencia = fabrica.crearIDAORevisiones(codigo);
 	}
 
 	public String getCodigo() {

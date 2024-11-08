@@ -67,7 +67,7 @@ public class DAOFoliosMySQL implements IDAOFolios{
 		}
 	}
 
-	public Folio find(IConexion icon, String cod) throws PersistenciaException {
+	public Folio find(IConexion icon, String cod) throws PersistenciaException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		Folio folio = null;
 
 		try {
@@ -94,7 +94,7 @@ public class DAOFoliosMySQL implements IDAOFolios{
 		return folio;
 	}
 
-	public void delete(IConexion icon, String cod) throws PersistenciaException {
+	public void delete(IConexion icon, String cod) throws PersistenciaException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 
 		try {
 			Consultas consultas = new Consultas();
@@ -169,7 +169,7 @@ public class DAOFoliosMySQL implements IDAOFolios{
 		return !existenFolios;
 	}
 
-	public VOFolioMaxRev folioMasRevisado(IConexion icon) throws PersistenciaException {
+	public VOFolioMaxRev folioMasRevisado(IConexion icon) throws PersistenciaException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		VOFolioMaxRev voFolio = null;
 		int maxRevisiones = -1;
 

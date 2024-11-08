@@ -95,7 +95,9 @@ public class ListarRevisiones extends JFrame {
 		            } catch (FolioNoExisteException e2) {
 		                JOptionPane.showMessageDialog(null, "Error NO existe Folio: " + e2.getMessage(), 
 		                    "Error", JOptionPane.ERROR_MESSAGE);
-		            } 
+		            } catch (Exception eG) {
+						JOptionPane.showMessageDialog(null, eG.getMessage());
+					}
 		        }
 		    });
 		    contentPane.add(btnObtenerRevisiones);

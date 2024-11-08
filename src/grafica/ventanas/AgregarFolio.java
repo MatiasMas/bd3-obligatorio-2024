@@ -104,6 +104,8 @@ public class AgregarFolio extends JFrame {
 					JOptionPane.showMessageDialog(null, e3.getMessage());
 				} catch (FormatoAlfanumericoException e4) {
 					JOptionPane.showMessageDialog(null, e4.getMessage());
+				} catch (Exception eG) {
+					JOptionPane.showMessageDialog(null, eG.getMessage());
 				}
 			}
 		});

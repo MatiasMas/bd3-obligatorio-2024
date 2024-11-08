@@ -13,6 +13,7 @@ public class Configuracion {
 	private String url;
 	private String user;
 	private String pwd;
+	private String metodoPersistencia;
 
 	private Configuracion() {
 		Properties p = new Properties();
@@ -31,6 +32,7 @@ public class Configuracion {
 		user = p.getProperty("user");
 		pwd = p.getProperty("password");
 		rutaRespaldo = p.getProperty("rutaRespaldo");
+		metodoPersistencia = p.getProperty("metodoPersistencia");
 		
 	}
 
@@ -62,5 +64,9 @@ public class Configuracion {
 	
 	public String getPassword() {
 		return pwd;
+	}
+	
+	public String getMetodoPersistencia() {
+		return metodoPersistencia;
 	}
 }
