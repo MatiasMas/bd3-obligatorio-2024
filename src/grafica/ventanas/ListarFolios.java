@@ -81,8 +81,9 @@ public class ListarFolios extends JFrame {
 				} catch (FolioNoExisteException e1) {
 					JOptionPane.showMessageDialog(null, "Error NO existe folio: " + e1.getMessage(), 
 							"Error", JOptionPane.ERROR_MESSAGE);
+				} catch (Exception eG) {
+				JOptionPane.showMessageDialog(null, eG.getMessage());
 				}
-				
 			}
 		});
 		btnObtenerFolios.setBounds(381, 231, 156, 23);

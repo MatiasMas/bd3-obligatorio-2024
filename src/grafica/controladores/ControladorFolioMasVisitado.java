@@ -22,7 +22,7 @@ public class ControladorFolioMasVisitado {
 		this.fmr = ventana;
 	}
 
-	public VOFolioMaxRev getFolioMasRev()  throws PersistenciaException, NoExistenFoliosException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+	public VOFolioMaxRev getFolioMasRev()  throws Exception {
 		
 		Properties p = new Properties();
 		String nomArch = "config/cliente.properties";
@@ -33,14 +33,17 @@ public class ControladorFolioMasVisitado {
 		}
 
 		String path = p.getProperty("fachada");
+		
+		
 		try {
 			IFachada fachada = (IFachada) Naming.lookup(path);
 			return fachada.folioMasRevisado();
 			 
-		} catch (MalformedURLException | RemoteException | NotBoundException e) {
+		} catch (Exception e) {
 			throw new PersistenciaException("Error en fachada:" + e);
 		}
 		
 	} 
+	
 	
 }
