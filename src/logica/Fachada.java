@@ -125,6 +125,7 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 			e.printStackTrace();
 			errorPersistencia = true;
 			msgError = "Error de persistencia";
+			pool.liberarConexion(icon, false);
 		} finally {
 			if (noExisteFolio)
 				throw new FolioNoExisteException(msgError);
@@ -157,6 +158,7 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 			e.printStackTrace();
 			errorPersistencia = true;
 			msgError = "Error de persistencia";
+			pool.liberarConexion(icon, false);
 		} finally {
 			if (noExisteFolio)
 				throw new FolioNoExisteException(msgError);
@@ -199,6 +201,7 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 		} catch (Exception e1) {
 			errorConexion = true;
 			msgError = "Error de persistencia";
+			pool.liberarConexion(icon, false);
 		} finally {
 			if (noExisteFolio)
 				throw new DarDescripcionException(msgError);
