@@ -85,7 +85,7 @@ public class DarDescripcion extends JFrame {
 				try {
 
 					lblResultadoDescripcion.setText(
-							cdd.darDescripcion(txtCodigo.getText(), Integer.parseInt(txtNroRevision.getText())));
+							cdd.darDescripcion(txtCodigo.getText(),txtNroRevision.getText()));
 
 				} catch (PersistenciaException e2) {
 					JOptionPane.showMessageDialog(null, "Error al obtener los folios: " + e2.getMessage(), "Error",

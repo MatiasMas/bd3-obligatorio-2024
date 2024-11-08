@@ -7,11 +7,12 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Properties;
-
 import grafica.ventanas.DarDescripcion;
 import logica.IFachada;
 import logica.excepciones.PersistenciaException;
+import logica.excepciones.ValorInvalidoException;
 import logica.valueObjects.VODarDescripcion;
+import utilidades.Validador;
 
 public class ControladorDarDescripcion {
 	
@@ -21,7 +22,7 @@ public class ControladorDarDescripcion {
 		this.dd = ventana;
 	}	
 	
-	public String darDescripcion (String codFolio, int numero) throws Exception {
+	public String darDescripcion (String codFolio, String numero) throws Exception {
 		
 		Properties p = new Properties();
 		String nomArch = "config/cliente.properties";
@@ -32,11 +33,11 @@ public class ControladorDarDescripcion {
 		}
 
 		String path = p.getProperty("fachada");
-
+		camposValidos (codFolio,numero);
+		
 		try {
 			IFachada fachada = (IFachada) Naming.lookup(path);
-			/*camposValidos(codFolio) y control de nro*/
-			VODarDescripcion vo = new VODarDescripcion (codFolio,numero);
+			VODarDescripcion vo = new VODarDescripcion (codFolio,Integer.parseInt(numero));
 			return fachada.darDescripcion(vo);
 		
 		} catch (MalformedURLException | RemoteException | NotBoundException e) {
@@ -45,14 +46,20 @@ public class ControladorDarDescripcion {
 	}
 
 	
-/*	// valido los datos ingresador
-	private void camposValidos(String codFolio) {
-
-		if (codFolio.isEmpty()) {
-			String msg = "El codgio de folio no puede ser vacio";
+	// valido los datos ingresados
+	private void camposValidos(String codigoFolio, String numero) throws ValorInvalidoException {
+		if (codigoFolio.isEmpty()) {
+			String msg = "El codigo no puede ser vacío.";
 			throw new ValorInvalidoException(msg);
-		} }
-*/
+		} else if (!Validador.esAlfaNumerico(codigoFolio)) {
+			String msg = "El codigo debe ser alfanumerico.";
+			throw new ValorInvalidoException(msg);
+		} else if (!Validador.esNumerico(numero)) {
+			String msg = "El numero de revision debe ser numerico.";
+			throw new ValorInvalidoException(msg);
+		} 
+
+	}
 	
 
 

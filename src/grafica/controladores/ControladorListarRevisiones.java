@@ -11,10 +11,11 @@ import java.util.Properties;
 
 import grafica.ventanas.ListarRevisiones;
 import logica.IFachada;
-import logica.excepciones.FolioNoExisteException;
 import logica.excepciones.PersistenciaException;
+import logica.excepciones.ValorInvalidoException;
 import logica.valueObjects.VOListarRevisiones;
 import logica.valueObjects.VORevision;
+import utilidades.Validador;
 
 public class ControladorListarRevisiones {
 
@@ -24,7 +25,7 @@ public class ControladorListarRevisiones {
 		this.lr = ventana;
 	}
 	
-	public List<VORevision> listarRevisiones(String codigoFolio) throws PersistenciaException, FolioNoExisteException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+	public List<VORevision> listarRevisiones(String codigoFolio) throws Exception {
 		
 
 		Properties p = new Properties();
@@ -36,6 +37,8 @@ public class ControladorListarRevisiones {
 		}
 
 		String path = p.getProperty("fachada");
+		camposValidos(codigoFolio);
+		
 		try {
 			IFachada fachada = (IFachada) Naming.lookup(path);
 			VOListarRevisiones vo = new VOListarRevisiones(codigoFolio);
@@ -46,5 +49,14 @@ public class ControladorListarRevisiones {
 		
 	} 
 	
-
+	// valido los datos ingresados
+	private void camposValidos(String codigoFolio) throws ValorInvalidoException {
+		if (codigoFolio.isEmpty()) {
+			String msg = "El codigo no puede ser vacío.";
+			throw new ValorInvalidoException(msg);
+		} else if (!Validador.esAlfaNumerico(codigoFolio)) {
+			String msg = "El codigo debe ser alfanumerico.";
+			throw new ValorInvalidoException(msg);
+		}
+	}	
 }

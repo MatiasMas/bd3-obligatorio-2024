@@ -72,6 +72,8 @@ public class EliminarFolioRevisiones extends JFrame {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				} catch (FolioNoExisteException e2) {
 					JOptionPane.showMessageDialog(null, e2.getMessage());
+				} catch (Exception eG) {
+					JOptionPane.showMessageDialog(null, eG.getMessage());	
 				}
 			}
 		});

@@ -4,8 +4,8 @@ public class Validador {
 	
 	public static boolean esAlfaNumerico(String valor) {
 		// expresion regular para validar que el String solo tiene letras mayusculas,
-		// minusculas o numeros
-		return valor.matches("^[a-zA-Z0-9]+$");
+		// minusculas, numeros o -
+		return valor.matches("^[a-zA-Z0-9-]+$");
 	}
 
 	public static boolean esNumerico(String valor) {

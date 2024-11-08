@@ -10,9 +10,10 @@ import java.util.Properties;
 
 import grafica.ventanas.EliminarFolioRevisiones;
 import logica.IFachada;
-import logica.excepciones.FolioNoExisteException;
 import logica.excepciones.PersistenciaException;
+import logica.excepciones.ValorInvalidoException;
 import logica.valueObjects.VOBorrarFolio;
+import utilidades.Validador;
 
 public class ControladorEliminarFolioRevisiones {
 
@@ -22,7 +23,7 @@ public class ControladorEliminarFolioRevisiones {
 		this.efr = ventana;
 	}
 
-	public void eliminarFolioRevisiones(String codigoFolio) throws PersistenciaException, FolioNoExisteException {
+	public void eliminarFolioRevisiones(String codigoFolio) throws Exception{
 		System.out.println("codigoFolio: " + codigoFolio);
 
 		Properties p = new Properties();
@@ -34,7 +35,8 @@ public class ControladorEliminarFolioRevisiones {
 		}
 
 		String path = p.getProperty("fachada");
-
+		camposValidos(codigoFolio);
+		
 		try {
 			IFachada fachada = (IFachada) Naming.lookup(path);
 			VOBorrarFolio vobf = new VOBorrarFolio(codigoFolio);
@@ -43,5 +45,15 @@ public class ControladorEliminarFolioRevisiones {
 			throw new PersistenciaException("Error en fachada:" + e);
 		}
 	}
-
+	
+	// valido los datos ingresados
+	private void camposValidos(String codigoFolio) throws ValorInvalidoException {
+		if (codigoFolio.isEmpty()) {
+			String msg = "El codigo no puede ser vacío.";
+			throw new ValorInvalidoException(msg);
+		} else if (!Validador.esAlfaNumerico(codigoFolio)) {
+			String msg = "El codigo debe ser alfanumerico.";
+			throw new ValorInvalidoException(msg);
+		}
+	}
 }

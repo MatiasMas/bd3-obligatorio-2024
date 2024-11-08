@@ -8,8 +8,7 @@ import javax.swing.border.EmptyBorder;
 
 import grafica.controladores.ControladorAgregarFolio;
 import logica.excepciones.FolioYaExisteException;
-import logica.excepciones.FormatoAlfanumericoException;
-import logica.excepciones.FormatoNumeroException;
+import logica.excepciones.ValorInvalidoException;
 import logica.excepciones.PersistenciaException;
 
 import javax.swing.JLabel;
@@ -100,9 +99,7 @@ public class AgregarFolio extends JFrame {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				} catch (FolioYaExisteException e2) {
 					JOptionPane.showMessageDialog(null, e2.getMessage());
-				} catch (FormatoNumeroException e3) {
-					JOptionPane.showMessageDialog(null, e3.getMessage());
-				} catch (FormatoAlfanumericoException e4) {
+				} catch (ValorInvalidoException e4) {
 					JOptionPane.showMessageDialog(null, e4.getMessage());
 				} catch (Exception eG) {
 					JOptionPane.showMessageDialog(null, eG.getMessage());
