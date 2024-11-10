@@ -78,10 +78,13 @@ public class PoolConexiones implements IPoolConexiones {
 			Connection con;
 			con = ((Conexion) conex).getCon();
 			try {
-				if (res)
-					con.commit();
-				else
-					con.rollback();
+				//Si el autoCommit era true, no hago ni vommit ni rollback
+				if(!((Conexion)conex).getCon().getAutoCommit()){
+					if (res)
+						con.commit();
+					else
+						con.rollback();
+				}
 			} catch (SQLException e) {
 				throw new PersistenciaException("Error al cerrar transaccion");
 			}
