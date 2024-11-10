@@ -12,10 +12,7 @@ import utilidades.Validador;
 
 public class ControladorAgregarRevision {
 
-	private AgregarRevision ar;
-
-	public ControladorAgregarRevision(AgregarRevision ventana) {
-		this.ar = ventana;
+	public ControladorAgregarRevision() {
 	}
 
 	public void agregarRevision(String codigoFolio, String descripcion) throws Exception {

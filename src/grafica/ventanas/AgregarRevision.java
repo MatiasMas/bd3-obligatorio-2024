@@ -25,7 +25,7 @@ public class AgregarRevision extends JFrame {
 
 	// creo el frame de la ventana, todos los componentes visuales
 	public AgregarRevision() {
-		this.car = new ControladorAgregarRevision(this);
+		this.car = new ControladorAgregarRevision();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

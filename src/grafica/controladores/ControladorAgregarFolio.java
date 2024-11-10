@@ -12,10 +12,7 @@ import utilidades.Validador;
 
 public class ControladorAgregarFolio {
 
-	private AgregarFolio caf;
-
-	public ControladorAgregarFolio(AgregarFolio ventana) {
-		this.caf = ventana;
+	public ControladorAgregarFolio() {
 	}
 
 	public void agregarFolio(String codigo, String caratula, String paginas) throws Exception {

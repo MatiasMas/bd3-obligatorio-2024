@@ -27,7 +27,7 @@ public class AgregarFolio extends JFrame {
 
 	//creo el frame de la ventana, todos los componentes visuales
 	public AgregarFolio() {
-		this.caf = new ControladorAgregarFolio(this);
+		this.caf = new ControladorAgregarFolio();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
