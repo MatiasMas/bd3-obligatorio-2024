@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 import grafica.controladores.ControladorDarDescripcion;
 import logica.excepciones.FolioNoExisteException;
 import logica.excepciones.PersistenciaException;
+import logica.valueObjects.VODescripcionRetornada;
 
 public class DarDescripcion extends JFrame {
 
@@ -83,10 +84,9 @@ public class DarDescripcion extends JFrame {
 		btnObtenerDescr.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-
-					lblResultadoDescripcion.setText(
-							cdd.darDescripcion(txtCodigo.getText(),txtNroRevision.getText()));
-
+					VODescripcionRetornada vo = cdd.darDescripcion(txtCodigo.getText(),txtNroRevision.getText());
+					
+					lblResultadoDescripcion.setText(vo.getDescripcion());
 				} catch (PersistenciaException e2) {
 					JOptionPane.showMessageDialog(null, "Error al obtener los folios: " + e2.getMessage(), "Error",
 							JOptionPane.ERROR_MESSAGE);

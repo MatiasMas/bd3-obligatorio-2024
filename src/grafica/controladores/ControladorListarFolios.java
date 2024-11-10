@@ -8,6 +8,7 @@ import java.util.List;
 import grafica.ventanas.ListarFolios;
 import logica.IFachada;
 import logica.excepciones.FolioNoExisteException;
+import logica.excepciones.InstanciacionException;
 import logica.excepciones.NoSePudoConectarServidorException;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOFolio;
@@ -20,7 +21,7 @@ public class ControladorListarFolios {
 		this.lf = ventana;
 	}
 
-	public List<VOFolio> listarFolios() throws PersistenciaException, FolioNoExisteException, NoSePudoConectarServidorException {
+	public List<VOFolio> listarFolios() throws PersistenciaException, FolioNoExisteException, NoSePudoConectarServidorException, InstanciacionException {
 
 		try {
 			IFachada fachada = Cliente.obtenerFachada();

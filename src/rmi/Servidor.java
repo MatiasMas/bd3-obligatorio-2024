@@ -1,26 +1,17 @@
 package rmi;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
-import java.sql.SQLException;
-
 import logica.Fachada;
 import logica.IFachada;
-import logica.excepciones.PersistenciaException;
+import logica.excepciones.InstanciacionException;
 import utilidades.Configuracion;
 
 public class Servidor {
-
-	public static void main(String[] args) throws ClassNotFoundException, FileNotFoundException, InstantiationException,
-			IllegalAccessException, IOException, SQLException, IllegalArgumentException, InvocationTargetException,
-			NoSuchMethodException, SecurityException {
-
+	public static void main(String[] args) throws InstanciacionException {
 		try {
 			// Obtengo la configuracion
 			Configuracion fileConfig = Configuracion.getInstancia();
@@ -44,10 +35,6 @@ public class Servidor {
 			System.out.println("Error: " + e.getMessage());
 		} catch (MalformedURLException e) {
 			System.out.println("Error: " + e.getMessage());
-		} catch (PersistenciaException e) {
-			System.out.println("Error: " + e.getMessage());
 		}
-
 	}
-
 }
