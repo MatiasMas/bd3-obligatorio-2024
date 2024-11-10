@@ -6,7 +6,6 @@ import java.util.List;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VORevision;
 import persistencia.abstractFactory.IFabricaAbstracta;
-import persistencia.daos.DAORevisionesMySQL;
 import persistencia.daos.IDAORevisiones;
 import poolConexiones.IConexion;
 import utilidades.Configuracion;
@@ -29,6 +28,7 @@ public class Folio implements Serializable {
 		this.caratula = caratula;
 		this.paginas = paginas;
 		
+		//uso abstractfactory para saber que tipo de DaoRevisiones debo instanciar en el folio
 		String nomFab = Configuracion.getInstancia().getMetodoPersistencia();
 		IFabricaAbstracta fabrica = (IFabricaAbstracta) Class.forName(nomFab).newInstance();
 		

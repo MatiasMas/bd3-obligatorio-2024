@@ -1,11 +1,16 @@
 package grafica.ventanas;
 
-import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -13,13 +18,6 @@ import grafica.controladores.ControladorListarFolios;
 import logica.excepciones.FolioNoExisteException;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOFolio;
-
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.util.List;
-import java.awt.event.ActionEvent;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 
 public class ListarFolios extends JFrame {
 
