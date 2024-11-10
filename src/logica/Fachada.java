@@ -20,7 +20,6 @@ import logica.valueObjects.VOFolioMaxRev;
 import logica.valueObjects.VOListarRevisiones;
 import logica.valueObjects.VORevision;
 import persistencia.abstractFactory.IFabricaAbstracta;
-import persistencia.daos.DAOFoliosMySQL;
 import persistencia.daos.IDAOFolios;
 import poolConexiones.IConexion;
 import poolConexiones.IPoolConexiones;
