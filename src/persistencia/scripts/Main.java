@@ -1,4 +1,5 @@
 package persistencia.scripts;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -25,6 +26,8 @@ public class Main {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, user, password);
 
+			// borro la BD por las dudas
+			borrarDB(con);
 			// creo la DB
 			crearDB(con);
 
@@ -39,7 +42,7 @@ public class Main {
 
 			// cierro la conexion
 			con.close();
-			
+
 			System.out.println("Main finalizo sin errores");
 
 		} catch (Exception e) {
@@ -62,6 +65,22 @@ public class Main {
 
 		} catch (IOException e) {
 			System.out.println("ERROR: no se pudieron cargar las properties");
+			e.printStackTrace();
+		}
+
+	}
+
+	// metodo que elimina la base de datos si existe
+	private static void borrarDB(Connection con) {
+
+		try {
+			String borrarDB = "DROP DATABASE IF EXISTS EstudioNotarial";
+			Statement stm1 = con.createStatement();
+			stm1.executeUpdate(borrarDB);
+			stm1.close();
+
+		} catch (Exception e) {
+			System.out.println("ERROR: no se pudo borrar la base de datos");
 			e.printStackTrace();
 		}
 
@@ -122,18 +141,27 @@ public class Main {
 	private static void insertDatos(Connection con) {
 
 		try {
-			
-			// agrego el IGNORE a los insert para que no de error de duplicados, si ya existe el folio, no lo inserta
+
+			// agrego el IGNORE a los insert para que no de error de duplicados, si ya
+			// existe el folio, no lo inserta
 			String insert1 = "INSERT IGNORE  INTO EstudioNotarial.Folios (codigo, caratula, paginas) VALUES ('FGH-0015', 'La comuna contra la señora que tiene 38 gatos', 5)";
-			String insert2 = "INSERT IGNORE  INTO EstudioNotarial.Folios (codigo, caratula, paginas) VALUES ('BBD-1278', 'Adolescentes descontrolados hasta las 5 AM', 2)";
-			String insert3 = "INSERT IGNORE  INTO EstudioNotarial.Folios (codigo, caratula, paginas) VALUES ('JJ-202', 'Vecinos reclaman por heces de perro en el hall', 9)";
-			String insert4 = "INSERT IGNORE  INTO EstudioNotarial.Folios (codigo, caratula, paginas) VALUES ('CEFJ-63', 'Vecinas rivales se arrojan macetas con frecuencia', 463)";
+			String insert2 = "INSERT IGNORE  INTO EstudioNotarial.Folios (codigo, caratula, paginas) VALUES ('JJ-202', 'Vecinos reclaman por heces de perro en el hall', 9)";
+			String insert3 = "INSERT IGNORE  INTO EstudioNotarial.Folios (codigo, caratula, paginas) VALUES ('CEFJ-63', 'Vecinas rivales se arrojan macetas con frecuencia', 463)";
 
 			Statement stm = con.createStatement();
 			stm.executeUpdate(insert1);
 			stm.executeUpdate(insert2);
 			stm.executeUpdate(insert3);
+
+			// agrego revisiones
+			String insert4 = "INSERT IGNORE  INTO EstudioNotarial.Revisiones (numero, codFolio, descripcion) VALUES (1, 'FGH-0015', 'Sigue sumando gatos')";
+			String insert5 = "INSERT IGNORE  INTO EstudioNotarial.Revisiones (numero, codFolio, descripcion) VALUES (2, 'FGH-0015', 'Es la gatera de los Simpsons')";
+			String insert6 = "INSERT IGNORE  INTO EstudioNotarial.Revisiones (numero, codFolio, descripcion) VALUES (1, 'JJ-202', 'No eran de perro')";
+
 			stm.executeUpdate(insert4);
+			stm.executeUpdate(insert5);
+			stm.executeUpdate(insert6);
+
 			stm.close();
 
 		} catch (Exception e) {
