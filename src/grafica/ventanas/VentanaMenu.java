@@ -1,162 +1,150 @@
 package grafica.ventanas;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.rmi.NotBoundException;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import grafica.controladores.ControladorVentanaMenu;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.*;
+import javax.swing.border.Border;
 
 public class VentanaMenu extends JFrame {
 
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private ControladorVentanaMenu cvm;
+    private static final long serialVersionUID = 1L;
+    private JPanel mainPanel;
+    private CardLayout cardLayout;
 
-	
-	public VentanaMenu() {
-		cvm = new ControladorVentanaMenu(this);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 570, 200);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+    public VentanaMenu() {
+        setTitle("Gestión de Folios y Revisiones");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 800, 600);
+        setLayout(new BorderLayout());
 
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+        cardLayout = new CardLayout();
+        mainPanel = new JPanel(cardLayout);
+        add(mainPanel, BorderLayout.CENTER);
 
-		//agrego todos los botones de cada ventana
-		JButton btnAgregarFolio = new JButton("Agregar Folio");
-		btnAgregarFolio.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					cvm.agregarFolio();
-				} catch (IOException | NotBoundException e1) {
-					e1.printStackTrace();
-				}
+        mainPanel.add(crearMenuPrincipal(), "MenuPrincipal");
+        mainPanel.add(new AgregarFolioPanel(this), "AgregarFolio");
+        mainPanel.add(new AgregarRevisionPanel(this), "AgregarRevision");
+        mainPanel.add(new ListarFoliosPanel(this), "ListarFolios");
+        mainPanel.add(new ListarRevisionesPanel(this), "ListarRevisiones");
+        mainPanel.add(new FolioMasRevisadoPanel(this), "FolioMasRevisado");
+        mainPanel.add(new DarDescripcionPanel(this), "DarDescripcion");
+        mainPanel.add(new EliminarFolioRevisionesPanel(this), "BorrarFolio");
+
+        cardLayout.show(mainPanel, "MenuPrincipal");
+    }
+
+    private JPanel crearMenuPrincipal() {
+        JPanel menuPanel = new JPanel();
+        menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
+
+        Dimension buttonSize = new Dimension(400, 50);
+
+        JButton btnAgregarFolio = crearBoton("Agregar Folio", buttonSize, "AgregarFolio");
+        JButton btnAgregarRevision = crearBoton("Agregar Revisión", buttonSize, "AgregarRevision");
+        JButton btnListarFolios = crearBoton("Listar Folios", buttonSize, "ListarFolios");
+        JButton btnListarRevisiones = crearBoton("Listar Revisiones", buttonSize, "ListarRevisiones");
+        JButton btnFolioMasRevisado = crearBoton("Folio Más Revisado", buttonSize, "FolioMasRevisado");
+        JButton btnDarDescripcion = crearBoton("Dar Descripción", buttonSize, "DarDescripcion");
+        JButton btnBorrarFolio = crearBoton("Borrar Folio", buttonSize, "BorrarFolio");
+        
+		btnBorrarFolio.setBackground(new Color(255, 156, 156));
+
+		// Colores
+		Color fondoNormal = new Color(255, 156, 156);
+		Color fondoHover = new Color(255, 116, 116);
+		Color bordeColor = Color.LIGHT_GRAY;
+
+		// Estilo del botón
+		btnBorrarFolio.setBackground(fondoNormal);
+		btnBorrarFolio.setForeground(Color.BLACK);
+		btnBorrarFolio.setFocusPainted(false);
+
+		// Añadir efecto hover
+		btnBorrarFolio.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnBorrarFolio.setBackground(fondoHover);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnBorrarFolio.setBackground(fondoNormal);
 			}
 		});
+        
+        JButton btnSalir = crearBoton("Salir", buttonSize, "Salir");
 
-		btnAgregarFolio.setBounds(28, 11, 141, 23);
-		contentPane.add(btnAgregarFolio);
+        btnSalir.addActionListener(e -> System.exit(0));
 
-		JButton btnAgregarRevision = new JButton("Agregar Revision");
-		btnAgregarRevision.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					cvm.agregarRevision();
-				} catch (IOException | NotBoundException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		btnAgregarRevision.setBounds(28, 70, 141, 23);
-		contentPane.add(btnAgregarRevision);
+        menuPanel.add(Box.createVerticalGlue());
+        menuPanel.add(btnAgregarFolio);
+        menuPanel.add(Box.createRigidArea(new Dimension(0, 5)));
+        menuPanel.add(btnAgregarRevision);
+        menuPanel.add(Box.createRigidArea(new Dimension(0, 5)));
+        menuPanel.add(btnListarFolios);
+        menuPanel.add(Box.createRigidArea(new Dimension(0, 5)));
+        menuPanel.add(btnListarRevisiones);
+        menuPanel.add(Box.createRigidArea(new Dimension(0, 5)));
+        menuPanel.add(btnFolioMasRevisado);
+        menuPanel.add(Box.createRigidArea(new Dimension(0, 5)));
+        menuPanel.add(btnDarDescripcion);
+        menuPanel.add(Box.createRigidArea(new Dimension(0, 5)));
+        menuPanel.add(btnBorrarFolio);
+        menuPanel.add(Box.createRigidArea(new Dimension(0, 5)));
+        menuPanel.add(btnSalir);
+        menuPanel.add(Box.createVerticalGlue());
 
-		JButton btnEliminarFolioRevisiones = new JButton("Eliminar Folio y Revisiones");
-		btnEliminarFolioRevisiones.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					cvm.eliminarFolioRevisiones();
-				} catch (IOException | NotBoundException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		btnEliminarFolioRevisiones.setBounds(153, 114, 235, 23);
-		contentPane.add(btnEliminarFolioRevisiones);
+        return menuPanel;
+    }
 
-		JButton btnListarFolios = new JButton("Listar Folios");
-		btnListarFolios.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					cvm.listarFolios();
-				} catch (IOException | NotBoundException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		btnListarFolios.setBounds(197, 11, 141, 23);
-		contentPane.add(btnListarFolios);
+    public JButton crearBoton(String texto, Dimension size, String vista) {
+    	BotonPersonalizado boton = new BotonPersonalizado(texto, 20);
+        boton.setPreferredSize(size);
+        boton.setMaximumSize(size);
+        boton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		JButton btnFolioMasRevisado = new JButton("Folio mas revisado");
-		btnFolioMasRevisado.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					cvm.folioMasRevisado();
-				} catch (IOException | NotBoundException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		btnFolioMasRevisado.setBounds(366, 11, 160, 23);
-		contentPane.add(btnFolioMasRevisado);
+        // Colores
+        Color fondoNormal = new Color(226, 234, 244);
+        Color fondoHover = new Color(200, 216, 236); // Gris más oscuro para el hover
+        Color bordeColor = Color.LIGHT_GRAY;
 
-		JButton btnListarRevisiones = new JButton("Listar Revisiones");
-		btnListarRevisiones.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					cvm.listarRevisiones();
-				} catch (IOException | NotBoundException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		btnListarRevisiones.setBounds(197, 70, 141, 23);
-		contentPane.add(btnListarRevisiones);
+        // Estilo del botón
+        boton.setBackground(fondoNormal);
+        boton.setForeground(Color.BLACK);
+        boton.setFocusPainted(false);
 
-		JButton btnDarDescripcion = new JButton("Dar Descripcion");
-		btnDarDescripcion.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					cvm.darDescripcion();
-				} catch (IOException | NotBoundException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		btnDarDescripcion.setBounds(366, 70, 160, 23);
-		contentPane.add(btnDarDescripcion);
-	}
+        // Añadir efecto hover
+        boton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                boton.setBackground(fondoHover);
+            }
 
-	//metodos que instancian cada ventana y la hacen viisibles
-	public void agregarFolio() throws FileNotFoundException, IOException, NotBoundException {
-		AgregarFolio af = new AgregarFolio();
-		af.visible();
-	}
+            @Override
+            public void mouseExited(MouseEvent e) {
+                boton.setBackground(fondoNormal);
+            }
+        });
 
-	public void agregarRevision() throws FileNotFoundException, IOException, NotBoundException {
-		AgregarRevision ar = new AgregarRevision();
-		ar.visible();
-	}
+        boton.addActionListener(e -> mostrarVista(vista));
+        return boton;
+    }
 
-	public void listarFolios() throws FileNotFoundException, IOException, NotBoundException {
-		ListarFolios lf = new ListarFolios();
-		lf.visible();
-	}
+    public void mostrarVista(String vista) {
+        if (vista.equals("Salir")) {
+            System.exit(0);
+        } else {
+            cardLayout.show(mainPanel, vista);
+        }
+    }
 
-	public void listarRevisiones() throws FileNotFoundException, IOException, NotBoundException {
-		ListarRevisiones lr = new ListarRevisiones();
-		lr.visible();
-	}
-
-	public void folioMasRevisado() throws FileNotFoundException, IOException, NotBoundException {
-		FolioMasRevisado fmr = new FolioMasRevisado();
-		fmr.visible();
-	}
-
-	public void darDescripcion() throws FileNotFoundException, IOException, NotBoundException {
-		DarDescripcion dd = new DarDescripcion();
-		dd.visible();
-	}
-
-	public void eliminarFolioRevisiones() throws FileNotFoundException, IOException, NotBoundException {
-		EliminarFolioRevisiones efr = new EliminarFolioRevisiones();
-		efr.visible();
-	}
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            VentanaMenu frame = new VentanaMenu();
+            frame.setVisible(true);
+        });
+    }
 }

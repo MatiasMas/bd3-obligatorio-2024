@@ -2,7 +2,6 @@ package grafica.controladores;
 
 import java.rmi.RemoteException;
 
-import grafica.ventanas.AgregarRevision;
 import logica.IFachada;
 import logica.excepciones.PersistenciaException;
 import logica.excepciones.ValorInvalidoException;
@@ -12,10 +11,7 @@ import utilidades.Validador;
 
 public class ControladorAgregarRevision {
 
-	private AgregarRevision ar;
-
-	public ControladorAgregarRevision(AgregarRevision ventana) {
-		this.ar = ventana;
+	public ControladorAgregarRevision() {
 	}
 
 	public void agregarRevision(String codigoFolio, String descripcion) throws Exception {

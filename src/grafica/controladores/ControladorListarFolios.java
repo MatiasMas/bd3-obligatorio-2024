@@ -3,7 +3,6 @@ package grafica.controladores;
 import java.rmi.RemoteException;
 import java.util.List;
 
-import grafica.ventanas.ListarFolios;
 import logica.IFachada;
 import logica.excepciones.FolioNoExisteException;
 import logica.excepciones.InstanciacionException;
@@ -13,10 +12,8 @@ import logica.valueObjects.VOFolio;
 import rmi.Cliente;
 
 public class ControladorListarFolios {
-	private ListarFolios lf;
 
-	public ControladorListarFolios(ListarFolios ventana) {
-		this.lf = ventana;
+	public ControladorListarFolios() {
 	}
 
 	public List<VOFolio> listarFolios() throws PersistenciaException, FolioNoExisteException, NoSePudoConectarServidorException, InstanciacionException {

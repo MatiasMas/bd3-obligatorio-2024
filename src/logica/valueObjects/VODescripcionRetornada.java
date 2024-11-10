@@ -2,8 +2,10 @@ package logica.valueObjects;
 
 import java.io.Serializable;
 
-public class VODescripcionRetornada implements Serializable{
-	
+public class VODescripcionRetornada implements Serializable {
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 	private String descripcion;
 

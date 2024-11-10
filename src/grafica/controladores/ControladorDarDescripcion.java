@@ -2,7 +2,6 @@ package grafica.controladores;
 
 import java.rmi.RemoteException;
 
-import grafica.ventanas.DarDescripcion;
 import logica.IFachada;
 import logica.excepciones.PersistenciaException;
 import logica.excepciones.ValorInvalidoException;
@@ -13,10 +12,7 @@ import utilidades.Validador;
 
 public class ControladorDarDescripcion {
 
-	private DarDescripcion dd;
-
-	public ControladorDarDescripcion(DarDescripcion ventana) {
-		this.dd = ventana;
+	public ControladorDarDescripcion() {
 	}
 
 	public VODescripcionRetornada darDescripcion(String codFolio, String numero) throws Exception {
