@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import grafica.controladores.ControladorDarDescripcion;
 import logica.excepciones.FolioNoExisteException;
 import logica.excepciones.PersistenciaException;
+import logica.excepciones.RevisionNoExisteException;
 import logica.valueObjects.VODescripcionRetornada;
 
 public class DarDescripcionPanel extends JPanel {
@@ -106,6 +107,8 @@ public class DarDescripcionPanel extends JPanel {
 							JOptionPane.ERROR_MESSAGE);
 				} catch (FolioNoExisteException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (RevisionNoExisteException e4) {
+					JOptionPane.showMessageDialog(null, e4.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (Exception e3) {
 					JOptionPane.showMessageDialog(null, e3.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}

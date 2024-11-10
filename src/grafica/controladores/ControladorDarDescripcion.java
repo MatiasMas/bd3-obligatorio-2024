@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 
 import logica.IFachada;
 import logica.excepciones.PersistenciaException;
+import logica.excepciones.RevisionNoExisteException;
 import logica.excepciones.ValorInvalidoException;
 import logica.valueObjects.VODarDescripcion;
 import logica.valueObjects.VODescripcionRetornada;
@@ -27,6 +28,8 @@ public class ControladorDarDescripcion {
 
 		} catch (RemoteException e) {
 			throw new PersistenciaException("Error en fachada:" + e);
+		} catch (RevisionNoExisteException e) {
+			throw new RevisionNoExisteException(e.getMessage());
 		}
 	}
 

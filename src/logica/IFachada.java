@@ -8,6 +8,7 @@ import logica.excepciones.FolioNoExisteException;
 import logica.excepciones.FolioYaExisteException;
 import logica.excepciones.InstanciacionException;
 import logica.excepciones.NoExistenFoliosException;
+import logica.excepciones.NoHayRevisionesException;
 import logica.excepciones.PersistenciaException;
 import logica.excepciones.RevisionNoExisteException;
 import logica.valueObjects.VOBorrarFolio;
@@ -29,7 +30,7 @@ public interface IFachada extends Remote {
 
 	public List<VOFolio> listarFolios() throws RemoteException, PersistenciaException, InstanciacionException;
 
-	public List<VORevision> listarRevisiones(VOListarRevisiones voL) throws RemoteException, PersistenciaException, FolioNoExisteException, InstanciacionException;
+	public List<VORevision> listarRevisiones(VOListarRevisiones voL) throws RemoteException, PersistenciaException, FolioNoExisteException, NoHayRevisionesException, InstanciacionException;
 
 	public VOFolioMaxRev folioMasRevisado() throws RemoteException, PersistenciaException, NoExistenFoliosException, InstanciacionException;
 }

@@ -90,7 +90,7 @@ public class PoolConexiones implements IPoolConexiones {
 			conexiones[tope - 1] = conex;
 			notify();
 		} else
-			throw new PersistenciaException("Conexion nulla");
+			throw new PersistenciaException("Conexion nula");
 	}
 
 }

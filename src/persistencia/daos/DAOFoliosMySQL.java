@@ -189,6 +189,7 @@ public class DAOFoliosMySQL implements IDAOFolios{
 				if (cantidadRevisiones > maxRevisiones) {
 					voFolio = new VOFolioMaxRev(folio.getCodigo(), folio.getCaratula(), folio.getPaginas(),
 							cantidadRevisiones);
+					maxRevisiones = cantidadRevisiones;
 				}
 			}
 
