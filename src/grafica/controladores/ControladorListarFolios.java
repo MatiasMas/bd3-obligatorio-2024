@@ -24,6 +24,7 @@ public class ControladorListarFolios {
 	public List<VOFolio> listarFolios() throws PersistenciaException, FolioNoExisteException, NoSePudoConectarServidorException, InstanciacionException {
 
 		try {
+			// hago lookup de la fachada del servidor
 			IFachada fachada = Cliente.obtenerFachada();
 			return fachada.listarFolios();
 		} catch (RemoteException e) {

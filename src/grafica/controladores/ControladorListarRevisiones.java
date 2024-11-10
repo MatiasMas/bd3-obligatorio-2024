@@ -22,10 +22,13 @@ public class ControladorListarRevisiones {
 	
 	public List<VORevision> listarRevisiones(String codigoFolio) throws Exception {
 		
+		// valido los parametros ingresados
 		camposValidos(codigoFolio);
 		
 		try {
+			// hago lookup de la fachada del servidor
 			IFachada fachada = Cliente.obtenerFachada();
+			// creo vo para pasar a la capa logica
 			VOListarRevisiones vo = new VOListarRevisiones(codigoFolio);
 			return fachada.listarRevisiones(vo);
 		} catch ( RemoteException e) {

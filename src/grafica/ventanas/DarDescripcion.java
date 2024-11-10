@@ -1,6 +1,5 @@
 package grafica.ventanas;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -25,25 +24,7 @@ public class DarDescripcion extends JFrame {
 	private JTextField txtNroRevision;
 	private ControladorDarDescripcion cdd;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					DarDescripcion frame = new DarDescripcion();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
+	//creo el frame de la ventana, todos los componentes visuales
 	public DarDescripcion() {
 		this.cdd = new ControladorDarDescripcion(this);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -80,6 +61,7 @@ public class DarDescripcion extends JFrame {
 		lblResultadoDescripcion.setBounds(10, 111, 414, 105);
 		contentPane.add(lblResultadoDescripcion);
 
+		//codigo del click del boton
 		JButton btnObtenerDescr = new JButton("Obtener descripcion");
 		btnObtenerDescr.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -91,15 +73,15 @@ public class DarDescripcion extends JFrame {
 					JOptionPane.showMessageDialog(null, "Error al obtener los folios: " + e2.getMessage(), "Error",
 							JOptionPane.ERROR_MESSAGE);
 				} catch (FolioNoExisteException e1) {
-//					JOptionPane.showMessageDialog(null, "Error NO existe folio: " + e1.getMessage(), "Error",
-//							JOptionPane.ERROR_MESSAGE);
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (Exception e3) {
 					JOptionPane.showMessageDialog(null, e3.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
+		//seteo la ubicacion y tamaño del boton
 		btnObtenerDescr.setBounds(155, 227, 156, 23);
+		//agrego el boton al frame 
 		contentPane.add(btnObtenerDescr);
 	}
 
