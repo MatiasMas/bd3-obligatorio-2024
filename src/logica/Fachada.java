@@ -192,7 +192,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 		boolean errorGenerico = false;
 
 		try {
-			icon = pool.obtenerConexion(true);
+			icon = pool.obtenerConexion(false);
 
 			if (diccio.member(icon, voD.getCodFolio())) {
 				Folio fol = diccio.find(icon, voD.getCodFolio());
@@ -241,7 +241,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 		List<VOFolio> folios = null;
 
 		try {
-			icon = pool.obtenerConexion(true);
+			icon = pool.obtenerConexion(false);
 			folios = diccio.listarFolios(icon);
 
 			pool.liberarConexion(icon, true);
@@ -277,7 +277,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 		List<VORevision> listaRevisiones = null;
 
 		try {
-			icon = pool.obtenerConexion(true);
+			icon = pool.obtenerConexion(false);
 
 			if (!diccio.member(icon, voL.getCodFolio())) {
 				noExisteFolio = true;
@@ -326,7 +326,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 		VOFolioMaxRev folioMasRevisado = null;
 
 		try {
-			icon = pool.obtenerConexion(true);
+			icon = pool.obtenerConexion(false);
 
 			if (diccio.esVacio(icon)) {
 				noExistenFolio = true;

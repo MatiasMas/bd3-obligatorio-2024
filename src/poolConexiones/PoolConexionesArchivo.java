@@ -20,14 +20,14 @@ public class PoolConexionesArchivo implements IPoolConexiones, Serializable {
 		} else {
 			m.comenzarLectura();
 		}
+		//devuelvo una conexion con el identificador de si es escritura o lectura
 		return new ConexionArchivo(escribe);
 	}
 
 	public void liberarConexion(IConexion conex, boolean mod) throws PersistenciaException {
+		
 		//utilizo la clase ConexionArchivo para saber si era escritura en obtener conexion.
 		//no puedo utilizar mod por compatibilidad, en la fachada se utiliza para saber si es rollback en BD
-		
-		
 		if (((ConexionArchivo)conex).isEscritura()) {
 			m.terminoEscritura();
 		} else {
