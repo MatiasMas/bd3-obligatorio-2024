@@ -195,9 +195,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 			icon = pool.obtenerConexion(true);
 
 			if (diccio.member(icon, voD.getCodFolio())) {
-				DAOFoliosMySQL dicFilio = new DAOFoliosMySQL();
-				Folio fol = dicFilio.find(icon, voD.getCodFolio());
-
+				Folio fol = diccio.find(icon, voD.getCodFolio());
 				if (fol.tieneRevision(icon, voD.getNumRevision())) {
 					Revision rev = fol.obtenerRevision(icon, voD.getNumRevision());
 					voDescripcion = rev.getVoDescripcion();
