@@ -7,6 +7,7 @@ import logica.IFachada;
 import logica.excepciones.PersistenciaException;
 import logica.excepciones.ValorInvalidoException;
 import logica.valueObjects.VODarDescripcion;
+import logica.valueObjects.VODescripcionRetornada;
 import rmi.Cliente;
 import utilidades.Validador;
 
@@ -18,9 +19,7 @@ public class ControladorDarDescripcion {
 		this.dd = ventana;
 	}
 
-	public String darDescripcion(String codFolio, String numero) throws Exception {
-		
-		// valido los parametros ingresados
+	public VODescripcionRetornada darDescripcion(String codFolio, String numero) throws Exception {
 		camposValidos(codFolio, numero);
 
 		try {
@@ -47,7 +46,5 @@ public class ControladorDarDescripcion {
 			String msg = "El numero de revision debe ser numerico.";
 			throw new ValorInvalidoException(msg);
 		}
-
 	}
-
 }
