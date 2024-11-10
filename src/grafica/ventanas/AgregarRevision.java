@@ -1,21 +1,19 @@
 package grafica.ventanas;
 
-import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import grafica.controladores.ControladorAgregarRevision;
 import logica.excepciones.FolioNoExisteException;
 import logica.excepciones.PersistenciaException;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class AgregarRevision extends JFrame {
 
@@ -25,25 +23,7 @@ public class AgregarRevision extends JFrame {
 	private JTextField txtDescripcion;
 	private ControladorAgregarRevision car;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AgregarRevision frame = new AgregarRevision();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
+	// creo el frame de la ventana, todos los componentes visuales
 	public AgregarRevision() {
 		this.car = new ControladorAgregarRevision(this);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -72,6 +52,7 @@ public class AgregarRevision extends JFrame {
 		contentPane.add(txtDescripcion);
 		txtDescripcion.setColumns(10);
 
+		//codigo del click del boton
 		JButton btnNuevaRevision = new JButton("Crear nueva Revision");
 		btnNuevaRevision.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -89,7 +70,9 @@ public class AgregarRevision extends JFrame {
 				}
 			}
 		});
+		//seteo la ubicacion y tamaño del boton
 		btnNuevaRevision.setBounds(155, 112, 156, 23);
+		//agrego el boton al frame 
 		contentPane.add(btnNuevaRevision);
 	}
 

@@ -1,18 +1,17 @@
 package grafica.ventanas;
 
-import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import grafica.controladores.ControladorVentanaMenu;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class VentanaMenu extends JFrame {
 
@@ -20,19 +19,7 @@ public class VentanaMenu extends JFrame {
 	private JPanel contentPane;
 	private ControladorVentanaMenu cvm;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaMenu frame = new VentanaMenu();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}		
-		});
-	}
-
+	
 	public VentanaMenu() {
 		cvm = new ControladorVentanaMenu(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,6 +30,7 @@ public class VentanaMenu extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
+		//agrego todos los botones de cada ventana
 		JButton btnAgregarFolio = new JButton("Agregar Folio");
 		btnAgregarFolio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -136,6 +124,7 @@ public class VentanaMenu extends JFrame {
 		contentPane.add(btnDarDescripcion);
 	}
 
+	//metodos que instancian cada ventana y la hacen viisibles
 	public void agregarFolio() throws FileNotFoundException, IOException, NotBoundException {
 		AgregarFolio af = new AgregarFolio();
 		af.visible();

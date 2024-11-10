@@ -1,6 +1,5 @@
 package grafica.ventanas;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -26,28 +25,9 @@ public class AgregarFolio extends JFrame {
 	private JTextField txtPaginas;
 	private ControladorAgregarFolio caf;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AgregarFolio frame = new AgregarFolio();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
+	//creo el frame de la ventana, todos los componentes visuales
 	public AgregarFolio() {
 		this.caf = new ControladorAgregarFolio(this);
-		// this.caf = new ControladoragregarFolio(this);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -83,6 +63,7 @@ public class AgregarFolio extends JFrame {
 		contentPane.add(txtPaginas);
 		txtPaginas.setColumns(10);
 
+		//codigo del click del boton
 		JButton btnNuevoFolio = new JButton("Crear nuevo Folio");
 		btnNuevoFolio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -93,7 +74,6 @@ public class AgregarFolio extends JFrame {
 					txtCodigo.setText("");
 					txtCaratula.setText("");
 					txtPaginas.setText("");
-
 				} catch (PersistenciaException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				} catch (FolioYaExisteException e2) {
@@ -105,7 +85,9 @@ public class AgregarFolio extends JFrame {
 				}
 			}
 		});
+		//seteo la ubicacion y tamaño del boton
 		btnNuevoFolio.setBounds(155, 166, 156, 23);
+		//agrego el boton al frame 
 		contentPane.add(btnNuevoFolio);
 	}
 

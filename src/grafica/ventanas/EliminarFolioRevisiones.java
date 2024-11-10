@@ -23,25 +23,7 @@ public class EliminarFolioRevisiones extends JFrame {
 	private JTextField txtCodigoFolio;
 	private ControladorEliminarFolioRevisiones cefr;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					EliminarFolioRevisiones frame = new EliminarFolioRevisiones();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
+	//creo el frame de la ventana, todos los componentes visuales
 	public EliminarFolioRevisiones() {
 		this.cefr = new ControladorEliminarFolioRevisiones(this);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -61,6 +43,7 @@ public class EliminarFolioRevisiones extends JFrame {
 		contentPane.add(txtCodigoFolio);
 		txtCodigoFolio.setColumns(10);
 
+		//codigo del click del boton
 		JButton btnEliminarFolioRevision = new JButton("Eliminar Folio y Revisiones");
 		btnEliminarFolioRevision.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -77,7 +60,9 @@ public class EliminarFolioRevisiones extends JFrame {
 				}
 			}
 		});
+		//seteo la ubicacion y tamaño del boton
 		btnEliminarFolioRevision.setBounds(104, 60, 207, 23);
+		//agrego el boton al frame 
 		contentPane.add(btnEliminarFolioRevision);
 	}
 
