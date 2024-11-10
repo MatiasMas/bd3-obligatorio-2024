@@ -28,19 +28,7 @@ public class ListarFolios extends JFrame {
 	private JTable tableFolios;
 	private ControladorListarFolios clf;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ListarFolios frame = new ListarFolios();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	// creo el frame de la ventana, todos los componentes visuales
 	public ListarFolios() {
 		this.clf = new ControladorListarFolios(this);
 		
@@ -64,6 +52,7 @@ public class ListarFolios extends JFrame {
 		scrollPane.setBounds(10, 11, 865, 209);
 		contentPane.add(scrollPane);
 
+		// codigo del click del boton
 		JButton btnObtenerFolios = new JButton("Obtener Folios");
 		btnObtenerFolios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -86,7 +75,9 @@ public class ListarFolios extends JFrame {
 				}
 			}
 		});
+		// seteo la ubicacion y tamaño del boton
 		btnObtenerFolios.setBounds(381, 231, 156, 23);
+		// agrego el boton al frame
 		contentPane.add(btnObtenerFolios);
 
 	}

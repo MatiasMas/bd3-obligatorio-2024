@@ -1,7 +1,5 @@
 package grafica.controladores;
 
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 import grafica.ventanas.DarDescripcion;
@@ -21,11 +19,14 @@ public class ControladorDarDescripcion {
 	}
 
 	public String darDescripcion(String codFolio, String numero) throws Exception {
-
+		
+		// valido los parametros ingresados
 		camposValidos(codFolio, numero);
 
 		try {
+			// hago lookup de la fachada del servidor
 			IFachada fachada = Cliente.obtenerFachada();
+			// creo vo para pasar a la capa logica
 			VODarDescripcion vo = new VODarDescripcion(codFolio, Integer.parseInt(numero));
 			return fachada.darDescripcion(vo);
 

@@ -19,12 +19,13 @@ public class ControladorAgregarRevision {
 	}
 
 	public void agregarRevision(String codigoFolio, String descripcion) throws Exception {
-		System.out.println("CodigoFolio: " + codigoFolio + " Descripcion: " + descripcion);
 
+		// valido los parametros ingresados
 		camposValidos(codigoFolio, descripcion);
 		try {
+			// hago lookup de la fachada del servidor
 			IFachada fachada = Cliente.obtenerFachada();
-
+			// creo vo para pasar a la capa logica
 			VORevision vo = new VORevision(descripcion, codigoFolio);
 			fachada.agregarRevision(vo);
 		} catch (RemoteException e) {

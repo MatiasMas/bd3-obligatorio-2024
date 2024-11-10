@@ -20,10 +20,13 @@ public class ControladorAgregarFolio {
 
 	public void agregarFolio(String codigo, String caratula, String paginas) throws Exception {
 
+		// valido los parametros ingresados
 		camposValidos(codigo, caratula, paginas);
 
 		try {
+			// hago lookup de la fachada del servidor
 			IFachada fachada = Cliente.obtenerFachada();
+			// creo vo para pasar a la capa logica
 			VOFolio vo = new VOFolio(codigo, caratula, Integer.parseInt(paginas));
 
 			fachada.agregarFolio(vo);

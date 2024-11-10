@@ -17,6 +17,7 @@ public class ControladorFolioMasVisitado {
 	public VOFolioMaxRev getFolioMasRev() throws Exception {
 
 		try {
+			// hago lookup de la fachada del servidor
 			IFachada fachada = Cliente.obtenerFachada();
 			return fachada.folioMasRevisado();
 

@@ -19,12 +19,14 @@ public class ControladorEliminarFolioRevisiones {
 	}
 
 	public void eliminarFolioRevisiones(String codigoFolio) throws Exception {
-		System.out.println("codigoFolio: " + codigoFolio);
 
+		// valido los parametros ingresados
 		camposValidos(codigoFolio);
 
 		try {
+			// hago lookup de la fachada del servidor
 			IFachada fachada = Cliente.obtenerFachada();
+			// creo vo para pasar a la capa logica
 			VOBorrarFolio vobf = new VOBorrarFolio(codigoFolio);
 			fachada.borrarFolioRevisiones(vobf);
 		} catch (RemoteException e) {
