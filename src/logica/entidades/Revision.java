@@ -2,6 +2,8 @@ package logica.entidades;
 
 import java.io.Serializable;
 
+import logica.valueObjects.VODescripcionRetornada;
+
 public class Revision implements Serializable {
 
 	private static final long serialVersionUID = 3308446847347329678L;
@@ -19,5 +21,9 @@ public class Revision implements Serializable {
 
 	public String getDescripcion() {
 		return this.descripcion;
+	}
+	
+	public VODescripcionRetornada getVoDescripcion() {
+		return new VODescripcionRetornada(this.descripcion);
 	}
 }
