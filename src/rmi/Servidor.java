@@ -11,7 +11,7 @@ import logica.excepciones.InstanciacionException;
 import utilidades.Configuracion;
 
 public class Servidor {
-	public static void main(String[] args) throws InstanciacionException {
+	public static void main(String[] args) {
 		try {
 			// Obtengo la configuracion
 			Configuracion fileConfig = Configuracion.getInstancia();
@@ -34,6 +34,8 @@ public class Servidor {
 		} catch (RemoteException e) {
 			System.out.println("Error: " + e.getMessage());
 		} catch (MalformedURLException e) {
+			System.out.println("Error: " + e.getMessage());
+		} catch (InstanciacionException e) {
 			System.out.println("Error: " + e.getMessage());
 		}
 	}
