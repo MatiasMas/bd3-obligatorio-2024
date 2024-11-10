@@ -36,10 +36,10 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 	public Fachada() throws RemoteException, InstanciacionException {
 		super();
 		String nomFab = Configuracion.getInstancia().getMetodoPersistencia();
-		
+
 		try {
 			IFabricaAbstracta fabrica = (IFabricaAbstracta) Class.forName(nomFab).newInstance();
-			
+
 			diccio = fabrica.crearIDAOFolios();
 			pool = fabrica.crearIPoolConexiones();
 		} catch (Exception e) {
@@ -57,7 +57,8 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 		}
 	}
 
-	public void agregarFolio(VOFolio voF) throws RemoteException, FolioYaExisteException, PersistenciaException, InstanciacionException {
+	public void agregarFolio(VOFolio voF)
+			throws RemoteException, FolioYaExisteException, PersistenciaException, InstanciacionException {
 		boolean errorPersistencia = false;
 		boolean existeFolio = false;
 		String msgError = null;
@@ -77,17 +78,17 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 				existeFolio = true;
 				msgError = "Folio ya existe";
 			}
-			
+
 			pool.liberarConexion(icon, true);
 		} catch (PersistenciaException e) {
 			errorPersistencia = true;
 			msgError = "Error de acceso a los datos";
-			
+
 			pool.liberarConexion(icon, false);
 		} catch (Exception e) {
 			errorGenerico = true;
 			msgError = "Ha habido un problema en la instanciacion";
-			
+
 			pool.liberarConexion(icon, false);
 		} finally {
 			if (existeFolio)
@@ -99,13 +100,14 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 		}
 	}
 
-	public void agregarRevision(VORevision voR) throws RemoteException, PersistenciaException, FolioNoExisteException, InstanciacionException {
+	public void agregarRevision(VORevision voR)
+			throws RemoteException, PersistenciaException, FolioNoExisteException, InstanciacionException {
 		String msgError = null;
 		boolean noExisteFolio = false;
 		boolean errorPersistencia = false;
 		IConexion icon = null;
 		boolean errorGenerico = false;
-		
+
 		try {
 			icon = pool.obtenerConexion(true);
 			if (diccio.member(icon, voR.getCodFolio())) {
@@ -119,17 +121,17 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 				noExisteFolio = true;
 				msgError = "Folio no existe";
 			}
-			
+
 			pool.liberarConexion(icon, true);
 		} catch (PersistenciaException e) {
 			errorPersistencia = true;
 			msgError = "Error de persistencia";
-			
+
 			pool.liberarConexion(icon, false);
 		} catch (Exception e) {
 			errorGenerico = true;
 			msgError = "Ha habido un problema en la instanciacion";
-			
+
 			pool.liberarConexion(icon, false);
 		} finally {
 			if (noExisteFolio)
@@ -141,7 +143,8 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 		}
 	}
 
-	public void borrarFolioRevisiones(VOBorrarFolio voF) throws RemoteException, PersistenciaException, FolioNoExisteException, InstanciacionException {
+	public void borrarFolioRevisiones(VOBorrarFolio voF)
+			throws RemoteException, PersistenciaException, FolioNoExisteException, InstanciacionException {
 		String msgError = null;
 		boolean noExisteFolio = false;
 		boolean errorPersistencia = false;
@@ -178,7 +181,8 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 		}
 	}
 
-	public VODescripcionRetornada darDescripcion(VODarDescripcion voD) throws RemoteException, PersistenciaException, FolioNoExisteException, RevisionNoExisteException, InstanciacionException {
+	public VODescripcionRetornada darDescripcion(VODarDescripcion voD) throws RemoteException, PersistenciaException,
+			FolioNoExisteException, RevisionNoExisteException, InstanciacionException {
 		String msgError = null;
 		VODescripcionRetornada voDescripcion = null;
 		boolean noExisteFolio = false;
@@ -189,11 +193,11 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 
 		try {
 			icon = pool.obtenerConexion(true);
-			
+
 			if (diccio.member(icon, voD.getCodFolio())) {
 				DAOFoliosMySQL dicFilio = new DAOFoliosMySQL();
 				Folio fol = dicFilio.find(icon, voD.getCodFolio());
-				
+
 				if (fol.tieneRevision(icon, voD.getNumRevision())) {
 					Revision rev = fol.obtenerRevision(icon, voD.getNumRevision());
 					voDescripcion = rev.getVoDescripcion();
@@ -205,7 +209,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 				noExisteFolio = true;
 				msgError = "Folio no existe";
 			}
-			
+
 			pool.liberarConexion(icon, true);
 		} catch (PersistenciaException e) {
 			errorPersistencia = true;
@@ -237,11 +241,11 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 		boolean errorGenerico = false;
 		IConexion icon = null;
 		List<VOFolio> folios = null;
-		
+
 		try {
 			icon = pool.obtenerConexion(true);
 			folios = diccio.listarFolios(icon);
-			
+
 			pool.liberarConexion(icon, true);
 		} catch (PersistenciaException e) {
 			errorPersistencia = true;
@@ -259,11 +263,12 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 			if (errorGenerico)
 				throw new InstanciacionException(msgError);
 		}
-		
+
 		return folios;
 	}
 
-	public List<VORevision> listarRevisiones(VOListarRevisiones voL) throws RemoteException, PersistenciaException, FolioNoExisteException, InstanciacionException  {
+	public List<VORevision> listarRevisiones(VOListarRevisiones voL)
+			throws RemoteException, PersistenciaException, FolioNoExisteException, InstanciacionException {
 		String msgError = null;
 		boolean errorPersistencia = false;
 		boolean errorGenerico = false;
@@ -271,7 +276,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 		IConexion icon = null;
 		Folio folio = null;
 		List<VORevision> listaRevisiones = null;
-		
+
 		try {
 			icon = pool.obtenerConexion(false);
 
@@ -306,7 +311,8 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 		return listaRevisiones;
 	}
 
-	public VOFolioMaxRev folioMasRevisado() throws RemoteException, PersistenciaException, NoExistenFoliosException, InstanciacionException {
+	public VOFolioMaxRev folioMasRevisado()
+			throws RemoteException, PersistenciaException, NoExistenFoliosException, InstanciacionException {
 		String msgError = null;
 		boolean errorPersistencia = false;
 		boolean errorGenerico = false;
