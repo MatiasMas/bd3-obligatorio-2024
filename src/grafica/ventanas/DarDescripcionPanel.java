@@ -27,8 +27,8 @@ public class DarDescripcionPanel extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); // Disposición vertical
 
         // Crear campos de texto personalizados con bordes redondeados y altura ajustada
-        JTextField txtCodigo = new CustomRoundedTextField(20);
-        JTextField txtNumeroRevision = new CustomRoundedTextField(20);
+        JTextField txtCodigo = new CampoTextoPersonalizado(20);
+        JTextField txtNumeroRevision = new CampoTextoPersonalizado(20);
 
         // Crear labels
         JLabel lblCodigo = new JLabel("Código");

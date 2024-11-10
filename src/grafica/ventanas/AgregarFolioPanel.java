@@ -25,9 +25,9 @@ public class AgregarFolioPanel extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); // Disposición vertical
 
         // Crear campos de texto personalizados con bordes redondeados y altura ajustada
-        JTextField txtCodigo = new CustomRoundedTextField(20);
-        JTextField txtCaratula = new CustomRoundedTextField(20);
-        JTextField txtPaginas = new CustomRoundedTextField(20);
+        JTextField txtCodigo = new CampoTextoPersonalizado(20);
+        JTextField txtCaratula = new CampoTextoPersonalizado(20);
+        JTextField txtPaginas = new CampoTextoPersonalizado(20);
 
         // Crear labels
         JLabel lblCodigo = new JLabel("Código");

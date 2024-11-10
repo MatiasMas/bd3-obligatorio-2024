@@ -8,10 +8,10 @@ import java.awt.RenderingHints;
 
 import javax.swing.JButton;
 
-public class CustomRoundedButton extends JButton {
+public class BotonPersonalizado extends JButton {
     private int radius;
 
-    public CustomRoundedButton(String text, int radius) {
+    public BotonPersonalizado(String text, int radius) {
         super(text);
         this.radius = radius;
         setOpaque(false);

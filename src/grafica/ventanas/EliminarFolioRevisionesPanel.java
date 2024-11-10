@@ -28,7 +28,7 @@ public class EliminarFolioRevisionesPanel extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); // Disposición vertical
 
         // Crear campo de texto personalizado con borde redondeado y altura ajustada
-        JTextField txtCodigo = new CustomRoundedTextField(20);
+        JTextField txtCodigo = new CampoTextoPersonalizado(20);
 
         // Crear label
         JLabel lblCodigo = new JLabel("Código");

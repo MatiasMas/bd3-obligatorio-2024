@@ -101,7 +101,7 @@ public class VentanaMenu extends JFrame {
     }
 
     public JButton crearBoton(String texto, Dimension size, String vista) {
-    	CustomRoundedButton boton = new CustomRoundedButton(texto, 20);
+    	BotonPersonalizado boton = new BotonPersonalizado(texto, 20);
         boton.setPreferredSize(size);
         boton.setMaximumSize(size);
         boton.setAlignmentX(Component.CENTER_ALIGNMENT);

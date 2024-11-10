@@ -1,7 +1,5 @@
 package grafica.controladores;
 
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.List;
 

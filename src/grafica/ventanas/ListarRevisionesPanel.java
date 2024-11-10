@@ -35,7 +35,7 @@ public class ListarRevisionesPanel extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); // Disposición vertical
 
         // Crear campo de texto personalizado para Código
-        JTextField txtCodigo = new CustomRoundedTextField(20);
+        JTextField txtCodigo = new CampoTextoPersonalizado(20);
         Dimension fieldSize = new Dimension(450, 40); // Ajustar tamaño del campo de texto
         txtCodigo.setPreferredSize(fieldSize);
         txtCodigo.setMinimumSize(fieldSize);

@@ -7,10 +7,10 @@ import java.awt.RenderingHints;
 
 import javax.swing.JTextField;
 
-public class CustomRoundedTextField extends JTextField {
+public class CampoTextoPersonalizado extends JTextField {
     private int radius;
 
-    public CustomRoundedTextField(int radius) {
+    public CampoTextoPersonalizado(int radius) {
         super();
         this.radius = radius;
         setOpaque(false);
