@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -19,7 +20,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
-import grafica.controladores.ControladorFolioMasVisitado;
+import grafica.controladores.ControladorFolioMasRevisado;
+import logica.excepciones.NoExistenFoliosException;
 import logica.valueObjects.VOFolioMaxRev;
 
 public class FolioMasRevisadoPanel extends JPanel {
@@ -90,15 +92,17 @@ public class FolioMasRevisadoPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 
 				try {
-					ControladorFolioMasVisitado cfmv = new ControladorFolioMasVisitado();
+					ControladorFolioMasRevisado cfmv = new ControladorFolioMasRevisado();
 					
 					VOFolioMaxRev folio = cfmv.getFolioMasRev();
 					if (folio != null) {
 						tableModel.setRowCount(0);
 						tableModel.addRow(new Object[] { folio.getCodigo(), folio.getCaratula(), folio.getPaginas(), folio.getCantRevisiones() });
 					}
-				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(null, "Error al obtener el folio más revisado.", "Error", JOptionPane.ERROR_MESSAGE);
+				}catch (NoExistenFoliosException e2) {
+					JOptionPane.showMessageDialog(null, e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (Exception e3) {
+					JOptionPane.showMessageDialog(null, e3.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
             	
             }
