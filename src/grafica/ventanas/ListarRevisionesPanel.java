@@ -25,6 +25,7 @@ import javax.swing.table.TableColumn;
 import grafica.controladores.ControladorListarFolios;
 import grafica.controladores.ControladorListarRevisiones;
 import logica.excepciones.FolioNoExisteException;
+import logica.excepciones.NoHayRevisionesException;
 import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOFolio;
 import logica.valueObjects.VORevision;
@@ -130,9 +131,11 @@ public class ListarRevisionesPanel extends JPanel {
 						tableModel.addRow(new Object[] { rev.getNumero(), rev.getCodFolio(), rev.getDescripcion() });
 					}
 				} catch (PersistenciaException e1) {
-					JOptionPane.showMessageDialog(null, "Error al obtener las Revisiones: " + e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (FolioNoExisteException e2) {
-					JOptionPane.showMessageDialog(null, "Error NO existe Folio: " + e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (NoHayRevisionesException e3) {
+					JOptionPane.showMessageDialog(null, e3.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (Exception eG) {
 					JOptionPane.showMessageDialog(null, eG.getMessage());
 				}

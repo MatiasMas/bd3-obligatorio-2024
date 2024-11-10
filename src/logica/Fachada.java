@@ -10,6 +10,7 @@ import logica.excepciones.FolioNoExisteException;
 import logica.excepciones.FolioYaExisteException;
 import logica.excepciones.InstanciacionException;
 import logica.excepciones.NoExistenFoliosException;
+import logica.excepciones.NoHayRevisionesException;
 import logica.excepciones.PersistenciaException;
 import logica.excepciones.RevisionNoExisteException;
 import logica.valueObjects.VOBorrarFolio;
@@ -265,17 +266,18 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 	}
 
 	public List<VORevision> listarRevisiones(VOListarRevisiones voL)
-			throws RemoteException, PersistenciaException, FolioNoExisteException, InstanciacionException {
+			throws RemoteException, PersistenciaException, FolioNoExisteException, NoHayRevisionesException, InstanciacionException {
 		String msgError = null;
 		boolean errorPersistencia = false;
 		boolean errorGenerico = false;
 		boolean noExisteFolio = false;
+		boolean noExistenRevisiones = false;
 		IConexion icon = null;
 		Folio folio = null;
 		List<VORevision> listaRevisiones = null;
 
 		try {
-			icon = pool.obtenerConexion(false);
+			icon = pool.obtenerConexion(true);
 
 			if (!diccio.member(icon, voL.getCodFolio())) {
 				noExisteFolio = true;
@@ -283,6 +285,11 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 			} else {
 				folio = diccio.find(icon, voL.getCodFolio());
 				listaRevisiones = folio.listarRevisiones(icon);
+				
+				if (listaRevisiones.size() == 0) {
+					noExistenRevisiones = true;
+					msgError = "El folio no tiene revisiones que mostrar";
+				}
 			}
 
 			pool.liberarConexion(icon, true);
@@ -299,6 +306,8 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 		} finally {
 			if (noExisteFolio)
 				throw new FolioNoExisteException(msgError);
+			if (noExistenRevisiones)
+				throw new NoHayRevisionesException(msgError);
 			if (errorPersistencia)
 				throw new PersistenciaException(msgError);
 			if (errorGenerico)
@@ -308,8 +317,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 		return listaRevisiones;
 	}
 
-	public VOFolioMaxRev folioMasRevisado()
-			throws RemoteException, PersistenciaException, NoExistenFoliosException, InstanciacionException {
+	public VOFolioMaxRev folioMasRevisado() throws RemoteException, PersistenciaException, NoExistenFoliosException, InstanciacionException {
 		String msgError = null;
 		boolean errorPersistencia = false;
 		boolean errorGenerico = false;
