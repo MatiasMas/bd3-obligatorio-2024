@@ -14,18 +14,19 @@ public class Configuracion {
 	private String user;
 	private String pwd;
 	private String metodoPersistencia;
+	private String fachada;
 
 	private Configuracion() {
 		Properties p = new Properties();
 		String fileConfig = "config/config.properties";
-		
+
 		try {
 
 			p.load(new FileInputStream(fileConfig));
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
-		
+
 		ipServidor = p.getProperty("ipServidor");
 		puertoServidor = Integer.parseInt(p.getProperty("puertoServidor"));
 		url = p.getProperty("url");
@@ -33,7 +34,8 @@ public class Configuracion {
 		pwd = p.getProperty("password");
 		rutaRespaldo = p.getProperty("rutaRespaldo");
 		metodoPersistencia = p.getProperty("metodoPersistencia");
-		
+		fachada = p.getProperty("fachada");
+
 	}
 
 	public static Configuracion getInstancia() {
@@ -53,20 +55,29 @@ public class Configuracion {
 	public String getRutaRespaldo() {
 		return rutaRespaldo;
 	}
-	
+
 	public String getUrl() {
 		return url;
 	}
-	
+
 	public String getUser() {
 		return user;
 	}
-	
+
 	public String getPassword() {
 		return pwd;
 	}
-	
+
 	public String getMetodoPersistencia() {
 		return metodoPersistencia;
 	}
+
+	public String getFachada() {
+		return fachada;
+	}
+
+	public void setFachada(String fachada) {
+		this.fachada = fachada;
+	}
+
 }

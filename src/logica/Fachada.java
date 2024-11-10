@@ -1,12 +1,10 @@
 package logica;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.rmi.RemoteException;
 import java.util.List;
-import java.util.Properties;
 
 import logica.entidades.Folio;
 import logica.entidades.Revision;
@@ -21,12 +19,12 @@ import logica.valueObjects.VOFolio;
 import logica.valueObjects.VOFolioMaxRev;
 import logica.valueObjects.VOListarRevisiones;
 import logica.valueObjects.VORevision;
+import persistencia.abstractFactory.IFabricaAbstracta;
 import persistencia.daos.DAOFoliosMySQL;
 import persistencia.daos.IDAOFolios;
 import poolConexiones.IConexion;
 import poolConexiones.IPoolConexiones;
 import utilidades.Configuracion;
-import persistencia.abstractFactory.*;
 
 public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFachada {
 
@@ -40,19 +38,6 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, PersistenciaException {
 		super();
 
-		String nomPool = null;
-
-		try {
-			Properties propiedades = new Properties();
-			propiedades.load(new FileInputStream("config/server.properties"));
-			nomPool = propiedades.getProperty("pool");
-		} catch (FileNotFoundException e) {
-			System.out.println("Error, el archivo de configuracion no existe!");
-		} catch (IOException e) {
-			System.out.println("Error, no se puede leer el archivo de configuracion!");
-		}
-		
-		
 		String nomFab = Configuracion.getInstancia().getMetodoPersistencia();
 		IFabricaAbstracta fabrica = (IFabricaAbstracta) Class.forName(nomFab).newInstance();
 		diccio = fabrica.crearIDAOFolios();
@@ -224,7 +209,7 @@ public class Fachada extends java.rmi.server.UnicastRemoteObject implements IFac
 	public List<VORevision> listarRevisiones(VOListarRevisiones voL)
 			throws RemoteException, PersistenciaException, FolioNoExisteException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 
-		IConexion icon = pool.obtenerConexion(true);
+		IConexion icon = pool.obtenerConexion(false);
 
 		if (!diccio.member(icon, voL.getCodFolio())) {
 			pool.liberarConexion(icon, false);

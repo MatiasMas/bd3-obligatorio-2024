@@ -1,13 +1,7 @@
 package grafica.controladores;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.rmi.Naming;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.List;
-import java.util.Properties;
 
 import grafica.ventanas.ListarRevisiones;
 import logica.IFachada;
@@ -15,6 +9,7 @@ import logica.excepciones.PersistenciaException;
 import logica.excepciones.ValorInvalidoException;
 import logica.valueObjects.VOListarRevisiones;
 import logica.valueObjects.VORevision;
+import rmi.Cliente;
 import utilidades.Validador;
 
 public class ControladorListarRevisiones {
@@ -27,23 +22,13 @@ public class ControladorListarRevisiones {
 	
 	public List<VORevision> listarRevisiones(String codigoFolio) throws Exception {
 		
-
-		Properties p = new Properties();
-		String nomArch = "config/cliente.properties";
-		try {
-			p.load(new FileInputStream(nomArch));
-		} catch (IOException e1) {
-			throw new PersistenciaException("Error en leer archivo de configuracion");
-		}
-
-		String path = p.getProperty("fachada");
 		camposValidos(codigoFolio);
 		
 		try {
-			IFachada fachada = (IFachada) Naming.lookup(path);
+			IFachada fachada = Cliente.obtenerFachada();
 			VOListarRevisiones vo = new VOListarRevisiones(codigoFolio);
 			return fachada.listarRevisiones(vo);
-		} catch (MalformedURLException | RemoteException | NotBoundException e) {
+		} catch ( RemoteException e) {
 			throw new PersistenciaException("Error en fachada:" + e);
 		}
 		

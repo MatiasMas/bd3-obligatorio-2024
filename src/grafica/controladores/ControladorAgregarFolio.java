@@ -1,19 +1,14 @@
 package grafica.controladores;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.rmi.Naming;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.Properties;
 
 import grafica.ventanas.AgregarFolio;
 import logica.IFachada;
-import logica.valueObjects.VOFolio;
-import utilidades.Validador;
-import logica.excepciones.ValorInvalidoException;
 import logica.excepciones.PersistenciaException;
+import logica.excepciones.ValorInvalidoException;
+import logica.valueObjects.VOFolio;
+import rmi.Cliente;
+import utilidades.Validador;
 
 public class ControladorAgregarFolio {
 
@@ -23,30 +18,19 @@ public class ControladorAgregarFolio {
 		this.caf = ventana;
 	}
 
-	public void agregarFolio(String codigo, String caratula, String paginas) throws Exception
-	{	
-	Properties p = new Properties();	
-	String nomArch = "config/cliente.properties";
-		
-		try {
-			p.load(new FileInputStream(nomArch));
-		} catch (IOException e1) {
-			throw new PersistenciaException("Error en leer archivo de configuracion");
-		}
+	public void agregarFolio(String codigo, String caratula, String paginas) throws Exception {
 
-		String path = p.getProperty("fachada");
-		
-		camposValidos (codigo, caratula, paginas);
+		camposValidos(codigo, caratula, paginas);
 
 		try {
-			IFachada fachada = (IFachada) Naming.lookup(path);
+			IFachada fachada = Cliente.obtenerFachada();
 			VOFolio vo = new VOFolio(codigo, caratula, Integer.parseInt(paginas));
-			
+
 			fachada.agregarFolio(vo);
-		} catch (MalformedURLException | RemoteException | NotBoundException e) {
+		} catch (RemoteException e) {
 			throw new PersistenciaException("Error en fachada:" + e);
 		}
-		
+
 	}
 
 	// valido los datos ingresados
@@ -62,12 +46,12 @@ public class ControladorAgregarFolio {
 			throw new ValorInvalidoException(msg);
 		} else if (paginas.isEmpty()) {
 			String msg = "Las paginas no pueden ser vacías.";
-			throw new ValorInvalidoException(msg);			
+			throw new ValorInvalidoException(msg);
 		} else if (!Validador.esNumerico(paginas)) {
 			String msg = "El valos de las paginas debe ser numérico.";
 			throw new ValorInvalidoException(msg);
 		}
 
 	}
-	
+
 }
