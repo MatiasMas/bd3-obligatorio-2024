@@ -1,4 +1,4 @@
-package grafica.ventanas.paneles;
+package grafica.ventanas;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -13,8 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import grafica.controladores.ControladorAgregarFolio;
-import grafica.ventanas.CustomRoundedTextField;
-import grafica.ventanas.VentanaMenu;
 import logica.excepciones.FolioYaExisteException;
 import logica.excepciones.PersistenciaException;
 import logica.excepciones.ValorInvalidoException;

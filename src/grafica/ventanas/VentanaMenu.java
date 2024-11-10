@@ -8,14 +8,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-import grafica.ventanas.paneles.AgregarFolioPanel;
-import grafica.ventanas.paneles.AgregarRevisionPanel;
-import grafica.ventanas.paneles.DarDescripcionPanel;
-import grafica.ventanas.paneles.EliminarFolioRevisionesPanel;
-import grafica.ventanas.paneles.FolioMasRevisadoPanel;
-import grafica.ventanas.paneles.ListarFoliosPanel;
-import grafica.ventanas.paneles.ListarRevisionesPanel;
-
 public class VentanaMenu extends JFrame {
 
     private static final long serialVersionUID = 1L;
@@ -57,6 +49,32 @@ public class VentanaMenu extends JFrame {
         JButton btnFolioMasRevisado = crearBoton("Folio Más Revisado", buttonSize, "FolioMasRevisado");
         JButton btnDarDescripcion = crearBoton("Dar Descripción", buttonSize, "DarDescripcion");
         JButton btnBorrarFolio = crearBoton("Borrar Folio", buttonSize, "BorrarFolio");
+        
+		btnBorrarFolio.setBackground(new Color(255, 156, 156));
+
+		// Colores
+		Color fondoNormal = new Color(255, 156, 156);
+		Color fondoHover = new Color(255, 116, 116);
+		Color bordeColor = Color.LIGHT_GRAY;
+
+		// Estilo del botón
+		btnBorrarFolio.setBackground(fondoNormal);
+		btnBorrarFolio.setForeground(Color.BLACK);
+		btnBorrarFolio.setFocusPainted(false);
+
+		// Añadir efecto hover
+		btnBorrarFolio.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnBorrarFolio.setBackground(fondoHover);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnBorrarFolio.setBackground(fondoNormal);
+			}
+		});
+        
         JButton btnSalir = crearBoton("Salir", buttonSize, "Salir");
 
         btnSalir.addActionListener(e -> System.exit(0));

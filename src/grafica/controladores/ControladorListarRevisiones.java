@@ -3,7 +3,6 @@ package grafica.controladores;
 import java.rmi.RemoteException;
 import java.util.List;
 
-import grafica.ventanas.ListarRevisiones;
 import logica.IFachada;
 import logica.excepciones.PersistenciaException;
 import logica.excepciones.ValorInvalidoException;
@@ -14,10 +13,7 @@ import utilidades.Validador;
 
 public class ControladorListarRevisiones {
 
-	private ListarRevisiones lr;
-
-	public ControladorListarRevisiones(ListarRevisiones ventana) {
-		this.lr = ventana;
+	public ControladorListarRevisiones() {
 	}
 	
 	public List<VORevision> listarRevisiones(String codigoFolio) throws Exception {

@@ -2,7 +2,6 @@ package grafica.controladores;
 
 import java.rmi.RemoteException;
 
-import grafica.ventanas.AgregarRevision;
 import logica.IFachada;
 import logica.excepciones.PersistenciaException;
 import logica.excepciones.ValorInvalidoException;

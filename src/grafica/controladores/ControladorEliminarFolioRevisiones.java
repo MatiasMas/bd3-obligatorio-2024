@@ -2,7 +2,6 @@ package grafica.controladores;
 
 import java.rmi.RemoteException;
 
-import grafica.ventanas.EliminarFolioRevisiones;
 import logica.IFachada;
 import logica.excepciones.PersistenciaException;
 import logica.excepciones.ValorInvalidoException;
@@ -12,10 +11,7 @@ import utilidades.Validador;
 
 public class ControladorEliminarFolioRevisiones {
 
-	private EliminarFolioRevisiones efr;
-
-	public ControladorEliminarFolioRevisiones(EliminarFolioRevisiones ventana) {
-		this.efr = ventana;
+	public ControladorEliminarFolioRevisiones() {
 	}
 
 	public void eliminarFolioRevisiones(String codigoFolio) throws Exception {
