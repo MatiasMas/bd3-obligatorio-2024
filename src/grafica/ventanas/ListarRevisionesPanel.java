@@ -136,8 +136,8 @@ public class ListarRevisionesPanel extends JPanel {
 					JOptionPane.showMessageDialog(null, e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (NoHayRevisionesException e3) {
 					JOptionPane.showMessageDialog(null, e3.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-				} catch (Exception eG) {
-					JOptionPane.showMessageDialog(null, eG.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (Exception e4) {
+					JOptionPane.showMessageDialog(null, e4.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
             	
             }

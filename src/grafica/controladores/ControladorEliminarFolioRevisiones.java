@@ -3,6 +3,9 @@ package grafica.controladores;
 import java.rmi.RemoteException;
 
 import logica.IFachada;
+import logica.excepciones.FolioNoExisteException;
+import logica.excepciones.InstanciacionException;
+import logica.excepciones.NoSePudoConectarServidorException;
 import logica.excepciones.PersistenciaException;
 import logica.excepciones.ValorInvalidoException;
 import logica.valueObjects.VOBorrarFolio;
@@ -11,23 +14,17 @@ import utilidades.Validador;
 
 public class ControladorEliminarFolioRevisiones {
 
-	public ControladorEliminarFolioRevisiones() {
-	}
+	public ControladorEliminarFolioRevisiones() {}
 
-	public void eliminarFolioRevisiones(String codigoFolio) throws Exception {
-
+	public void eliminarFolioRevisiones(String codigoFolio) throws ValorInvalidoException, NoSePudoConectarServidorException, RemoteException, PersistenciaException, FolioNoExisteException, InstanciacionException {
 		// valido los parametros ingresados
 		camposValidos(codigoFolio);
 
-		try {
-			// hago lookup de la fachada del servidor
-			IFachada fachada = Cliente.obtenerFachada();
-			// creo vo para pasar a la capa logica
-			VOBorrarFolio vobf = new VOBorrarFolio(codigoFolio);
-			fachada.borrarFolioRevisiones(vobf);
-		} catch (RemoteException e) {
-			throw new PersistenciaException("Error en fachada:" + e);
-		}
+		// hago lookup de la fachada del servidor
+		IFachada fachada = Cliente.obtenerFachada();
+		// creo vo para pasar a la capa logica
+		VOBorrarFolio vobf = new VOBorrarFolio(codigoFolio);
+		fachada.borrarFolioRevisiones(vobf);
 	}
 
 	// valido los datos ingresados

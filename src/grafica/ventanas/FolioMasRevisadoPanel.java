@@ -22,6 +22,7 @@ import javax.swing.table.TableColumn;
 
 import grafica.controladores.ControladorFolioMasRevisado;
 import logica.excepciones.NoExistenFoliosException;
+import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOFolioMaxRev;
 
 public class FolioMasRevisadoPanel extends JPanel {
@@ -99,10 +100,12 @@ public class FolioMasRevisadoPanel extends JPanel {
 						tableModel.setRowCount(0);
 						tableModel.addRow(new Object[] { folio.getCodigo(), folio.getCaratula(), folio.getPaginas(), folio.getCantRevisiones() });
 					}
-				}catch (NoExistenFoliosException e1) {
+				} catch (PersistenciaException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-				} catch (Exception e2) {
+				} catch (NoExistenFoliosException e2) {
 					JOptionPane.showMessageDialog(null, e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (Exception e3) {
+					JOptionPane.showMessageDialog(null, e3.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
             	
             }

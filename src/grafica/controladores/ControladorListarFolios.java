@@ -14,19 +14,11 @@ import rmi.Cliente;
 
 public class ControladorListarFolios {
 
-	public ControladorListarFolios() {
+	public ControladorListarFolios() {}
+
+	public List<VOFolio> listarFolios() throws PersistenciaException, NoExistenFoliosException, NoSePudoConectarServidorException, InstanciacionException, RemoteException {
+		// hago lookup de la fachada del servidor
+		IFachada fachada = Cliente.obtenerFachada();
+		return fachada.listarFolios();
 	}
-
-	public List<VOFolio> listarFolios() throws PersistenciaException, FolioNoExisteException, NoExistenFoliosException, NoSePudoConectarServidorException, InstanciacionException {
-
-		try {
-			// hago lookup de la fachada del servidor
-			IFachada fachada = Cliente.obtenerFachada();
-			return fachada.listarFolios();
-		} catch (RemoteException e) {
-			throw new PersistenciaException("Error en fachada:" + e);
-		}
-
-	}
-
 }

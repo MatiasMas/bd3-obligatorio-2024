@@ -3,6 +3,9 @@ package grafica.controladores;
 import java.rmi.RemoteException;
 
 import logica.IFachada;
+import logica.excepciones.FolioYaExisteException;
+import logica.excepciones.InstanciacionException;
+import logica.excepciones.NoSePudoConectarServidorException;
 import logica.excepciones.PersistenciaException;
 import logica.excepciones.ValorInvalidoException;
 import logica.valueObjects.VOFolio;
@@ -11,24 +14,19 @@ import utilidades.Validador;
 
 public class ControladorAgregarFolio {
 
-	public ControladorAgregarFolio() {
-	}
+	public ControladorAgregarFolio() {}
 
-	public void agregarFolio(String codigo, String caratula, String paginas) throws Exception {
+	public void agregarFolio(String codigo, String caratula, String paginas) throws RemoteException, PersistenciaException, FolioYaExisteException, InstanciacionException, ValorInvalidoException, NoSePudoConectarServidorException {
 
 		// valido los parametros ingresados
 		camposValidos(codigo, caratula, paginas);
 
-		try {
-			// hago lookup de la fachada del servidor
-			IFachada fachada = Cliente.obtenerFachada();
-			// creo vo para pasar a la capa logica
-			VOFolio vo = new VOFolio(codigo, caratula, Integer.parseInt(paginas));
+		// hago lookup de la fachada del servidor
+		IFachada fachada = Cliente.obtenerFachada();
+		// creo vo para pasar a la capa logica
+		VOFolio vo = new VOFolio(codigo, caratula, Integer.parseInt(paginas));
 
-			fachada.agregarFolio(vo);
-		} catch (RemoteException e) {
-			throw new PersistenciaException("Error en fachada:" + e);
-		}
+		fachada.agregarFolio(vo);
 
 	}
 

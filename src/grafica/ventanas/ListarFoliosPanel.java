@@ -110,10 +110,8 @@ public class ListarFoliosPanel extends JPanel {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (NoExistenFoliosException e2) {
 					JOptionPane.showMessageDialog(null, e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-				} catch (FolioNoExisteException e3) {
+				} catch (Exception e3) {
 					JOptionPane.showMessageDialog(null, e3.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-				} catch (Exception eG) {
-					JOptionPane.showMessageDialog(null, eG.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
 
 			}

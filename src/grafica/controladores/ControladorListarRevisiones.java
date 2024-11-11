@@ -4,6 +4,10 @@ import java.rmi.RemoteException;
 import java.util.List;
 
 import logica.IFachada;
+import logica.excepciones.FolioNoExisteException;
+import logica.excepciones.InstanciacionException;
+import logica.excepciones.NoHayRevisionesException;
+import logica.excepciones.NoSePudoConectarServidorException;
 import logica.excepciones.PersistenciaException;
 import logica.excepciones.ValorInvalidoException;
 import logica.valueObjects.VOListarRevisiones;
@@ -13,25 +17,18 @@ import utilidades.Validador;
 
 public class ControladorListarRevisiones {
 
-	public ControladorListarRevisiones() {
-	}
+	public ControladorListarRevisiones() {}
 	
-	public List<VORevision> listarRevisiones(String codigoFolio) throws Exception {
-		
+	public List<VORevision> listarRevisiones(String codigoFolio) throws ValorInvalidoException, NoSePudoConectarServidorException, RemoteException, PersistenciaException, FolioNoExisteException, NoHayRevisionesException, InstanciacionException {
 		// valido los parametros ingresados
 		camposValidos(codigoFolio);
-		
-		try {
-			// hago lookup de la fachada del servidor
-			IFachada fachada = Cliente.obtenerFachada();
-			// creo vo para pasar a la capa logica
-			VOListarRevisiones vo = new VOListarRevisiones(codigoFolio);
-			return fachada.listarRevisiones(vo);
-		} catch ( RemoteException e) {
-			throw new PersistenciaException("Error en fachada:" + e);
-		}
-		
-	} 
+
+		// hago lookup de la fachada del servidor
+		IFachada fachada = Cliente.obtenerFachada();
+		// creo vo para pasar a la capa logica
+		VOListarRevisiones vo = new VOListarRevisiones(codigoFolio);
+		return fachada.listarRevisiones(vo);
+	}
 	
 	// valido los datos ingresados
 	private void camposValidos(String codigoFolio) throws ValorInvalidoException {

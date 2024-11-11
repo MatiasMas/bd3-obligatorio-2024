@@ -16,8 +16,7 @@ import utilidades.Validador;
 
 public class ControladorDarDescripcion {
 
-	public ControladorDarDescripcion() {
-	}
+	public ControladorDarDescripcion() {}
 
 	public VODescripcionRetornada darDescripcion(String codFolio, String numero) throws ValorInvalidoException, NoSePudoConectarServidorException, RemoteException, PersistenciaException, FolioNoExisteException, RevisionNoExisteException, InstanciacionException {
 		camposValidos(codFolio, numero);
@@ -27,7 +26,6 @@ public class ControladorDarDescripcion {
 		// creo vo para pasar a la capa logica
 		VODarDescripcion vo = new VODarDescripcion(codFolio, Integer.parseInt(numero));
 		return fachada.darDescripcion(vo);
-
 	}
 
 	// valido los datos ingresados

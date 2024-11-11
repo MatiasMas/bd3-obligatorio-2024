@@ -3,6 +3,9 @@ package grafica.controladores;
 import java.rmi.RemoteException;
 
 import logica.IFachada;
+import logica.excepciones.FolioNoExisteException;
+import logica.excepciones.InstanciacionException;
+import logica.excepciones.NoSePudoConectarServidorException;
 import logica.excepciones.PersistenciaException;
 import logica.excepciones.ValorInvalidoException;
 import logica.valueObjects.VORevision;
@@ -11,22 +14,17 @@ import utilidades.Validador;
 
 public class ControladorAgregarRevision {
 
-	public ControladorAgregarRevision() {
-	}
+	public ControladorAgregarRevision() {}
 
-	public void agregarRevision(String codigoFolio, String descripcion) throws Exception {
-
+	public void agregarRevision(String codigoFolio, String descripcion) throws ValorInvalidoException, NoSePudoConectarServidorException, RemoteException, PersistenciaException, FolioNoExisteException, InstanciacionException {
 		// valido los parametros ingresados
 		camposValidos(codigoFolio, descripcion);
-		try {
-			// hago lookup de la fachada del servidor
-			IFachada fachada = Cliente.obtenerFachada();
-			// creo vo para pasar a la capa logica
-			VORevision vo = new VORevision(descripcion, codigoFolio);
-			fachada.agregarRevision(vo);
-		} catch (RemoteException e) {
-			throw new PersistenciaException("Error en fachada:" + e);
-		}
+
+		// hago lookup de la fachada del servidor
+		IFachada fachada = Cliente.obtenerFachada();
+		// creo vo para pasar a la capa logica
+		VORevision vo = new VORevision(descripcion, codigoFolio);
+		fachada.agregarRevision(vo);
 	}
 
 	// valido los datos ingresados
