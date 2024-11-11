@@ -126,9 +126,7 @@ public class ListarFoliosPanel extends JPanel {
 		add(Box.createVerticalStrut(40)); // Espacio adicional inferior
 	}
 
-	@Override
-	public void addNotify() {
-		super.addNotify(); // Limpiar los valores de los campos de texto cuando se añade el panel
+	public void limpiarCampos() {
 		tableModel.setRowCount(0);
 	}
 }

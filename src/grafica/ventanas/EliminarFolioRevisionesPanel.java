@@ -21,6 +21,7 @@ import logica.excepciones.FolioNoExisteException;
 import logica.excepciones.PersistenciaException;
 
 public class EliminarFolioRevisionesPanel extends JPanel {
+	private JTextField txtCodigo;
 
     public EliminarFolioRevisionesPanel(VentanaMenu ventanaMenu) {
         int alturaPanel = 65;
@@ -28,7 +29,7 @@ public class EliminarFolioRevisionesPanel extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); // Disposición vertical
 
         // Crear campo de texto personalizado con borde redondeado y altura ajustada
-        JTextField txtCodigo = new CampoTextoPersonalizado(20);
+        txtCodigo = new CampoTextoPersonalizado(20);
 
         // Crear label
         JLabel lblCodigo = new JLabel("Código");
@@ -94,7 +95,7 @@ public class EliminarFolioRevisionesPanel extends JPanel {
 					
 					cefr.eliminarFolioRevisiones(txtCodigo.getText().trim());
 					JOptionPane.showMessageDialog(null, "Folio y Revisiones eliminadas correctamente.");
-					txtCodigo.setText("");
+					limpiarCampos();
 				} catch (PersistenciaException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (FolioNoExisteException e2) {
@@ -114,4 +115,8 @@ public class EliminarFolioRevisionesPanel extends JPanel {
         add(btnVolver);
         add(Box.createVerticalStrut(20)); // Espacio adicional inferior
     }
+
+	public void limpiarCampos() {
+		txtCodigo.setText("");
+	}
 }

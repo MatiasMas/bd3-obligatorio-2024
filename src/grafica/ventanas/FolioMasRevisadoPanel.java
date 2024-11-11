@@ -26,13 +26,14 @@ import logica.excepciones.PersistenciaException;
 import logica.valueObjects.VOFolioMaxRev;
 
 public class FolioMasRevisadoPanel extends JPanel {
+	private DefaultTableModel tableModel;
 
     public FolioMasRevisadoPanel(VentanaMenu ventanaMenu) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); // Disposición vertical
 
         // Crear el modelo de la tabla
         String[] columnNames = {"Código", "Carátula", "Páginas", "Revisiones"};
-        DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
+        tableModel = new DefaultTableModel(columnNames, 0);
         JTable table = new JTable(tableModel);
 
         // Ajustar el color de fondo de la tabla
@@ -119,4 +120,8 @@ public class FolioMasRevisadoPanel extends JPanel {
         add(btnVolver);
         add(Box.createVerticalStrut(40)); // Espacio adicional inferior
     }
+
+	public void limpiarCampos() {
+		tableModel.setRowCount(0);
+	}
 }

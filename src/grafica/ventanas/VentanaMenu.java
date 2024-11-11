@@ -13,6 +13,13 @@ public class VentanaMenu extends JFrame {
     private static final long serialVersionUID = 1L;
     private JPanel mainPanel;
     private CardLayout cardLayout;
+    private AgregarFolioPanel agregarFolioPanel;
+    private AgregarRevisionPanel agregarRevisionPanel;
+    private ListarFoliosPanel listarFoliosPanel;
+    private ListarRevisionesPanel listarRevisionesPanel;
+    private FolioMasRevisadoPanel folioMasRevisadoPanel;
+    private DarDescripcionPanel darDescripcionPanel;
+    private EliminarFolioRevisionesPanel eliminarFolioRevisionesPanel;
 
     public VentanaMenu() {
         setTitle("Gestión de Folios y Revisiones");
@@ -24,14 +31,22 @@ public class VentanaMenu extends JFrame {
         mainPanel = new JPanel(cardLayout);
         add(mainPanel, BorderLayout.CENTER);
 
+        agregarFolioPanel = new AgregarFolioPanel(this);
+        agregarRevisionPanel = new AgregarRevisionPanel(this);
+        listarFoliosPanel = new ListarFoliosPanel(this);
+        listarRevisionesPanel = new ListarRevisionesPanel(this);
+        folioMasRevisadoPanel = new FolioMasRevisadoPanel(this);
+        darDescripcionPanel = new DarDescripcionPanel(this);
+        eliminarFolioRevisionesPanel = new EliminarFolioRevisionesPanel(this);
+        
         mainPanel.add(crearMenuPrincipal(), "MenuPrincipal");
-        mainPanel.add(new AgregarFolioPanel(this), "AgregarFolio");
-        mainPanel.add(new AgregarRevisionPanel(this), "AgregarRevision");
-        mainPanel.add(new ListarFoliosPanel(this), "ListarFolios");
-        mainPanel.add(new ListarRevisionesPanel(this), "ListarRevisiones");
-        mainPanel.add(new FolioMasRevisadoPanel(this), "FolioMasRevisado");
-        mainPanel.add(new DarDescripcionPanel(this), "DarDescripcion");
-        mainPanel.add(new EliminarFolioRevisionesPanel(this), "BorrarFolio");
+        mainPanel.add(agregarFolioPanel, "AgregarFolio");
+        mainPanel.add(agregarRevisionPanel, "AgregarRevision");
+        mainPanel.add(listarFoliosPanel, "ListarFolios");
+        mainPanel.add(listarRevisionesPanel, "ListarRevisiones");
+        mainPanel.add(folioMasRevisadoPanel, "FolioMasRevisado");
+        mainPanel.add(darDescripcionPanel, "DarDescripcion");
+        mainPanel.add(eliminarFolioRevisionesPanel, "BorrarFolio");
 
         cardLayout.show(mainPanel, "MenuPrincipal");
     }
@@ -136,9 +151,23 @@ public class VentanaMenu extends JFrame {
     public void mostrarVista(String vista) {
         if (vista.equals("Salir")) {
             System.exit(0);
-        } else {
-            cardLayout.show(mainPanel, vista);
-        }
+        } else if(vista.equals("AgregarFolio")) {
+            agregarFolioPanel.limpiarCampos();
+        } else if(vista.equals("AgregarRevision")) {
+            agregarRevisionPanel.limpiarCampos();
+        } else if(vista.equals("ListarFolios")) {
+            listarFoliosPanel.limpiarCampos();
+        } else if(vista.equals("ListarRevisiones")) {
+            listarRevisionesPanel.limpiarCampos();
+        } else if(vista.equals("FolioMasRevisado")) {
+            folioMasRevisadoPanel.limpiarCampos();
+        } else if(vista.equals("DarDescripcion")) {
+            darDescripcionPanel.limpiarCampos();
+        } else if(vista.equals("BorrarFolio")) {
+            eliminarFolioRevisionesPanel.limpiarCampos();
+        } 
+        
+        cardLayout.show(mainPanel, vista);
     }
 
     public static void main(String[] args) {

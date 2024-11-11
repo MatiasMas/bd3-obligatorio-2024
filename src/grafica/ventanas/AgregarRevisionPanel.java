@@ -17,6 +17,8 @@ import logica.excepciones.FolioNoExisteException;
 import logica.excepciones.PersistenciaException;
 
 public class AgregarRevisionPanel extends JPanel {
+	private JTextField txtCodigo;
+	private JTextField txtDescripcion;
 
     public AgregarRevisionPanel(VentanaMenu ventanaMenu) {
         int alturaPanel = 65;
@@ -24,8 +26,8 @@ public class AgregarRevisionPanel extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); // Disposición vertical
 
         // Crear campos de texto personalizados con bordes redondeados y altura ajustada
-        JTextField txtCodigo = new CampoTextoPersonalizado(20);
-        JTextField txtDescripcion = new CampoTextoPersonalizado(20);
+        txtCodigo = new CampoTextoPersonalizado(20);
+        txtDescripcion = new CampoTextoPersonalizado(20);
 
         // Crear labels
         JLabel lblCodigo = new JLabel("Código");
@@ -79,8 +81,7 @@ public class AgregarRevisionPanel extends JPanel {
 					ControladorAgregarRevision car = new ControladorAgregarRevision();
 					car.agregarRevision(txtCodigo.getText().trim(), txtDescripcion.getText().trim());
 					JOptionPane.showMessageDialog(null, "Nueva Revision de Folio ingresada correctamente.");
-					txtCodigo.setText("");
-					txtDescripcion.setText("");
+					limpiarCampos();
 				} catch (PersistenciaException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (FolioNoExisteException e2) {
@@ -100,4 +101,9 @@ public class AgregarRevisionPanel extends JPanel {
         add(btnVolver);
         add(Box.createVerticalStrut(20)); // Espacio adicional inferior
     }
+
+	public void limpiarCampos() {
+		txtCodigo.setText("");
+		txtDescripcion.setText("");
+	}
 }

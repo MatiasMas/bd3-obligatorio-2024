@@ -21,6 +21,9 @@ import logica.excepciones.RevisionNoExisteException;
 import logica.valueObjects.VODescripcionRetornada;
 
 public class DarDescripcionPanel extends JPanel {
+	private JTextField txtCodigo;
+	private JTextField txtNumeroRevision;
+	private JTextArea txtDescripcion;
 
     public DarDescripcionPanel(VentanaMenu ventanaMenu) {
         int alturaPanel = 65;
@@ -28,15 +31,15 @@ public class DarDescripcionPanel extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); // Disposición vertical
 
         // Crear campos de texto personalizados con bordes redondeados y altura ajustada
-        JTextField txtCodigo = new CampoTextoPersonalizado(20);
-        JTextField txtNumeroRevision = new CampoTextoPersonalizado(20);
+        txtCodigo = new CampoTextoPersonalizado(20);
+        txtNumeroRevision = new CampoTextoPersonalizado(20);
 
         // Crear labels
         JLabel lblCodigo = new JLabel("Código");
         JLabel lblNumeroRevision = new JLabel("Número de Revisión");
 
         // Crear panel de descripción
-        JTextArea txtDescripcion = new JTextArea();
+        txtDescripcion = new JTextArea();
         txtDescripcion.setBackground(new Color(240, 255, 240));
         txtDescripcion.setEditable(false);
         txtDescripcion.setLineWrap(true);
@@ -123,4 +126,10 @@ public class DarDescripcionPanel extends JPanel {
         add(btnVolver);
         add(Box.createVerticalStrut(50)); // Espacio adicional inferior
     }
+
+	public void limpiarCampos() {
+		txtCodigo.setText("");
+		txtDescripcion.setText("");
+		txtNumeroRevision.setText("");
+	}
 }

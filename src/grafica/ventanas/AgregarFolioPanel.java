@@ -18,16 +18,18 @@ import logica.excepciones.PersistenciaException;
 import logica.excepciones.ValorInvalidoException;
 
 public class AgregarFolioPanel extends JPanel {
+	JTextField txtCodigo;
+	JTextField txtCaratula;
+	JTextField txtPaginas;
 
     public AgregarFolioPanel(VentanaMenu ventanaMenu) {
     	int alturaPanel = 65;
     	
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); // Disposición vertical
-
-        // Crear campos de texto personalizados con bordes redondeados y altura ajustada
-        JTextField txtCodigo = new CampoTextoPersonalizado(20);
-        JTextField txtCaratula = new CampoTextoPersonalizado(20);
-        JTextField txtPaginas = new CampoTextoPersonalizado(20);
+        
+    	txtCodigo = new CampoTextoPersonalizado(20);
+    	txtCaratula = new CampoTextoPersonalizado(20);
+    	txtPaginas = new CampoTextoPersonalizado(20);
 
         // Crear labels
         JLabel lblCodigo = new JLabel("Código");
@@ -95,9 +97,7 @@ public class AgregarFolioPanel extends JPanel {
 					caf.agregarFolio(txtCodigo.getText().trim(), txtCaratula.getText().trim(), txtPaginas.getText().trim());
 					
 					JOptionPane.showMessageDialog(null, "Nuevo Folio ingresado correctamente.");
-					txtCodigo.setText("");
-					txtCaratula.setText("");
-					txtPaginas.setText("");
+					limpiarCampos();
 				} catch (PersistenciaException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (FolioYaExisteException e2) {
@@ -118,5 +118,11 @@ public class AgregarFolioPanel extends JPanel {
         add(Box.createRigidArea(new Dimension(0, 15))); // Espacio entre botones
         add(btnVolver);
         add(Box.createVerticalStrut(20)); // Espacio adicional inferior
+    }
+    
+    public void limpiarCampos() {
+    	txtCodigo.setText("");
+    	txtCaratula.setText("");
+    	txtPaginas.setText("");
     }
 }

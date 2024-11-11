@@ -31,12 +31,14 @@ import logica.valueObjects.VOFolio;
 import logica.valueObjects.VORevision;
 
 public class ListarRevisionesPanel extends JPanel {
+	private DefaultTableModel tableModel;
+	private JTextField txtCodigo;
 
     public ListarRevisionesPanel(VentanaMenu ventanaMenu) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); // Disposición vertical
 
         // Crear campo de texto personalizado para Código
-        JTextField txtCodigo = new CampoTextoPersonalizado(20);
+        txtCodigo = new CampoTextoPersonalizado(20);
         Dimension fieldSize = new Dimension(450, 40); // Ajustar tamaño del campo de texto
         txtCodigo.setPreferredSize(fieldSize);
         txtCodigo.setMinimumSize(fieldSize);
@@ -64,7 +66,7 @@ public class ListarRevisionesPanel extends JPanel {
 
         // Crear el modelo de la tabla
         String[] columnNames = {"Número", "Código", "Descripción"};
-        DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
+        tableModel = new DefaultTableModel(columnNames, 0);
         JTable table = new JTable(tableModel);
 
         // Ajustar el color de fondo de la tabla
@@ -153,4 +155,9 @@ public class ListarRevisionesPanel extends JPanel {
         add(btnVolver);
         add(Box.createVerticalStrut(15)); // Espacio adicional inferior
     }
+
+	public void limpiarCampos() {
+		txtCodigo.setText("");
+		tableModel.setRowCount(0);
+	}
 }
