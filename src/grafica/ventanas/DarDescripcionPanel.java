@@ -102,15 +102,14 @@ public class DarDescripcionPanel extends JPanel {
 					VODescripcionRetornada vo = cdd.darDescripcion(txtCodigo.getText(),txtNumeroRevision.getText());
 					
 					txtDescripcion.setText(vo.getDescripcion());
-				} catch (PersistenciaException e2) {
-					JOptionPane.showMessageDialog(null, "Error al obtener los folios: " + e2.getMessage(), "Error",
-							JOptionPane.ERROR_MESSAGE);
-				} catch (FolioNoExisteException e1) {
+				} catch (PersistenciaException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-				} catch (RevisionNoExisteException e4) {
-					JOptionPane.showMessageDialog(null, e4.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-				} catch (Exception e3) {
+				} catch (FolioNoExisteException e2) {
+					JOptionPane.showMessageDialog(null, e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (RevisionNoExisteException e3) {
 					JOptionPane.showMessageDialog(null, e3.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (Exception e4) {
+					JOptionPane.showMessageDialog(null, e4.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
             	
             }

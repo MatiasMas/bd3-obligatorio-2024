@@ -99,13 +99,13 @@ public class AgregarFolioPanel extends JPanel {
 					txtCaratula.setText("");
 					txtPaginas.setText("");
 				} catch (PersistenciaException e1) {
-					JOptionPane.showMessageDialog(null, e1.getMessage());
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (FolioYaExisteException e2) {
-					JOptionPane.showMessageDialog(null, e2.getMessage());
+					JOptionPane.showMessageDialog(null, e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (ValorInvalidoException e4) {
-					JOptionPane.showMessageDialog(null, e4.getMessage());
+					JOptionPane.showMessageDialog(null, e4.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (Exception eG) {
-					JOptionPane.showMessageDialog(null, eG.getMessage());
+					JOptionPane.showMessageDialog(null, eG.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
             	
             }

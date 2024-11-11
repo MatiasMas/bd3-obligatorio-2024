@@ -82,11 +82,11 @@ public class AgregarRevisionPanel extends JPanel {
 					txtCodigo.setText("");
 					txtDescripcion.setText("");
 				} catch (PersistenciaException e1) {
-					JOptionPane.showMessageDialog(null, e1.getMessage());
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (FolioNoExisteException e2) {
-					JOptionPane.showMessageDialog(null, e2.getMessage());
+					JOptionPane.showMessageDialog(null, e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (Exception eG) {
-					JOptionPane.showMessageDialog(null, eG.getMessage());
+					JOptionPane.showMessageDialog(null, eG.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				
             }

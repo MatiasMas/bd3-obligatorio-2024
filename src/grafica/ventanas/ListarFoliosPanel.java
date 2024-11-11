@@ -101,12 +101,12 @@ public class ListarFoliosPanel extends JPanel {
                     for (VOFolio folio : folios) {
                         tableModel.addRow(new Object[] { folio.getCodigo(), folio.getCaratula(), folio.getPaginas() });
                     }
-                } catch (PersistenciaException e2) {
-                    JOptionPane.showMessageDialog(null, "Error al obtener los folios: " + e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                } catch (FolioNoExisteException e1) {
-                    JOptionPane.showMessageDialog(null, "Error NO existe folio: " + e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                } catch (PersistenciaException e1) {
+                	JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                } catch (FolioNoExisteException e2) {
+                	JOptionPane.showMessageDialog(null, e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 } catch (Exception eG) {
-                    JOptionPane.showMessageDialog(null, eG.getMessage());
+                	JOptionPane.showMessageDialog(null, eG.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 
             }
