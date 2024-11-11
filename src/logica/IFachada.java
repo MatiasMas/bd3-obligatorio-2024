@@ -28,7 +28,7 @@ public interface IFachada extends Remote {
 
 	public VODescripcionRetornada darDescripcion(VODarDescripcion voD) throws RemoteException, PersistenciaException, FolioNoExisteException, RevisionNoExisteException, InstanciacionException;
 
-	public List<VOFolio> listarFolios() throws RemoteException, PersistenciaException, InstanciacionException;
+	public List<VOFolio> listarFolios() throws RemoteException, PersistenciaException, InstanciacionException, NoExistenFoliosException;
 
 	public List<VORevision> listarRevisiones(VOListarRevisiones voL) throws RemoteException, PersistenciaException, FolioNoExisteException, NoHayRevisionesException, InstanciacionException;
 

@@ -38,7 +38,7 @@ public class Main {
 			crearTablaRevisiones(con);
 
 			// inserto datos de prueba
-			insertDatos(con);
+			//insertDatos(con);
 
 			// cierro la conexion
 			con.close();

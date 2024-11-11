@@ -35,6 +35,9 @@ public class ControladorDarDescripcion {
 		if (codigoFolio.isEmpty()) {
 			String msg = "El codigo no puede ser vacío.";
 			throw new ValorInvalidoException(msg);
+		} else if (numero.isEmpty()) {
+			String msg = "El numero de revision no puede ser vacío.";
+			throw new ValorInvalidoException(msg);
 		} else if (!Validador.esAlfaNumerico(codigoFolio)) {
 			String msg = "El codigo debe ser alfanumerico.";
 			throw new ValorInvalidoException(msg);
