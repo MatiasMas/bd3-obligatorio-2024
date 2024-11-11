@@ -92,7 +92,7 @@ public class AgregarFolioPanel extends JPanel {
                
 				try {
 					ControladorAgregarFolio caf = new ControladorAgregarFolio();
-					caf.agregarFolio(txtCodigo.getText(), txtCaratula.getText(), txtPaginas.getText());
+					caf.agregarFolio(txtCodigo.getText().trim(), txtCaratula.getText().trim(), txtPaginas.getText().trim());
 					
 					JOptionPane.showMessageDialog(null, "Nuevo Folio ingresado correctamente.");
 					txtCodigo.setText("");

@@ -92,7 +92,7 @@ public class EliminarFolioRevisionesPanel extends JPanel {
 				try {
 					ControladorEliminarFolioRevisiones cefr = new ControladorEliminarFolioRevisiones();
 					
-					cefr.eliminarFolioRevisiones(txtCodigo.getText());
+					cefr.eliminarFolioRevisiones(txtCodigo.getText().trim());
 					JOptionPane.showMessageDialog(null, "Folio y Revisiones eliminadas correctamente.");
 					txtCodigo.setText("");
 				} catch (PersistenciaException e1) {

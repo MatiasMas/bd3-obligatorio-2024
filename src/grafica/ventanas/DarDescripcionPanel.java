@@ -99,7 +99,7 @@ public class DarDescripcionPanel extends JPanel {
                
 				try {
 					ControladorDarDescripcion cdd = new ControladorDarDescripcion();
-					VODescripcionRetornada vo = cdd.darDescripcion(txtCodigo.getText(),txtNumeroRevision.getText());
+					VODescripcionRetornada vo = cdd.darDescripcion(txtCodigo.getText().trim(), txtNumeroRevision.getText().trim());
 					
 					txtDescripcion.setText(vo.getDescripcion());
 				} catch (PersistenciaException e1) {

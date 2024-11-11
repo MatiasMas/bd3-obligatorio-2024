@@ -124,7 +124,7 @@ public class ListarRevisionesPanel extends JPanel {
 				try {
 					ControladorListarRevisiones clr = new ControladorListarRevisiones();
 					
-					List<VORevision> revisiones = clr.listarRevisiones(txtCodigo.getText());
+					List<VORevision> revisiones = clr.listarRevisiones(txtCodigo.getText().trim());
 
 					tableModel.setRowCount(0);
 					for (VORevision rev : revisiones) {

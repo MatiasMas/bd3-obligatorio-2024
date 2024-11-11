@@ -77,7 +77,7 @@ public class AgregarRevisionPanel extends JPanel {
             	
 				try {
 					ControladorAgregarRevision car = new ControladorAgregarRevision();
-					car.agregarRevision(txtCodigo.getText(), txtDescripcion.getText());
+					car.agregarRevision(txtCodigo.getText().trim(), txtDescripcion.getText().trim());
 					JOptionPane.showMessageDialog(null, "Nueva Revision de Folio ingresada correctamente.");
 					txtCodigo.setText("");
 					txtDescripcion.setText("");
